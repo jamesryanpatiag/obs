@@ -56,9 +56,27 @@
             return $query->row();
         }
 
+        public function getLookupByCategory($name){
+            $this->db->select('l.ID as LOOKUP_ID, c.ID as CATEGORY_ID, l.VALUE as VALUE, c.NAME as NAME');
+            $this->db->from("lookups l");
+            $this->db->join("category c", "c.ID = l.CATEGORY_ID", "inner");
+            $this->db->where("c.NAME", $name);
+            $this->db->order_by("l.CATEGORY_ID", "DESC");
+            $query = $this->db->get();
+            return $query->result();
+        }
+
         public function updateLookup($data, $id){
             $this->db->where('ID', $id);
             $this->db->update('lookups', $data); 
+        }
+
+        public function getLookupValue($lookupid){
+            $this->db->select('l.value as VALUE');
+            $this->db->from("lookups l");
+            $this->db->where("l.ID", $lookupid);
+            $query = $this->db->get();
+            return $query->row();
         }
 
 	}

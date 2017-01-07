@@ -23,9 +23,9 @@
                     <td><?php echo $item->NAME;?></td>
                     <td><?php echo $item->VALUE;?></td>
                     <td>
-                        <a href="#" data-toggle="modal" data-target="#editLookupsModal" title="Edit" class="btn btn-info btn-flat" onClick="getLookupById('<?php echo $item->LOOKUP_ID;?>')">
+                        <a href="#" data-toggle="modal" data-target="#editLookupsModal" title="Edit" class="btn btn-info" onClick="getLookupById('<?php echo $item->LOOKUP_ID;?>')">
                               <span class="fa fa-pencil"></span></a>
-                        <a href="#" title="Delete" class="btn btn-danger btn-flat" onClick="deleteLookup('<?php echo $item->LOOKUP_ID;?>')">
+                        <a href="#" title="Delete" class="btn btn-danger" onClick="deleteLookup('<?php echo $item->LOOKUP_ID;?>')">
                               <span class="fa fa-trash"></span></a>
                     </td>
                 </tr>
