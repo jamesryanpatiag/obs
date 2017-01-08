@@ -31,7 +31,7 @@ class Modules extends CI_Controller {
 		sessionChecker();
 		//0 = customer
 		//1 = administrator
-		permissionChecker(array(0), true);
+		permissionChecker(array(0,1), true);
 		$data["module"] = "bookflight";
 		$data["page_title"] = "Book Flight";
 		$data["list"] = $this->flight_schedule_model->getBookFlightsByUserId($_SESSION["user_id"]);
@@ -45,7 +45,7 @@ class Modules extends CI_Controller {
 		sessionChecker();
 		//0 = customer
 		//1 = administrator
-		permissionChecker(array(0), true);
+		permissionChecker(array(0,1), true);
 		$data["module"] = "bookhotel";
 		$data["page_title"] = "Book Hotel";
 		$data["list"] = $this->hotel_schedule_model->getBookHotelsByUserId($_SESSION["user_id"]);
@@ -59,7 +59,7 @@ class Modules extends CI_Controller {
 		sessionChecker();
 		//0 = customer
 		//1 = administrator
-		permissionChecker(array(0), true);
+		permissionChecker(array(0,1), true);
 		$data["module"] = "rentvehicle";
 		$data["page_title"] = "Rent Vehicle";
 		$data["list"] = $this->vehicle_schedule_model->getBookVehiclesByUserId($_SESSION["user_id"]);
@@ -69,9 +69,66 @@ class Modules extends CI_Controller {
 		$this->load->view("dashboard/common/footer");
 	}
 
+	public function toursandpackages(){
+		sessionChecker();
+		//0 = customer
+		//1 = administrator
+		permissionChecker(array(0,1), true);
+		$data["currency_symbol"] = $this->getCurrentCurrencySymbol();
+		$data["module"] = "toursandpackages";
+		$data["page_title"] = "Tours & Packages";
+		$data["list"] = $this->tour_pack_model->getAllValidTourPackSchedule();
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/toursandpackages",$data);
+		$this->load->view("dashboard/common/footer");
+	}
+
+	public function userToursAndPackages(){
+		sessionChecker();
+		//0 = customer
+		//1 = administrator
+		permissionChecker(array(0,1), true);
+		$data["currency_symbol"] = $this->getCurrentCurrencySymbol();
+		$data["module"] = "usertoursandpackages";
+		$data["page_title"] = "My Tours & Packages";
+		$data["list"] = $this->tour_pack_schedule_model->getTourPackScheduleById($_SESSION["user_id"]);
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/toursandpackages",$data);
+		$this->load->view("dashboard/common/footer");
+	}
+
+	public function newToursandpackages(){
+		sessionChecker();
+		//0 = customer
+		//1 = administrator
+		permissionChecker(array(0,1), true);
+		$data["currency_symbol"] = $this->getCurrentCurrencySymbol();
+		$data["module"] = "newtoursandpackages";
+		$data["page_title"] = "New Tours & Packages";
+		$data = $this->getAllLookups($data);
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/newToursAndPackages",$data);
+		$this->load->view("dashboard/common/footer");	
+	}
+
+	public function viewToursAndPackages($id){
+		sessionChecker();
+		//0 = customer
+		//1 = administrator
+		permissionChecker(array(0,1), true);
+		$data["currency_symbol"] = $this->getCurrentCurrencySymbol();
+		$data["module"] = "viewtoursandpackages";
+		$data["page_title"] = "View Tours & Packages";
+		$data["tap"] = $this->tour_pack_model->getTourAndPackagesById($id);
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/viewToursAndPackages",$data);
+		$this->load->view("dashboard/common/footer");	
+	}
+
+
 	public function lookups(){
 		sessionChecker();
-		permissionChecker(array(0), true);
+		permissionChecker(array(0,1), true);
 		$data["module"] = "lookup";
 		$data["page_title"] = "Lookup Values";
 		$data["list"] = $this->lookups_model->getAllLookups();
@@ -206,6 +263,36 @@ class Modules extends CI_Controller {
         }
 	}
 
+	public function submitToursAndPackages(){
+		$this->toursAndPackagesValidations();
+		if ($this->form_validation->run() == FALSE){
+			$this->newToursandpackages();
+		}else{
+			$data = $this->toursAndPackagesCreation($this->input->post());
+			if($data["DESCRIPTION"]!=""){
+				$data["DESCRIPTION"] = str_replace('src=', 'class="img-responsive" src=', $data["DESCRIPTION"]);
+			}
+        	$data["CREATED_BY"] = $_SESSION['user_id'];
+        	$this->tour_pack_model->addTourPack($data);
+        	$this->session->set_flashdata('message', 'You successfully created Tour and Package.');
+        	redirect(current_url());
+		}
+	}
+
+	public function submitToursAndPackageSchedule(){
+		$data = array(
+				"TOUR_PACK_ID"	=>	$this->input->post("id"),
+				"USER_ID"		=>	$_SESSION["user_id"],
+				"UPDATED_BY"	=>  $_SESSION['user_id'],
+				"CREATED_BY"	=>  $_SESSION['user_id']
+			);
+
+		$this->tour_pack_schedule_model->addTourPackSchedule($data);
+		echo "YES";
+	}
+
+
+
 	public function saveEditBookFlight(){
 		$this->bookFlightValidations();
         if ($this->form_validation->run() == FALSE){
@@ -283,6 +370,34 @@ class Modules extends CI_Controller {
         		);
 	}
 
+	private function toursAndPackagesCreation($data){
+		return array(
+				"TITLE"					=> $data["tapTitle"],
+				"DESCRIPTION"			=> $data["tapDescription"],
+				"NO_OF_DAYS"			=> $data["tapNoDays"],
+				"NO_OF_NIGHTS"			=> $data["tapNoNights"],
+				"VALID_FROM"			=> $data["tapValidFrom"],
+				"VALID_TO"				=> $data["tapValidTo"],
+				"INCLUSION"				=> $data["tapInclusion"],
+				"EXCLUSION"				=> $data["tapExclusion"],
+				"HOTEL_ID"				=> $data["tapHotel"],
+				"PRICE"					=> $data["tapPrice"],
+        		"UPDATED_BY" 			=> $_SESSION['user_id'],
+			);
+
+
+
+		$this->form_validation->set_rules('tapTitle', 'Title', 'trim|required');
+		$this->form_validation->set_rules('tapDescription', 'Description', 'trim|required');
+		$this->form_validation->set_rules('tapHotel', 'Hotel', 'trim|required');
+		$this->form_validation->set_rules('tapNoDays', 'No. of Days', 'trim|required|numeric');
+		$this->form_validation->set_rules('tapNoNights', 'No. of Nights', 'trim|required|numeric');
+		$this->form_validation->set_rules('tapValidFrom', 'Valid From', 'trim|required');
+		$this->form_validation->set_rules('tapValidTo', 'Valid To', 'trim|required');
+		$this->form_validation->set_rules('tapInclusion', 'Inclusion', 'trim|required');
+		$this->form_validation->set_rules('tapExclusion', 'Exclusion', 'trim|required');
+	}
+
 	############# VALIDATIONS ###########
 	private function bookFlightValidations(){
 		$this->form_validation->set_rules('flightTicketType', 'Ticket Type', 'trim|required');
@@ -313,6 +428,26 @@ class Modules extends CI_Controller {
 		$this->form_validation->set_rules('vehicleArrivalPlace', 'Arrival Place', 'trim|required');
 		$this->form_validation->set_rules('vehicleDepartureDate', 'Departure Date', 'trim|required');
 		$this->form_validation->set_rules('vehicleReturnDate', 'Return Date', 'trim|required');
+	}
+
+	private function toursAndPackagesValidations(){
+		$this->form_validation->set_rules('tapTitle', 'Title', 'trim|required');
+		$this->form_validation->set_rules('tapDescription', 'Description', 'trim|required');
+		$this->form_validation->set_rules('tapNoDays', 'No. of Days', 'trim|required|numeric');
+		$this->form_validation->set_rules('tapNoNights', 'No. of Nights', 'trim|required|numeric');
+		$this->form_validation->set_rules('tapValidFrom', 'Valid From', 'trim|required');
+		$this->form_validation->set_rules('tapValidTo', 'Valid To', 'trim|required');
+		$this->form_validation->set_rules('tapInclusion', 'Inclusion', 'trim|required');
+		$this->form_validation->set_rules('tapExclusion', 'Exclusion', 'trim|required');
+	}
+
+	private function getCurrentCurrencySymbol(){
+		$locale='en-US'; //browser or user locale
+		$currency='PHP';
+		$fmt = new NumberFormatter( $locale."@currency=$currency", NumberFormatter::CURRENCY );
+		$symbol = $fmt->getSymbol(NumberFormatter::CURRENCY_SYMBOL);
+		header("Content-Type: text/html; charset=UTF-8;");
+		return $symbol;
 	}
 }
 				

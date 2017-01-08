@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="<?php echo base_url()."assets/"; ?>plugins/morris/morris.css">
   <link rel="stylesheet" href="<?php echo base_url()."assets/"; ?>plugins/jvectormap/jquery-jvectormap-1.2.2.css">
   <link rel="stylesheet" href="<?php echo base_url()."assets/"; ?>plugins/datepicker/datepicker3.css">
+  <link rel="stylesheet" href="<?php echo base_url()."assets/"; ?>plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"></link>
   <!-- <link rel="stylesheet" href="<?php echo base_url()."assets/"; ?>plugins/daterangepicker/daterangepicker.css"> -->
   <script src="<?php echo base_url()."assets/"; ?>plugins/jQuery/jquery-2.2.3.min.js"></script>
   <!--<script src="<?php echo base_url()."assets/"; ?>plugins/daterangepicker/daterangepicker.js"></script>-->
@@ -38,12 +39,10 @@
       background-size:100%;
       background-attachment: fixed;
    }
-   .navbar{
-      background-color: #020000;
+   .navbar, .topnav, .topnav a, .navbar-fixed-top, .container{
+      background-color: #fff;
    }
-   .container{
-      background: rgba(46, 51, 56, 0.2)!important;
-   }
+   
    @media screen and (max-width: 640px) {
       table {
         overflow-x: auto;
@@ -53,7 +52,10 @@
     .error-mess{
         color:red;
     }
+    .para-no-margin{
+      margin:0;
+    }
 </style>
 </head>
-<body class="hold-transition skin-blue layout-top-nav">
+<body class="hold-transition skin-blue layout-top-nav wysihtml5-supported">
 <div class="container" style="margin-top:50px;">

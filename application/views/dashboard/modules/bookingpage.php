@@ -1,7 +1,12 @@
 <div class="wrapper">
 
   <?php $this->view("dashboard/common/sub-header"); ?>
-
+  <style type="text/css">
+      .bookingtabs {
+          background:#31250e;
+          
+      }
+  </style>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -17,15 +22,15 @@
     </section>
     <!-- Main content -->
     <section class="content">
-
-      <div class="nav-tabs-custom">
+      <?php if($_SESSION["role_code"]==CUSTOMER){?>
+      <div class="nav-tabs-custom col-md-12 col-lg-12">
             <ul class="nav nav-tabs">
               <?php if($module==="bookflight"){ ?>
-              <li class='active'><a href="#tab_1" data-toggle="tab">Book Flight</a></li>
+              <li class='active'><a style="background:#31250e;color:#fff;" href="#tab_1" data-toggle="tab"><b>Book Flight<b></a></li>
               <?php } elseif($module==="bookhotel"){ ?>
-              <li class='active'><a href="#tab_2" data-toggle="tab">Book Hotel</a></li>
+              <li class='active'><a style="background:#31250e;color:#fff;" href="#tab_2" data-toggle="tab">Book Hotel</a></li>
               <?php } elseif($module==="rentvehicle"){ ?>
-              <li class='active'><a href="#tab_3" data-toggle="tab">Rent Vehicle</a></li>
+              <li class='active'><a style="background:#31250e;color:#fff;" href="#tab_3" data-toggle="tab">Rent Vehicle</a></li>
               <?php }?>
             </ul>
             <div class="tab-content">
@@ -43,7 +48,8 @@
               <!-- /.tab-pane -->
             </div>
             <!-- /.tab-content -->
-          </div>
+      </div>
+      <? } ?>
 
     
     <?php if($module==="bookflight"){ ?>
@@ -58,6 +64,7 @@
   </div>
 
   <?php $this->view("dashboard/common/footer-html"); ?>
+  <?php $this->view("dashboard/modals/changeStatus"); ?>
   <div class="control-sidebar-bg"></div>
 </div>
 

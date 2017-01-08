@@ -49,7 +49,7 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <input type="text" class="form-control pull-right" id="vehicleDepartureDate" name="vehicleDepartureDate" value="<?php echo set_value('vehicleDepartureDate') ?>">
+          <input type="text" class="form-control pull-right" id="vehicleDepartureDate" name="vehicleDepartureDate" value="<?php echo set_value('vehicleDepartureDate') ?>" readonly>
         </div>
         <span class="error-mess"><?php echo form_error('vehicleDepartureDate'); ?></span>
       </div>
@@ -59,7 +59,7 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <input type="text" class="form-control pull-right" id="vehicleReturnDate" name="vehicleReturnDate" value="<?php echo set_value('vehicleReturnDate') ?>">
+          <input type="text" class="form-control pull-right" id="vehicleReturnDate" name="vehicleReturnDate" value="<?php echo set_value('vehicleReturnDate') ?>" readonly>
         </div>
         <span class="error-mess"><?php echo form_error('vehicleReturnDate'); ?></span>
       </div>

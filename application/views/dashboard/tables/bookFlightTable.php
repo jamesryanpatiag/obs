@@ -16,14 +16,20 @@
     <thead>
     <tr>
       <th>ID</th>
-      <th>Ticket Type</th>  
-      <th>Departure Place</th>  
-      <th>Arrival Place</th>  
-      <th>Departure Date</th>   
-      <th>Return Date</th>
-      <th>Airline</th>
-      <th>Seat Class</th>
-      <th>No. of Person</th>
+      <?php if($_SESSION["role_code"]==ADMINISTRATOR){?>
+        <th style="width:20%">Booked By</th>
+        <th>Booking Details</th>
+      <?php }else{ ?>
+        <th>Ticket Type</th>  
+        <th>Departure Place</th>  
+        <th>Arrival Place</ th>  
+        <th>Departure Date</th>   
+        <th>Return Date</th>
+        <th>Airline</th>
+        <th>Seat Class</th>
+        <th>No. of Person</th>
+      <?php } ?>
+      <th>Status</th>
       <th>Actions</th>
     </tr>
     </thead>
@@ -38,82 +44,117 @@
                       <label class="data-label-row" id="lblFlightBookingId_<?php echo $counter;?>"><?php echo $item->ID;?></label>
                       <input type="hidden" id="flightBookingId_<?php echo $counter;?>" name="flightBookingId_<?php echo $counter;?>" value="<?php echo $item->ID;?>" >
                     </td>
-                    <td style="width:10%" >
-                        <label class="data-label-row" id="lblFlightTicketType_<?php echo $counter;?>"><?php echo getLookupValueById($item->TICKET_TYPE_ID);?></label>
-                        <select class="form-control pull-right data-editable-row" id="flightTicketType_<?php echo $counter;?>" name="flightTicketType_<?php echo $counter;?>">
-                            <?php foreach($ticket_type as $category){ ?>
-                            <option value="<?php echo $category->LOOKUP_ID;?>" <?php if($item->TICKET_TYPE_ID==$category->LOOKUP_ID){echo "selected='selected'";}?> > <?php echo $category->VALUE;?></option>
-                            <?php } ?>
-                        </select>
-                    </td>
-                    <td style="width:15%" >
-                      <label class="data-label-row" id="lblFlightDeparturePlace_<?php echo $counter;?>"><?php echo getLookupValueById($item->DEPARTURE_PLACE_ID);?></label>
-                      <select class="form-control pull-right data-editable-row" id="flightDeparturePlace_<?php echo $counter;?>" name="flightDeparturePlace_<?php echo $counter;?>">
-                          <?php foreach($destination as $category){ ?>
-                          <option value="<?php echo $category->LOOKUP_ID;?>" <?php if($item->DEPARTURE_PLACE_ID==$category->LOOKUP_ID){echo "selected='selected'";}?>><?php echo $category->VALUE;?></option>
-                          <?php } ?>
-                      </select>  
-                    </td>
-                    <td style="width:15%" >
-                      <label class="data-label-row" id="lblFlightArrivalPlace_<?php echo $counter;?>"><?php echo getLookupValueById($item->ARRIVAL_PLACE_ID);?></label>
-                      <select class="form-control pull-right data-editable-row" id="flightArrivalPlace_<?php echo $counter;?>" name="flightArrivalPlace_<?php echo $counter;?>">
-                          <?php foreach($destination as $category){ ?>
-                          <option value="<?php echo $category->LOOKUP_ID;?>" <?php if($item->ARRIVAL_PLACE_ID==$category->LOOKUP_ID){echo "selected='selected'";}?>><?php echo $category->VALUE;?></option>
-                          <?php } ?>
-                      </select>    
-                    </td>
-                    <td  style="width:10%" >
-                      <label class="data-label-row" id="lblFlightDepartureDate_<?php echo $counter;?>"><?php echo $item->DEPATURE_DATE;?></label>
-                      <div class="input-group date data-editable-row" id="flightDepartureDate_<?php echo $counter;?>">
-                        <input type="text" class="form-control pull-right datepicker" id="flightDepartureDateVal_<?php echo $counter;?>" name="flightDepartureDate_<?php echo $counter;?>" value="<?php echo $item->DEPATURE_DATE;?>" >
-                      </div>
-                    </td>
-                    <td  style="width:10%" >
-                      <label class="data-label-row" id="lblFlightReturnDate_<?php echo $counter;?>"><?php echo $item->RETURN_DATE;?></label>
-                      <div class="input-group date data-editable-row" id="flightReturnDate_<?php echo $counter;?>">
-                        <input type="text" class="form-control pull-right datepicker" id="flightReturnDateVal_<?php echo $counter;?>" name="flightReturnDate_<?php echo $counter;?>" value="<?php echo $item->RETURN_DATE;?>" >
-                      </div>    
-                    </td>
-                    <td>
-                      <label class="data-label-row" id="lblFlightAirline_<?php echo $counter;?>"><?php echo getLookupValueById($item->AIRLINE_ID);?></label>
-                       <select class="form-control pull-right" id="flightAirline_<?php echo $counter;?>" name="flightAirline_<?php echo $counter;?>">
-                            <?php foreach($airline as $category){ ?>
-                            <option value="<?php echo $category->LOOKUP_ID;?>" <?php if($item->AIRLINE_ID==$category->LOOKUP_ID){echo "selected='selected'";}?>><?php echo $category->VALUE;?></option>
-                            <?php } ?>
-                        </select>
+                    <?php if($_SESSION["role_code"]==ADMINISTRATOR){?>
+                          <td>
+                              <p class="para-no-margin"><b>Username:</b></label> <?php echo getUsernameById($item->USER_ID); ?></p>
+                              <p class="para-no-margin"><b>Fullname:</b></label> <?php echo getSinglePersonByUserId($item->USER_ID); ?></p>
+                              <p class="para-no-margin"><b>Date Booked:</b> <?php echo date("Y-m-d",strtotime($item->CREATED_DATE)); ?></p>  
+                          </td>
+                          <td>
+                              <div class="col-md-4 col-lg-4">
+                                <p class="para-no-margin"><b>Ticket Type:</b></label> <?php echo getLookupValueById($item->TICKET_TYPE_ID);?></p>
+                                <p class="para-no-margin"><b>Departure Place:</b></label> <?php echo getLookupValueById($item->DEPARTURE_PLACE_ID);?></p>
+                                <p class="para-no-margin"><b>Arrival Place:</b></label> <?php echo getLookupValueById($item->ARRIVAL_PLACE_ID);?></p>
+                                <p class="para-no-margin"><b>Airline:</b></label> <?php echo getLookupValueById($item->AIRLINE_ID);?></p>
+                                <p class="para-no-margin"><b>Seat Class:</b></label> <?php echo getLookupValueById($item->CLASS_ID); ?></p>
+                              </div>
+                              <div class="col-md-4 col-lg-4">
+                                <p class="para-no-margin"><b>Departure Date:</b></label> <?php echo $item->DEPATURE_DATE;?></p>
+                                <p class="para-no-margin"><b>Return Date:</b></label> <?php echo $item->RETURN_DATE;?></p>
+                              </div>
+                              <div class="col-md-4 col-lg-4">
+                                <p class="para-no-margin"><b>No. of Adults:</b></label> <?php echo $item->NO_OF_ADULT;?></p>
+                                <p class="para-no-margin"><b>No. of Children:</b></label> <?php echo $item->NO_OF_CHILDREN;?></p>
+                                <p class="para-no-margin"><b>No. of Infant:</b></label> <?php echo $item->NO_OF_INFANT;?></p>
+                              </div>
+                          </td>
+                    <?php }else{ ?>
+                          <td style="width:10%" >
+                            <label class="data-label-row" id="lblFlightTicketType_<?php echo $counter;?>"><?php echo getLookupValueById($item->TICKET_TYPE_ID);?></label>
+                            <select class="form-control pull-right data-editable-row" id="flightTicketType_<?php echo $counter;?>" name="flightTicketType_<?php echo $counter;?>">
+                                <?php foreach($ticket_type as $category){ ?>
+                                <option value="<?php echo $category->LOOKUP_ID;?>" <?php if($item->TICKET_TYPE_ID==$category->LOOKUP_ID){echo "selected='selected'";}?> > <?php echo $category->VALUE;?></option>
+                                <?php } ?>
+                            </select>
+                        </td>
+                        <td style="width:15%" >
+                          <label class="data-label-row" id="lblFlightDeparturePlace_<?php echo $counter;?>"><?php echo getLookupValueById($item->DEPARTURE_PLACE_ID);?></label>
+                          <select class="form-control pull-right data-editable-row" id="flightDeparturePlace_<?php echo $counter;?>" name="flightDeparturePlace_<?php echo $counter;?>">
+                              <?php foreach($destination as $category){ ?>
+                              <option value="<?php echo $category->LOOKUP_ID;?>" <?php if($item->DEPARTURE_PLACE_ID==$category->LOOKUP_ID){echo "selected='selected'";}?>><?php echo $category->VALUE;?></option>
+                              <?php } ?>
+                          </select>  
+                        </td>
+                        <td style="width:15%" >
+                          <label class="data-label-row" id="lblFlightArrivalPlace_<?php echo $counter;?>"><?php echo getLookupValueById($item->ARRIVAL_PLACE_ID);?></label>
+                          <select class="form-control pull-right data-editable-row" id="flightArrivalPlace_<?php echo $counter;?>" name="flightArrivalPlace_<?php echo $counter;?>">
+                              <?php foreach($destination as $category){ ?>
+                              <option value="<?php echo $category->LOOKUP_ID;?>" <?php if($item->ARRIVAL_PLACE_ID==$category->LOOKUP_ID){echo "selected='selected'";}?>><?php echo $category->VALUE;?></option>
+                              <?php } ?>
+                          </select>    
+                        </td>
+                        <td  style="width:10%" >
+                          <label class="data-label-row" id="lblFlightDepartureDate_<?php echo $counter;?>"><?php echo $item->DEPATURE_DATE;?></label>
+                          <div class="input-group date data-editable-row" id="flightDepartureDate_<?php echo $counter;?>">
+                            <input type="text" class="form-control pull-right datepicker" id="flightDepartureDateVal_<?php echo $counter;?>" name="flightDepartureDate_<?php echo $counter;?>" value="<?php echo $item->DEPATURE_DATE;?>" >
+                          </div>
+                        </td>
+                        <td  style="width:10%" >
+                          <label class="data-label-row" id="lblFlightReturnDate_<?php echo $counter;?>"><?php echo $item->RETURN_DATE;?></label>
+                          <div class="input-group date data-editable-row" id="flightReturnDate_<?php echo $counter;?>">
+                            <input type="text" class="form-control pull-right datepicker" id="flightReturnDateVal_<?php echo $counter;?>" name="flightReturnDate_<?php echo $counter;?>" value="<?php echo $item->RETURN_DATE;?>" >
+                          </div>    
+                        </td>
+                        <td>
+                          <label class="data-label-row" id="lblFlightAirline_<?php echo $counter;?>"><?php echo getLookupValueById($item->AIRLINE_ID);?></label>
+                           <select class="form-control pull-right" id="flightAirline_<?php echo $counter;?>" name="flightAirline_<?php echo $counter;?>">
+                                <?php foreach($airline as $category){ ?>
+                                <option value="<?php echo $category->LOOKUP_ID;?>" <?php if($item->AIRLINE_ID==$category->LOOKUP_ID){echo "selected='selected'";}?>><?php echo $category->VALUE;?></option>
+                                <?php } ?>
+                            </select>
 
-                    </td> 
+                        </td> 
+                        <td>
+                          <label class="data-label-row" id="lblFlightClass_<?php echo $counter;?>"><?php echo getLookupValueById($item->CLASS_ID);?></label>
+                          <select class="form-control pull-right" id="flightClass_<?php echo $counter;?>" name="flightClass_<?php echo $counter;?>">
+                              <?php foreach($class as $category){ ?>  
+                              <option value="<?php echo $category->LOOKUP_ID;?>" <?php if($item->CLASS_ID==$category->LOOKUP_ID){echo "selected='selected'";}?>><?php echo $category->VALUE;?></option>
+                              <?php } ?>
+                          </select>
+                        </td>
+                        <td  style="width:10%" >
+                            Adult:
+                            <label class="data-label-row" id="lblFlightNoAdults_<?php echo $counter;?>"><?php echo $item->NO_OF_ADULT;?></label>
+                            <input type="text"  style="width:50px" class="form-control data-editable-row" id="flightNoAdults_<?php echo $counter;?>" name="flightNoAdults_<?php echo $counter;?>" value="<?php echo $item->NO_OF_ADULT;?>" >
+                            <br/>
+                            Children:
+                            <label class="data-label-row" id="lblFlightNoChildren_<?php echo $counter;?>"><?php echo $item->NO_OF_CHILDREN;?></label>
+                            <input type="text" style="width:50px" class="form-control data-editable-row" id="flightNoChildren_<?php echo $counter;?>" name="flightNoChildren_<?php echo $counter;?>" value="<?php echo $item->NO_OF_CHILDREN;?>" >
+                            <br/>
+                            Infant:
+                            <label class="data-label-row" id="lblFlightNoInfants_<?php echo $counter;?>"><?php echo $item->NO_OF_INFANT;?></label>
+                            <input type="text" style="width:50px" class="form-control data-editable-row" id="flightNoInfants_<?php echo $counter;?>" name="flightNoInfants_<?php echo $counter;?>" value="<?php echo $item->NO_OF_INFANT;?>" >   
+                        </td>
+                    <?php } ?>
                     <td>
-                      <label class="data-label-row" id="lblFlightClass_<?php echo $counter;?>"><?php echo getLookupValueById($item->CLASS_ID);?></label>
-                      <select class="form-control pull-right" id="flightClass_<?php echo $counter;?>" name="flightClass_<?php echo $counter;?>">
-                          <?php foreach($class as $category){ ?>  
-                          <option value="<?php echo $category->LOOKUP_ID;?>" <?php if($item->CLASS_ID==$category->LOOKUP_ID){echo "selected='selected'";}?>><?php echo $category->VALUE;?></option>
-                          <?php } ?>
-                      </select>
+                      <label class="data-label-row" id="lblStatus_<?php echo $counter;?>"><?php echo $item->BOOKING_STATUS;?></label>
                     </td>
                     <td  style="width:10%" >
-                        Adult:
-                        <label class="data-label-row" id="lblFlightNoAdults_<?php echo $counter;?>"><?php echo $item->NO_OF_ADULT;?></label>
-                        <input type="text"  style="width:50px" class="form-control data-editable-row" id="flightNoAdults_<?php echo $counter;?>" name="flightNoAdults_<?php echo $counter;?>" value="<?php echo $item->NO_OF_ADULT;?>" >
-                        <br/>
-                        Children:
-                        <label class="data-label-row" id="lblFlightNoChildren_<?php echo $counter;?>"><?php echo $item->NO_OF_CHILDREN;?></label>
-                        <input type="text" style="width:50px" class="form-control data-editable-row" id="flightNoChildren_<?php echo $counter;?>" name="flightNoChildren_<?php echo $counter;?>" value="<?php echo $item->NO_OF_CHILDREN;?>" >
-                        <br/>
-                        Infant:
-                        <label class="data-label-row" id="lblFlightNoInfants_<?php echo $counter;?>"><?php echo $item->NO_OF_INFANT;?></label>
-                        <input type="text" style="width:50px" class="form-control data-editable-row" id="flightNoInfants_<?php echo $counter;?>" name="flightNoInfants_<?php echo $counter;?>" value="<?php echo $item->NO_OF_INFANT;?>" >   
-                    </td>
-                    <td  style="width:10%" >
-                        <button title="Save Booking" style="display:none" class="btn btn-success" id="bntSaveBooking_<?php echo $counter; ?>" onClick="saveRow(<?php echo $counter; ?>)">
-                          <span class="fa fa-check"></span></a>
-                        </button>
-                        <button title="Edit Booking" class="btn btn-info" id="bntEditBooking_<?php echo $counter; ?>"  onClick="editRow(<?php echo $counter; ?>)">
-                          <span class="fa fa-pencil"></span></a>
-                        </button>
-                        <button title="Cancel Booking" class="btn btn-danger">
-                          <span class="fa fa-trash"></span></a>
-                        </button>
+                        <?php if($_SESSION["role_code"]==ADMINISTRATOR){?>
+                            <button type="button" class="btn btn-warning" title="Change Status" data-toggle="modal" data-target="#changeStatus" >
+                            <span class="fa fa-exchange"></button>
+                        <?php }else { ?>
+                            <button title="Save Booking" style="display:none" class="btn btn-success" id="bntSaveBooking_<?php echo $counter; ?>" onClick="saveRow(<?php echo $counter; ?>)">
+                              <span class="fa fa-check"></span></a>
+                            </button>
+                            <button title="Edit Booking" class="btn btn-info" id="bntEditBooking_<?php echo $counter; ?>"  onClick="editRow(<?php echo $counter; ?>)">
+                              <span class="fa fa-pencil"></span></a>
+                            </button>
+                        <?php } ?>
+                          <button title="Cancel Booking" class="btn btn-danger">
+                            <span class="fa fa-trash"></span></a>
+                          </button>
+                        
                     </td>
                 </tr>
             <?php $counter++;}?>

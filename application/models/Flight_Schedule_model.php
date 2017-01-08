@@ -20,7 +20,9 @@
         public function getBookFlightsByUserId($id){
         	$this->db->select('*');
             $this->db->from("flight_schedule fs");
-            $this->db->where("fs.USER_ID", $id);
+            if($_SESSION["role_code"]==CUSTOMER){
+                $this->db->where("fs.USER_ID", $id);    
+            }
             $query = $this->db->get();
             return $query->result();
         }

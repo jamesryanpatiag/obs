@@ -16,11 +16,17 @@
     <thead>
     <tr>
       <th>ID</th>
+       <?php if($_SESSION["role_code"]==ADMINISTRATOR){?>
+        <th style="width:30%">Booked By</th>
+        <th>Booking Details</th>
+      <?php }else{ ?>
       <th>Vehicle Type</th>  
       <th>Departure Place</th>  
       <th>Destination Place</th>  
       <th>Departure Date</th>
-      <th>Return Date</th> 
+      <th>Return Date</th>
+      <?php } ?> 
+      <th>Status</th>
       <th>Actions</th>
     </tr>
     </thead>
@@ -35,49 +41,74 @@
                       <label class="data-label-row" id="lblVehicleId_<?php echo $counter;?>"><?php echo $item->ID;?></label>
                       <input type="hidden" id="vehicleId_<?php echo $counter;?>" name="vehicleId_<?php echo $counter;?>" value="<?php echo $item->ID;?>" >
                     </td>
-                    <td style="width:10%" >
-                        <label class="data-label-row" id="lblVehicleType_<?php echo $counter;?>"><?php echo getLookupValueById($item->VEHICLE_TYPE);?></label>
-                        <select class="form-control pull-right data-editable-row" id="vehicleVehicleType_<?php echo $counter;?>" name="vehicleVehicleType_<?php echo $counter;?>">
-                            <?php foreach($vehicle_type as $category){ ?>
-                            <option value="<?php echo $category->LOOKUP_ID;?>" <?php if($item->VEHICLE_TYPE==$category->LOOKUP_ID){echo "selected='selected'";}?> > <?php echo $category->VALUE;?></option>
-                            <?php } ?>
-                        </select>
-                    </td>
-                    <td style="width:15%" >
-                      <label class="data-label-row" id="lblVehicleDeparturePlace_<?php echo $counter;?>"><?php echo getLookupValueById($item->DEPARTURE_PLACE_ID);?></label>
-                      <select class="form-control pull-right data-editable-row" id="vehicleDeparturePlace_<?php echo $counter;?>" name="vehicleDeparturePlace_<?php echo $counter;?>">
-                          <?php foreach($hotel as $category){ ?>
-                          <option value="<?php echo $category->LOOKUP_ID;?>" <?php if($item->DEPARTURE_PLACE_ID==$category->LOOKUP_ID){echo "selected='selected'";}?>><?php echo $category->VALUE;?></option>
-                          <?php } ?>
-                      </select>  
-                    </td>
-                    <td style="width:15%" >
-                      <label class="data-label-row" id="lblVehicleArrivalPlace_<?php echo $counter;?>"><?php echo getLookupValueById($item->DESTINATION_PLACE_ID);?></label>
-                      <select class="form-control pull-right data-editable-row" id="vehicleArrivalPlace_<?php echo $counter;?>" name="vehicleArrivalPlace_<?php echo $counter;?>">
-                          <?php foreach($hotel as $category){ ?>
-                          <option value="<?php echo $category->LOOKUP_ID;?>" <?php if($item->DESTINATION_PLACE_ID==$category->LOOKUP_ID){echo "selected='selected'";}?>><?php echo $category->VALUE;?></option>
-                          <?php } ?>
-                      </select>  
+                    <?php if($_SESSION["role_code"]==ADMINISTRATOR){?>
+                        <td>
+                            <p class="para-no-margin"><b>Username:</b></label> <?php echo getUsernameById($item->USER_ID); ?></p>
+                            <p class="para-no-margin"><b>Fullname:</b></label> <?php echo getSinglePersonByUserId($item->USER_ID); ?></p>
+                            <p class="para-no-margin"><b>Date Booked:</b> <?php echo date("Y-m-d",strtotime($item->CREATED_DATE)); ?></p> 
+                        </td>
+                        <td>
+                            <div class="col-md-6 col-lg-6">
+                              <p class="para-no-margin"><b>Vehicle Type:</b></label> <?php echo getLookupValueById($item->VEHICLE_TYPE);?></p>
+                              <p class="para-no-margin"><b>Departure Place:</b></label> <?php echo getLookupValueById($item->DEPARTURE_PLACE_ID);?></p>
+                              <p class="para-no-margin"><b>Destination Place:</b></label> <?php echo getLookupValueById($item->DESTINATION_PLACE_ID);?></p>
+                              <p class="para-no-margin"><b>Departure Date:</b></label> <?php echo $item->DEPARTURE_DATE;?></p>
+                              <p class="para-no-margin"><b>Return date:</b></label> <?php echo $item->RETURN_DATE;?></p>
+                            </div>
+                        </td>
+                    <?php } else { ?>
+                        <td style="width:10%" >
+                            <label class="data-label-row" id="lblVehicleType_<?php echo $counter;?>"><?php echo getLookupValueById($item->VEHICLE_TYPE);?></label>
+                            <select class="form-control pull-right data-editable-row" id="vehicleVehicleType_<?php echo $counter;?>" name="vehicleVehicleType_<?php echo $counter;?>">
+                                <?php foreach($vehicle_type as $category){ ?>
+                                <option value="<?php echo $category->LOOKUP_ID;?>" <?php if($item->VEHICLE_TYPE==$category->LOOKUP_ID){echo "selected='selected'";}?> > <?php echo $category->VALUE;?></option>
+                                <?php } ?>
+                            </select>
+                        </td>
+                        <td style="width:15%" >
+                          <label class="data-label-row" id="lblVehicleDeparturePlace_<?php echo $counter;?>"><?php echo getLookupValueById($item->DEPARTURE_PLACE_ID);?></label>
+                          <select class="form-control pull-right data-editable-row" id="vehicleDeparturePlace_<?php echo $counter;?>" name="vehicleDeparturePlace_<?php echo $counter;?>">
+                              <?php foreach($destination as $category){ ?>
+                              <option value="<?php echo $category->LOOKUP_ID;?>" <?php if($item->DEPARTURE_PLACE_ID==$category->LOOKUP_ID){echo "selected='selected'";}?>><?php echo $category->VALUE;?></option>
+                              <?php } ?>
+                          </select>  
+                        </td>
+                        <td style="width:15%" >
+                          <label class="data-label-row" id="lblVehicleArrivalPlace_<?php echo $counter;?>"><?php echo getLookupValueById($item->DESTINATION_PLACE_ID);?></label>
+                          <select class="form-control pull-right data-editable-row" id="vehicleArrivalPlace_<?php echo $counter;?>" name="vehicleArrivalPlace_<?php echo $counter;?>">
+                              <?php foreach($destination as $category){ ?>
+                              <option value="<?php echo $category->LOOKUP_ID;?>" <?php if($item->DESTINATION_PLACE_ID==$category->LOOKUP_ID){echo "selected='selected'";}?>><?php echo $category->VALUE;?></option>
+                              <?php } ?>
+                          </select>  
+                        </td>
+                        <td  style="width:10%" >
+                          <label class="data-label-row" id="lblVehicleDepartureDate_<?php echo $counter;?>"><?php echo $item->DEPARTURE_DATE;?></label>
+                          <div class="input-group date data-editable-row" id="vehicleDepartureDate_<?php echo $counter;?>">
+                            <input type="text" class="form-control pull-right datepicker" id="vehicleDepartureDateVal_<?php echo $counter;?>" name="vehicleDepartureDateVal_<?php echo $counter;?>" value="<?php echo $item->DEPARTURE_DATE;?>" >
+                          </div>
+                        </td>
+                        <td  style="width:10%" >
+                          <label class="data-label-row" id="lblVehicleReturnDate_<?php echo $counter;?>"><?php echo $item->RETURN_DATE;?></label>
+                          <div class="input-group date data-editable-row" id="vehicleReturnDate_<?php echo $counter;?>">
+                            <input type="text" class="form-control pull-right datepicker" id="vehicleReturnDateVal_<?php echo $counter;?>" name="vehicleReturnDateVal_<?php echo $counter;?>" value="<?php echo $item->RETURN_DATE;?>" >
+                          </div>    
+                        </td>
+                    <?php } ?>
+                    <td>
+                      <label class="data-label-row" id="lblStatus_<?php echo $counter;?>"><?php echo $item->BOOKING_STATUS;?></label>
                     </td>
                     <td  style="width:10%" >
-                      <label class="data-label-row" id="lblVehicleDepartureDate_<?php echo $counter;?>"><?php echo $item->DEPARTURE_DATE;?></label>
-                      <div class="input-group date data-editable-row" id="vehicleDepartureDate_<?php echo $counter;?>">
-                        <input type="text" class="form-control pull-right datepicker" id="vehicleDepartureDateVal_<?php echo $counter;?>" name="vehicleDepartureDateVal_<?php echo $counter;?>" value="<?php echo $item->DEPARTURE_DATE;?>" >
-                      </div>
-                    </td>
-                    <td  style="width:10%" >
-                      <label class="data-label-row" id="lblVehicleReturnDate_<?php echo $counter;?>"><?php echo $item->RETURN_DATE;?></label>
-                      <div class="input-group date data-editable-row" id="vehicleReturnDate_<?php echo $counter;?>">
-                        <input type="text" class="form-control pull-right datepicker" id="vehicleReturnDateVal_<?php echo $counter;?>" name="vehicleReturnDateVal_<?php echo $counter;?>" value="<?php echo $item->RETURN_DATE;?>" >
-                      </div>    
-                    </td>
-                    <td  style="width:10%" >
-                        <button title="Save Booking" style="display:none" class="btn btn-success" id="bntSaveBooking_<?php echo $counter; ?>" onClick="saveRow(<?php echo $counter; ?>)">
-                          <span class="fa fa-check"></span></a>
-                        </button>
-                        <button title="Edit Booking" class="btn btn-info" id="bntEditBooking_<?php echo $counter; ?>"  onClick="editRow(<?php echo $counter; ?>)">
-                          <span class="fa fa-pencil"></span></a>
-                        </button>
+                        <?php if($_SESSION["role_code"]==ADMINISTRATOR){?>
+                            <button type="button" class="btn btn-warning" title="Change Status" data-toggle="modal" data-target="#changeStatus" >
+                            <span class="fa fa-exchange"></button>
+                        <?php }else { ?>
+                            <button title="Save Booking" style="display:none" class="btn btn-success" id="bntSaveBooking_<?php echo $counter; ?>" onClick="saveRow(<?php echo $counter; ?>)">
+                            <span class="fa fa-check"></span></a>
+                          </button>
+                          <button title="Edit Booking" class="btn btn-info" id="bntEditBooking_<?php echo $counter; ?>"  onClick="editRow(<?php echo $counter; ?>)">
+                            <span class="fa fa-pencil"></span></a>
+                          </button>
+                        <?php } ?>
                         <button title="Cancel Booking" class="btn btn-danger">
                           <span class="fa fa-trash"></span></a>
                         </button>

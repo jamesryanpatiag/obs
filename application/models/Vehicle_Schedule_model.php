@@ -20,7 +20,9 @@
         public function getBookVehiclesByUserId($id){
         	$this->db->select('*');
             $this->db->from("vehicle_schedule vs");
-            $this->db->where("vs.USER_ID", $id);
+            if($_SESSION["role_code"]==CUSTOMER){
+                $this->db->where("vs.USER_ID", $id);
+            }
             $query = $this->db->get();
             return $query->result();
         }

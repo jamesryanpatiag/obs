@@ -16,12 +16,18 @@
     <thead>
     <tr>
       <th>ID</th>
+       <?php if($_SESSION["role_code"]==ADMINISTRATOR){?>
+        <th style="width:20%">Booked By</th>
+        <th>Booking Details</th>
+      <?php }else{ ?>
       <th>Destination</th>  
       <th>Hotel</th>  
       <th>Check-In Date</th>  
       <th>Check-Out Date</th>
       <th>No. of Rooms</th>   
       <th>No. of Person</th>
+      <? } ?>
+      <th>Status</th>
       <th>Actions</th>
     </tr>
     </thead>
@@ -36,54 +42,82 @@
                       <label class="data-label-row" id="lblHotelId_<?php echo $counter;?>"><?php echo $item->ID;?></label>
                       <input type="hidden" id="hotelId_<?php echo $counter;?>" name="hotelId_<?php echo $counter;?>" value="<?php echo $item->ID;?>" >
                     </td>
-                    <td style="width:10%" >
-                        <label class="data-label-row" id="lblHotelDestination_<?php echo $counter;?>"><?php echo getLookupValueById($item->DESTINATION_ID);?></label>
-                        <select class="form-control pull-right data-editable-row" id="hotelDestination_<?php echo $counter;?>" name="hotelDestination_<?php echo $counter;?>">
-                            <?php foreach($destination as $category){ ?>
-                            <option value="<?php echo $category->LOOKUP_ID;?>" <?php if($item->DESTINATION_ID==$category->LOOKUP_ID){echo "selected='selected'";}?> > <?php echo $category->VALUE;?></option>
+                    <?php if($_SESSION["role_code"]==ADMINISTRATOR){?>
+                        <td>
+                              <p class="para-no-margin"><b>Username:</b></label> <?php echo getUsernameById($item->USER_ID); ?></p>
+                              <p class="para-no-margin"><b>Fullname:</b></label> <?php echo getSinglePersonByUserId($item->USER_ID); ?></p>
+                              <p class="para-no-margin"><b>Date Booked:</b> <?php echo date("Y-m-d",strtotime($item->CREATED_DATE)); ?></p>  
+                          </td>
+                          <td>
+                              <div class="col-md-4 col-lg-4">
+                                <p class="para-no-margin"><b>Destination:</b></label> <?php echo getLookupValueById($item->DESTINATION_ID);?></p>
+                                <p class="para-no-margin"><b>Hotel:</b></label> <?php echo getLookupValueById($item->HOTEL_ID);?></p>
+                                <p class="para-no-margin"><b>Check-In Date:</b></label> <?php echo $item->CHECK_IN_DATE;?></p>
+                                <p class="para-no-margin"><b>Check-Out date:</b></label> <?php echo $item->CHECK_OUT_DATE;?></p>
+                              </div>
+                              <div class="col-md-4 col-lg-4">
+                                <p class="para-no-margin"><b>No. of Adults:</b></label> <?php echo $item->NO_OF_ADULT;?></p>
+                                <p class="para-no-margin"><b>No. of Children:</b></label> <?php echo $item->NO_OF_CHILDREN;?></p>
+                              </div>
+                          </td>
+                    <? }else{ ?>
+                        <td style="width:10%" >
+                          <label class="data-label-row" id="lblHotelDestination_<?php echo $counter;?>"><?php echo getLookupValueById($item->DESTINATION_ID);?></label>
+                          <select class="form-control pull-right data-editable-row" id="hotelDestination_<?php echo $counter;?>" name="hotelDestination_<?php echo $counter;?>">
+                              <?php foreach($destination as $category){ ?>
+                              <option value="<?php echo $category->LOOKUP_ID;?>" <?php if($item->DESTINATION_ID==$category->LOOKUP_ID){echo "selected='selected'";}?> > <?php echo $category->VALUE;?></option>
+                              <?php } ?>
+                          </select>
+                      </td>
+                      <td style="width:15%" >
+                        <label class="data-label-row" id="lblHotel_<?php echo $counter;?>"><?php echo getLookupValueById($item->HOTEL_ID);?></label>
+                        <select class="form-control pull-right data-editable-row" id="hotel_<?php echo $counter;?>" name="hotel_<?php echo $counter;?>">
+                            <?php foreach($hotel as $category){ ?>
+                            <option value="<?php echo $category->LOOKUP_ID;?>" <?php if($item->HOTEL_ID==$category->LOOKUP_ID){echo "selected='selected'";}?>><?php echo $category->VALUE;?></option>
                             <?php } ?>
-                        </select>
-                    </td>
-                    <td style="width:15%" >
-                      <label class="data-label-row" id="lblHotel_<?php echo $counter;?>"><?php echo getLookupValueById($item->HOTEL_ID);?></label>
-                      <select class="form-control pull-right data-editable-row" id="hotel_<?php echo $counter;?>" name="hotel_<?php echo $counter;?>">
-                          <?php foreach($hotel as $category){ ?>
-                          <option value="<?php echo $category->LOOKUP_ID;?>" <?php if($item->HOTEL_ID==$category->LOOKUP_ID){echo "selected='selected'";}?>><?php echo $category->VALUE;?></option>
-                          <?php } ?>
-                      </select>  
-                    </td>
-                    <td  style="width:10%" >
-                      <label class="data-label-row" id="lblHotelCheckInDate_<?php echo $counter;?>"><?php echo $item->CHECK_IN_DATE;?></label>
-                      <div class="input-group date data-editable-row" id="hotelCheckInDate_<?php echo $counter;?>">
-                        <input type="text" class="form-control pull-right datepicker" id="hotelCheckInDateVal_<?php echo $counter;?>" name="hotelCheckInDateVal_<?php echo $counter;?>" value="<?php echo $item->CHECK_IN_DATE;?>" >
-                      </div>
-                    </td>
-                    <td  style="width:10%" >
-                      <label class="data-label-row" id="lblHotelCheckOutDate_<?php echo $counter;?>"><?php echo $item->CHECK_OUT_DATE;?></label>
-                      <div class="input-group date data-editable-row" id="hotelCheckOutDate_<?php echo $counter;?>">
-                        <input type="text" class="form-control pull-right datepicker" id="hotelCheckOutDateVal_<?php echo $counter;?>" name="hotelCheckOutDateVal_<?php echo $counter;?>" value="<?php echo $item->CHECK_OUT_DATE;?>" >
-                      </div>    
-                    </td>
+                        </select>  
+                      </td>
+                      <td  style="width:10%" >
+                        <label class="data-label-row" id="lblHotelCheckInDate_<?php echo $counter;?>"><?php echo $item->CHECK_IN_DATE;?></label>
+                        <div class="input-group date data-editable-row" id="hotelCheckInDate_<?php echo $counter;?>">
+                          <input type="text" class="form-control pull-right datepicker" id="hotelCheckInDateVal_<?php echo $counter;?>" name="hotelCheckInDateVal_<?php echo $counter;?>" value="<?php echo $item->CHECK_IN_DATE;?>" >
+                        </div>
+                      </td>
+                      <td  style="width:10%" >
+                        <label class="data-label-row" id="lblHotelCheckOutDate_<?php echo $counter;?>"><?php echo $item->CHECK_OUT_DATE;?></label>
+                        <div class="input-group date data-editable-row" id="hotelCheckOutDate_<?php echo $counter;?>">
+                          <input type="text" class="form-control pull-right datepicker" id="hotelCheckOutDateVal_<?php echo $counter;?>" name="hotelCheckOutDateVal_<?php echo $counter;?>" value="<?php echo $item->CHECK_OUT_DATE;?>" >
+                        </div>    
+                      </td>
+                      <td>
+                          <label class="data-label-row" id="lblHotelNoRooms_<?php echo $counter;?>"><?php echo $item->NO_OF_ROOMS;?></label>
+                          <input type="text"  style="width:50px" class="form-control data-editable-row" id="hotelNoRooms_<?php echo $counter;?>" name="hotelNoRooms_<?php echo $counter;?>" value="<?php echo $item->NO_OF_ADULT;?>" >
+                      </td>
+                      <td  style="width:10%" >
+                          Adult:
+                          <label class="data-label-row" id="lblHotelNoAdults_<?php echo $counter;?>"><?php echo $item->NO_OF_ADULT;?></label>
+                          <input type="text"  style="width:50px" class="form-control data-editable-row" id="hotelNoAdults_<?php echo $counter;?>" name="hotelNoAdults_<?php echo $counter;?>" value="<?php echo $item->NO_OF_ADULT;?>" >
+                          <br/>
+                          Children:
+                          <label class="data-label-row" id="lblHotelNoChildren_<?php echo $counter;?>"><?php echo $item->NO_OF_CHILDREN;?></label>
+                          <input type="text" style="width:50px" class="form-control data-editable-row" id="hotelNoChildren_<?php echo $counter;?>" name="hotelNoChildren_<?php echo $counter;?>" value="<?php echo $item->NO_OF_CHILDREN;?>" >
+                      </td>
+                    <? } ?>
                     <td>
-                        <label class="data-label-row" id="lblHotelNoRooms_<?php echo $counter;?>"><?php echo $item->NO_OF_ROOMS;?></label>
-                        <input type="text"  style="width:50px" class="form-control data-editable-row" id="hotelNoRooms_<?php echo $counter;?>" name="hotelNoRooms_<?php echo $counter;?>" value="<?php echo $item->NO_OF_ADULT;?>" >
+                      <label class="data-label-row" id="lblStatus_<?php echo $counter;?>"><?php echo $item->BOOKING_STATUS;?></label>
                     </td>
                     <td  style="width:10%" >
-                        Adult:
-                        <label class="data-label-row" id="lblHotelNoAdults_<?php echo $counter;?>"><?php echo $item->NO_OF_ADULT;?></label>
-                        <input type="text"  style="width:50px" class="form-control data-editable-row" id="hotelNoAdults_<?php echo $counter;?>" name="hotelNoAdults_<?php echo $counter;?>" value="<?php echo $item->NO_OF_ADULT;?>" >
-                        <br/>
-                        Children:
-                        <label class="data-label-row" id="lblHotelNoChildren_<?php echo $counter;?>"><?php echo $item->NO_OF_CHILDREN;?></label>
-                        <input type="text" style="width:50px" class="form-control data-editable-row" id="hotelNoChildren_<?php echo $counter;?>" name="hotelNoChildren_<?php echo $counter;?>" value="<?php echo $item->NO_OF_CHILDREN;?>" >
-                    </td>
-                    <td  style="width:10%" >
-                        <button title="Save Booking" style="display:none" class="btn btn-success" id="bntSaveBooking_<?php echo $counter; ?>" onClick="saveRow(<?php echo $counter; ?>)">
-                          <span class="fa fa-check"></span></a>
-                        </button>
-                        <button title="Edit Booking" class="btn btn-info" id="bntEditBooking_<?php echo $counter; ?>"  onClick="editRow(<?php echo $counter; ?>)">
-                          <span class="fa fa-pencil"></span></a>
-                        </button>
+                        <?php if($_SESSION["role_code"]==ADMINISTRATOR){?>
+                            <button type="button" class="btn btn-warning" title="Change Status" data-toggle="modal" data-target="#changeStatus" >
+                            <span class="fa fa-exchange"></button>
+                        <?php }else { ?>
+                            <button title="Save Booking" style="display:none" class="btn btn-success" id="bntSaveBooking_<?php echo $counter; ?>" onClick="saveRow(<?php echo $counter; ?>)">
+                              <span class="fa fa-check"></span></a>
+                            </button>
+                            <button title="Edit Booking" class="btn btn-info" id="bntEditBooking_<?php echo $counter; ?>"  onClick="editRow(<?php echo $counter; ?>)">
+                              <span class="fa fa-pencil"></span></a>
+                            </button>
+                        <?php } ?>
                         <button title="Cancel Booking" class="btn btn-danger">
                           <span class="fa fa-trash"></span></a>
                         </button>

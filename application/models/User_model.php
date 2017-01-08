@@ -71,5 +71,15 @@
                 $this->db->where('id', $userid);
                 $this->db->update('user', $data); 
             }
+
+            public function getUsernameById($id){   
+                $query = $this->db->get_where('user',array('ID'=>$id));
+                return $query->row();
+            }
+
+             public function getSinglePersonByUserId($userid){
+                $query = $this->db->get_where('PERSON',array('USER_ID'=>$userid));
+                return $query->row();
+            }
 	}
 ?>

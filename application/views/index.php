@@ -1,3 +1,9 @@
+<style>
+    .title_font{
+        color: white;
+        text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+    }
+</style>
 <div class="intro-header">
         <div class="container">
 
@@ -5,6 +11,8 @@
                 <div class="col-lg-12">
                     <div class="intro-message">
                         <!--<h3>A Template by Start Bootstrap</h3>-->
+                        <h1 class="title_font">St. Joseph's Caravan</h1>
+                        <h3 class="title_font">Travel and Tours</h3>
                         <hr class="intro-divider">
                         <ul class="list-inline intro-social-buttons">
                             <li>

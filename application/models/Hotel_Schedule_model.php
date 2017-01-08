@@ -20,7 +20,9 @@
         public function getBookHotelsByUserId($id){
         	$this->db->select('*');
             $this->db->from("hotel_schedule hs");
-            $this->db->where("hs.USER_ID", $id);
+            if($_SESSION["role_code"]==CUSTOMER){
+                $this->db->where("hs.USER_ID", $id); 
+            }
             $query = $this->db->get();
             return $query->result();
         }

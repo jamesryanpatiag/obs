@@ -22,6 +22,12 @@
       "info": true,
       "autoWidth": true
     });
+
+    $('.datepicker').datepicker({
+      format: 'yyyy-mm-dd',
+      autoclose: true
+    });
+    
   });
 </script>
 </body>

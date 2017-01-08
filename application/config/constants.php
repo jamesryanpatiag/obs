@@ -85,5 +85,5 @@ defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automat
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 //ROLES
-defined('CUSTOMER')				OR 	define('CUSTOMER','CUSTOMER');
-defined('ADMINISTRATOR')		OR 	define('ADMINISTRATOR','ADMINISTRATOR');
+defined('CUSTOMER')				OR 	define('CUSTOMER',0);
+defined('ADMINISTRATOR')		OR 	define('ADMINISTRATOR', 1);
