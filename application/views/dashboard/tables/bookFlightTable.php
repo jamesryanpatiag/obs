@@ -22,9 +22,8 @@
       <?php }else{ ?>
         <th>Ticket Type</th>  
         <th>Departure Place</th>  
-        <th>Arrival Place</ th>  
-        <th>Departure Date</th>   
-        <th>Return Date</th>
+        <th>Arrival Place</th>  
+        <th>Date</th>
         <th>Airline</th>
         <th>Seat Class</th>
         <th>No. of Person</th>
@@ -77,7 +76,7 @@
                                 <?php } ?>
                             </select>
                         </td>
-                        <td style="width:15%" >
+                        <td style="width:10%" >
                           <label class="data-label-row" id="lblFlightDeparturePlace_<?php echo $counter;?>"><?php echo getLookupValueById($item->DEPARTURE_PLACE_ID);?></label>
                           <select class="form-control pull-right data-editable-row" id="flightDeparturePlace_<?php echo $counter;?>" name="flightDeparturePlace_<?php echo $counter;?>">
                               <?php foreach($destination as $category){ ?>
@@ -85,7 +84,7 @@
                               <?php } ?>
                           </select>  
                         </td>
-                        <td style="width:15%" >
+                        <td style="width:10%" >
                           <label class="data-label-row" id="lblFlightArrivalPlace_<?php echo $counter;?>"><?php echo getLookupValueById($item->ARRIVAL_PLACE_ID);?></label>
                           <select class="form-control pull-right data-editable-row" id="flightArrivalPlace_<?php echo $counter;?>" name="flightArrivalPlace_<?php echo $counter;?>">
                               <?php foreach($destination as $category){ ?>
@@ -94,18 +93,18 @@
                           </select>    
                         </td>
                         <td  style="width:10%" >
+                          Departure Date:
                           <label class="data-label-row" id="lblFlightDepartureDate_<?php echo $counter;?>"><?php echo $item->DEPATURE_DATE;?></label>
                           <div class="input-group date data-editable-row" id="flightDepartureDate_<?php echo $counter;?>">
                             <input type="text" class="form-control pull-right datepicker" id="flightDepartureDateVal_<?php echo $counter;?>" name="flightDepartureDate_<?php echo $counter;?>" value="<?php echo $item->DEPATURE_DATE;?>" >
-                          </div>
-                        </td>
-                        <td  style="width:10%" >
+                          </div><br/>
+                          Return Date:
                           <label class="data-label-row" id="lblFlightReturnDate_<?php echo $counter;?>"><?php echo $item->RETURN_DATE;?></label>
                           <div class="input-group date data-editable-row" id="flightReturnDate_<?php echo $counter;?>">
                             <input type="text" class="form-control pull-right datepicker" id="flightReturnDateVal_<?php echo $counter;?>" name="flightReturnDate_<?php echo $counter;?>" value="<?php echo $item->RETURN_DATE;?>" >
                           </div>    
                         </td>
-                        <td>
+                        <td  style="width:10%">
                           <label class="data-label-row" id="lblFlightAirline_<?php echo $counter;?>"><?php echo getLookupValueById($item->AIRLINE_ID);?></label>
                            <select class="form-control pull-right" id="flightAirline_<?php echo $counter;?>" name="flightAirline_<?php echo $counter;?>">
                                 <?php foreach($airline as $category){ ?>
@@ -151,7 +150,7 @@
                               <span class="fa fa-pencil"></span></a>
                             </button>
                         <?php } ?>
-                          <button title="Cancel Booking" class="btn btn-danger">
+                          <button title="Cancel Booking" class="btn btn-danger" onClick="cancelBooking(<?php echo $counter; ?>)">
                             <span class="fa fa-trash"></span></a>
                           </button>
                         
@@ -172,7 +171,8 @@
     //Date picker
     $('.datepicker').datepicker({
       format: 'yyyy-mm-dd',
-      autoclose: true
+      autoclose: true,
+      minDate: new Date()
     });
   });
 
@@ -246,10 +246,28 @@
       showHideEditableRow(counter, "block");
   }
 
+  function cancelBooking(counter){
+    if(confirm('Are you sure you want to cancel this flight?')){
+        var form_data = new FormData();
+        form_data.append('id', $("#flightBookingId_"+counter).val());
+        $.ajax({
+        url: "<?php echo site_url('modules/cancelFlightBooking'); ?>",
+        type: 'POST',
+        data: form_data,  
+        processData: false,
+        contentType: false,
+        success: function(msg) {
+          if(msg=="YES"){
+            location.reload();
+          }else{
+            $("#bookflight-table-alert-msg").html('<div class="alert alert-danger text-center" style="width:100%">' + msg +  '</div>');
+          }
+        }
+      });
+    }
+  }
+
   function saveRow(counter){
-      
-
-
       var form_data = new FormData();
       form_data.append('id', $("#flightBookingId_"+counter).val());
       form_data.append('flightTicketType', $("#flightTicketType_"+counter).val());
@@ -281,14 +299,11 @@
             }else{
               $("#bookflight-table-alert-msg").html('<div class="alert alert-danger text-center" style="width:100%">' + msg +  '</div>');
             }
-            
-           
           }
         });
   }
 
   $(document).ready(function(){
       showHideEditableRows("none");
-
   });
 </script>

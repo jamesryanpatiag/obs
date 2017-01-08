@@ -31,3 +31,14 @@ function notYetBooked($id){
 	}
 	return false;
 }
+
+function getAllBookingStatus(){
+	return array(
+			"PENDING",
+			"CONFIRMED",
+			"ON-GOING",
+			"RESERVED",
+			"CANCEL",
+			"PAID"
+		);
+}

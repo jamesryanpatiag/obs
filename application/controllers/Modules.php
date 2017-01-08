@@ -291,8 +291,6 @@ class Modules extends CI_Controller {
 		echo "YES";
 	}
 
-
-
 	public function saveEditBookFlight(){
 		$this->bookFlightValidations();
         if ($this->form_validation->run() == FALSE){
@@ -324,6 +322,12 @@ class Modules extends CI_Controller {
     		$this->vehicle_schedule_model->updateVehicleSchedule($this->input->post("id"),$data);
     		echo "YES";
         }
+	}
+
+	public function cancelFlightBooking(){
+		$data["BOOKING_STATUS"] = "CANCELLED";
+		$this->flight_schedule_model->updateFlightSchedule($this->input->post("id"), $data);
+		echo "YES";
 	}
 
 	############ DATA CREATIONS ################

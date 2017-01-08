@@ -16,7 +16,10 @@
                     <input type="hidden" id="classId" />
 	                  <label for="status">Status</label>
 	                  <select  class="form-control pull-right" id="cmbChangeStatus">
-	                  	  
+	                  	  <option value="">-- Select Status --</option>
+                        <?php foreach(getAllBookingStatus() as $item){?>
+                          <option value="<?php echo $item; ?>"><?php echo $item; ?></option>
+                        <?php } ?>
 	                  </select>
 	                </div>
               	</div>

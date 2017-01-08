@@ -138,7 +138,8 @@
     //Date picker
     $('.datepicker').datepicker({
       format: 'yyyy-mm-dd',
-      autoclose: true
+      autoclose: true,
+      minDate: new Date()
     });
   });
 
@@ -207,9 +208,6 @@
   }
 
   function saveRow(counter){
-      
-
-
       var form_data = new FormData();
       form_data.append('id', $("#hotelId_"+counter).val());
       form_data.append('hotelDestination', $("#hotelDestination_"+counter).val());
@@ -246,6 +244,5 @@
 
   $(document).ready(function(){
       showHideEditableRows("none");
-
   });
 </script>

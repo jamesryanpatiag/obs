@@ -21,7 +21,8 @@
         	$this->db->select('*');
             $this->db->from("flight_schedule fs");
             if($_SESSION["role_code"]==CUSTOMER){
-                $this->db->where("fs.USER_ID", $id);    
+                $this->db->where("fs.USER_ID", $id);
+                $this->db->where("fs.BOOKING_STATUS !=", "CANCELLED");
             }
             $query = $this->db->get();
             return $query->result();
