@@ -1,7 +1,7 @@
-<nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
-    <div class="container topnav">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
+  <header class="main-header">
+    <nav class="navbar navbar-static-top">
+        <div class="container">
+                    <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
@@ -10,7 +10,7 @@
             </button>
 
             <a class="navbar-brand topnav" href="<?php echo site_url('/auth/redirectToDashboard'); ?>">
-                <img class="img-thumbnail" src="<?php echo base_url()."assets/";?>img/logo.png" style="width:120px;margin-top:-10px" alt="">
+                <img class="img-thumbnail" src="<?php echo base_url()."assets/";?>img/logo.png" style="width:100px;margin-top:-10px" alt="">
             </a>
             <ul class="nav navbar-nav navbar-left">
                 <li>
@@ -94,9 +94,8 @@
                     </li>
                   </ul>
                 </li>
-
-
             </ul>            
         </div>
-    </div>
-</nav>
+        </div>
+    </nav>
+</header>

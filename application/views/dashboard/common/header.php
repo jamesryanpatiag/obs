@@ -33,14 +33,18 @@
     font-size: 12px;
     font-weight: 5px;
    }
-   body{
+   .content-wrapper{
       background-image: url("<?php echo base_url()."assets/img/container-bg.png"; ?>");
       background-size:cover;
       background-size:100%;
       background-attachment: fixed;
    }
    .navbar, .topnav, .topnav a, .navbar-fixed-top, .container{
-      background-color: #fff;
+
+   }
+
+   h1{
+    color:#99a19a;
    }
    
    @media screen and (max-width: 640px) {
@@ -58,4 +62,4 @@
 </style>
 </head>
 <body class="hold-transition skin-blue layout-top-nav wysihtml5-supported">
-<div class="container" style="margin-top:50px;">
+<div class="wrapper">  

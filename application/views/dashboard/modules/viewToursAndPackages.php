@@ -1,33 +1,27 @@
-<div class="wrapper">
-
    <?php $this->view("dashboard/common/sub-header"); ?>
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+
+ <div class="content-wrapper">
     <!-- Content Header (Page header) -->
- 	<div style="height:50px;"></div>
-    <section class="content-header">
-      <h1>
-         <i class="fa fa-dropbox" aria-hidden="true"></i>
-         <?php echo $page_title;?>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a>/</li> <?php echo $page_title;?></li>
-      </ol>
-    </section>
-    <!-- Main content -->
-    <div class="content">
-      <div id="tap-table-alert-msg" class="col-md-12 col-lg-12" style="text-align: center"></div>
-    	<div class="nav-tabs-custom col-md-12 col-lg-12">
-    		<ul class="nav nav-tabs">
+    <div style="height:50px;"></div>
+    <div class="container">
+      <section class="content-header">
+        <h1><i class="fa fa-dropbox" aria-hidden="true"></i><?php echo $page_title;?></h1>
+        <ol class="breadcrumb"><li><a href="#"><i class="fa fa-dashboard"></i> Home</li></a> /<?php echo $page_title;?></li></ol>
+        <div style="height:20px;"></div>
+      </section>
+      <section class="content">
+              <div id="tap-table-alert-msg" class="col-md-12 col-lg-12" style="text-align: center"></div>
+      <div class="nav-tabs-custom col-md-12 col-lg-12">
+        <ul class="nav nav-tabs">
               <li class='active'><a style="background:#31250e;color:#fff;" href="#tab_1" data-toggle="tab"><b>Tours & Packages Details<b></a></li>
             </ul>
             <div class="tab-content">
-            	<?php if($this->session->flashdata('message')){?>
-			        <div class="alert alert-success fade in">
-			            <a href="#" class="close" data-dismiss="alert">&times;</a>
-			            <strong>Success!</strong> <?php echo $this->session->flashdata('message'); ?>
-			        </div>
-		        <?php }?>
+              <?php if($this->session->flashdata('message')){?>
+              <div class="alert alert-success fade in">
+                  <a href="#" class="close" data-dismiss="alert">&times;</a>
+                  <strong>Success!</strong> <?php echo $this->session->flashdata('message'); ?>
+              </div>
+            <?php }?>
               <div class="tab-pane active" id="tab_1">
                   <div class="row">
                      <div class="form-group col-md-3 col-lg-3">
@@ -69,14 +63,14 @@
                   </div>
                   
               </div>
-          	</div>
-    	</div>
+            </div>
+      </div>
+
+      </section>
     </div>
   </div>
-
   <?php $this->view("dashboard/common/footer-html"); ?>
-  <div class="control-sidebar-bg"></div>
-</div>
+
 <script>
   
   function bookPackage(id){

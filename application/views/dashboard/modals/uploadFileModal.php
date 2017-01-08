@@ -15,7 +15,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
-    </div>
+    </div>s
   </div>
 </div>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.uploadify.min.js"></script>

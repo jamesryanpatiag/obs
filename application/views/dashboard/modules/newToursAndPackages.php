@@ -1,29 +1,24 @@
-<div class="wrapper">
-
-   <?php $this->view("dashboard/common/sub-header"); ?>
-  <style>
-	.wysihtml5{
-	    -webkit-box-sizing: border-box;
-	    -moz-box-sizing: border-box;
-	    box-sizing: border-box;
-	    width: 100%;
-	}
-
-	</style>
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+<?php $this->view("dashboard/common/sub-header"); ?>
+<style>
+.wysihtml5{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+}
+</style>
+<div class="content-wrapper">
     <!-- Content Header (Page header) -->
- 	<div style="height:50px;"></div>
-    <section class="content-header">
-      <h1>
-         <i class="fa fa-dropbox" aria-hidden="true"></i>
-         <?php echo $page_title;?>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a>/</li> <?php echo $page_title;?></li>
-      </ol>
-    </section>
-    <!-- Main content -->
+    <div style="height:50px;"></div>
+    <div class="container">
+      <section class="content-header">
+        <h1><i class="fa fa-dropbox" aria-hidden="true"></i><?php echo $page_title;?></h1>
+        <ol class="breadcrumb"><li><a href="#"><i class="fa fa-dashboard"></i> Home</li></a> /<?php echo $page_title;?></li></ol>
+        <div style="height:20px;"></div>
+        <?php if($_SESSION["role_code"]==ADMINISTRATOR){?>
+        <?php } ?>
+      </section>
+          <!-- Main content -->
     <div class="content">
     <?php echo form_open('modules/submitToursAndPackages'); ?> 
     	<div class="nav-tabs-custom col-md-12 col-lg-12">
@@ -122,11 +117,10 @@
           	</div>
     	</div>
     </div>
-  </div>
-
-  <?php $this->view("dashboard/common/footer-html"); ?>
-  <div class="control-sidebar-bg"></div>
+  	</div>
 </div>
+
+<?php $this->view("dashboard/common/footer-html"); ?>
 <script src="<?php echo base_url()."assets/"; ?>plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.js"></script>
 <script>
   $('.textarea').wysihtml5();
