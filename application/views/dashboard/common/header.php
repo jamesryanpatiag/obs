@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="<?php echo base_url()."assets/"; ?>plugins/jvectormap/jquery-jvectormap-1.2.2.css">
   <link rel="stylesheet" href="<?php echo base_url()."assets/"; ?>plugins/datepicker/datepicker3.css">
   <link rel="stylesheet" href="<?php echo base_url()."assets/"; ?>plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"></link>
+  <link rel="stylesheet" href="<?php echo base_url()."assets/"; ?>dist/css/skins/_all-skins.min.css">
   <!-- <link rel="stylesheet" href="<?php echo base_url()."assets/"; ?>plugins/daterangepicker/daterangepicker.css"> -->
   <script src="<?php echo base_url()."assets/"; ?>plugins/jQuery/jquery-2.2.3.min.js"></script>
   <!--<script src="<?php echo base_url()."assets/"; ?>plugins/daterangepicker/daterangepicker.js"></script>-->
@@ -39,20 +40,10 @@
       background-size:100%;
       background-attachment: fixed;
    }
-   .navbar, .topnav, .topnav a, .navbar-fixed-top, .container{
-
-   }
 
    h1{
     color:#99a19a;
    }
-   
-   @media screen and (max-width: 640px) {
-      table {
-        overflow-x: auto;
-        display: block;
-      }
-    }
     .error-mess{
         color:red;
     }

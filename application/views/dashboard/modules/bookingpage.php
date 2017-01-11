@@ -67,37 +67,37 @@
     $('#flightDepartureDate').datepicker({
       format: 'yyyy-mm-dd',
       autoclose: true,
-      minDate: new Date()
+      minDate: 0
     });
 
     $('#flightReturnDate').datepicker({
       format: 'yyyy-mm-dd',
       autoclose: true,
-      minDate: new Date()
+      minDate: 0
     });
 
     $('#hotelCheckInDate').datepicker({
       format: 'yyyy-mm-dd',
       autoclose: true,
-      minDate: new Date()
+      minDate: 0
     });
 
     $('#hotelCheckOutDate').datepicker({
       format: 'yyyy-mm-dd',
       autoclose: true,
-      minDate: new Date()
+      minDate: 0
     });
 
      $('#vehicleDepartureDate').datepicker({
       format: 'yyyy-mm-dd',
       autoclose: true,
-      minDate: new Date()
+      minDate: 0
     });
 
     $('#vehicleReturnDate').datepicker({
       format: 'yyyy-mm-dd',
       autoclose: true,
-      minDate: new Date()
+      minDate: 0
     });
   });
 </script>
