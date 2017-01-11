@@ -23,6 +23,7 @@
             if($_SESSION["role_code"]==CUSTOMER){
                 $this->db->where("hs.USER_ID", $id); 
             }
+            $this->db->where("hs.BOOKING_STATUS !=", "CANCELLED");
             $query = $this->db->get();
             return $query->result();
         }

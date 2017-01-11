@@ -30,5 +30,6 @@
     
   });
 </script>
+<?php $this->view("dashboard/common/footer-html"); ?>
 </body>
 </html>

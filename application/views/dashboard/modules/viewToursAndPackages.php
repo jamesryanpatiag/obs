@@ -13,7 +13,7 @@
               <div id="tap-table-alert-msg" class="col-md-12 col-lg-12" style="text-align: center"></div>
       <div class="nav-tabs-custom col-md-12 col-lg-12">
         <ul class="nav nav-tabs">
-              <li class='active'><a style="background:#31250e;color:#fff;" href="#tab_1" data-toggle="tab"><b>Tours & Packages Details<b></a></li>
+              <li class='active'><a style="background:#31250e;color:#fff;" href="#tab_1" data-toggle="tab"><b>Tours & Packages<b></a></li>
             </ul>
             <div class="tab-content">
               <?php if($this->session->flashdata('message')){?>
@@ -44,24 +44,40 @@
                         <i class="fa fa-calendar" aria-hidden="true"></i> Validity: <?php echo $tap->VALID_FROM . "/" . $tap->VALID_TO; ?>  
                     </div>
                     <div class="form-group col-md-9 col-lg-9">
-                      <p class="text-justify"><?php echo $tap->DESCRIPTION;?></P>
+                      <div class="nav-tabs-custom">
+                      <ul class="nav nav-tabs pull-right">
+                        <li class=""><a href="#tab_1-1" data-toggle="tab" aria-expanded="true">Itinerary</a></li>
+                        <li class=""><a href="#tab_2-2" data-toggle="tab" aria-expanded="false">Inclusion/Exclusion</a></li>
+                        <li class="active"><a href="#tab_3-2" data-toggle="tab" aria-expanded="false">Description</a></li>
+                        <li class="pull-left header"><i class="fa fa-th"></i> Tours & Package Details</li>
+                      </ul>
+                      <div class="tab-content">
+                        <div class="tab-pane active" id="tab_1-1">
+                            <h4>Itinerary</h4>
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="tab_2-2">
+                            <div class="form-group col-md-6 col-lg-6">
+                              <label for="tapTitle"></label>
+                              <h5><b>Inclusion:</b></h5>
+                              <P><?php echo $tap->INCLUSION;?></P>
+                            </div>
+                            <div class="form-group col-md-6 col-lg-6">
+                              <label for="tapTitle"></label>
+                              <h5><b>Exclusion:</b></h5>
+                              <P><?php echo $tap->EXCLUSION;?></P>
+                            </div>
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="tab_3-2">
+                          <p class="text-justify"><?php echo $tap->DESCRIPTION;?></P>
+                        </div>
+                        <!-- /.tab-pane -->
+                      </div>
+                      <!-- /.tab-content -->
+                    </div>
                     </div>  
-                   
-                  </div>
-                  <div class="row">
-                    <div class="form-group col-md-3 col-lg-3"></div>
-                    <div class="form-group col-md-5 col-lg-5">
-                      <label for="tapTitle"></label>
-                      <h5><b>Inclusion:</b></h5>
-                      <P><?php echo $tap->INCLUSION;?></P>
-                    </div>
-                    <div class="form-group col-md-4 col-lg-4">
-                      <label for="tapTitle"></label>
-                      <h5><b>Exclusion:</b></h5>
-                      <P><?php echo $tap->EXCLUSION;?></P>
-                    </div>
-                  </div>
-                  
+                  </div>                  
               </div>
             </div>
       </div>
@@ -69,7 +85,6 @@
       </section>
     </div>
   </div>
-  <?php $this->view("dashboard/common/footer-html"); ?>
 
 <script>
   

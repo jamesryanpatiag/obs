@@ -1,7 +1,7 @@
   <header class="main-header">
     <nav class="navbar navbar-static-top">
         <div class="container">
-            <div class="navbar-header">
+            <div class="navbar-header"> 
                 <!-- <a href="../../index2.html" class="navbar-brand"><b>Admin</b>LTE</a> -->
                 <a class="navbar-brand" href="<?php echo site_url('/auth/redirectToDashboard'); ?>">
                 <img class="img-thumbnail" src="<?php echo base_url()."assets/";?>img/logo.png" style="width:100px;margin-top:-10px" alt="">
@@ -13,28 +13,28 @@
             </div>
             <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li>
+                    <li <?php if($module == "bookflight" || $module == "bookhotel" || $module == "rentvehicle" || $module == "usertoursandpackages"){ echo "class='active'"; } ?> >
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-calendar" aria-hidden="true"></i>
                         <b>Bookings</b> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="<?php echo site_url('/modules/bookflight');?>">
+                            <li <?php if($module == "bookflight"){echo "class='active'";} ?>><a href="<?php echo site_url('/modules/bookflight');?>">
                             <i class="fa fa-plane" aria-hidden="true"></i>
                             <b>Book Flight</b></a></li>
-                            <li><a href="<?php echo site_url('/modules/bookhotel');?>">
+                            <li <?php if($module == "bookhotel"){echo "class='active'";} ?>><a href="<?php echo site_url('/modules/bookhotel');?>">
                             <i class="fa fa-home" aria-hidden="true"></i>
                             <b>Book Hotel</b></a></li>
-                            <li><a href="<?php echo site_url('/modules/bookvehicle');?>">
+                            <li <?php if($module == "rentvehicle"){echo "class='active'";} ?>><a href="<?php echo site_url('/modules/bookvehicle');?>">
                             <i class="fa fa-car" aria-hidden="true"></i>
                             <b>Book Vehicle</b></a></li>
                             <li class="divider"></li>
-                            <li><a href="<?php echo site_url('/modules/userToursAndPackages');?>"><i class="fa fa-dropbox" aria-hidden="true"></i><b>Reserve Tours/Package</b></a></li>
-                            <li><a href="#"><b>Reserve Promos</b></a></li>
+                            <li <?php if($module == "usertoursandpackages"){echo "class='active'";} ?>><a href="<?php echo site_url('/modules/userToursAndPackages');?>"><i class="fa fa-dropbox" aria-hidden="true"></i><b>Reserve Tours/Package</b></a></li>
+                            <li><a href="#"><i class="fa fa-asterisk" aria-hidden="true"></i>  <b>Reserve Promos</b></a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-sticky-note" aria-hidden="true"></i>
+                        <i class="fa fa-minus-circle" aria-hidden="true"></i>
                         <b>Cancelled Transactions</b> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#">
@@ -44,18 +44,18 @@
                         </ul>
                     </li>
                     <li>
-                        <li><a href="<?php echo site_url('/modules/toursandpackages');?>">
+                        <li <?php if($module == "toursandpackages" || $module == "viewtoursandpackages"){echo "class='active'";} ?>><a href="<?php echo site_url('/modules/toursandpackages');?>">
                         <i class="fa fa-dropbox" aria-hidden="true"></i>    
                         <b>Tours & Package</b></a></li>
                     </li>
                     <li>
                         <li><a href="#">
-                        <i class="fa fa-map-o" aria-hidden="true"></i>  
+                        <i class="fa fa-asterisk" aria-hidden="true"></i>  
                         <b>Promos</b></a></li>
                     </li>
                     <?php if($_SESSION["role_code"]==ADMINISTRATOR){?>
                         <li>
-                         <li><a href="<?php echo site_url('/modules/lookups');?>">
+                         <li <?php if($module == "lookup"){echo "class='active'";} ?>><a href="<?php echo site_url('/modules/lookups');?>">
                         <i class="fa fa-search" aria-hidden="true"></i>  
                         <b>Lookup Values</b></a></li>
                         </li>

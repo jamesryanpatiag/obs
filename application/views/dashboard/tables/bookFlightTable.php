@@ -38,7 +38,7 @@
                 $counter = 1; 
                 foreach($list as $item){ 
                   ?>
-                <tr> 
+                <tr id="BOOKING_<?php echo $item->ID;?>"> 
                     <td style="width:3%" >
                       <label class="data-label-row" id="lblFlightBookingId_<?php echo $counter;?>"><?php echo $item->ID;?></label>
                       <input type="hidden" id="flightBookingId_<?php echo $counter;?>" name="flightBookingId_<?php echo $counter;?>" value="<?php echo $item->ID;?>" >
@@ -140,7 +140,7 @@
                     </td>
                     <td  style="width:10%" >
                         <?php if($_SESSION["role_code"]==ADMINISTRATOR){?>
-                            <button type="button" class="btn btn-warning" title="Change Status" data-toggle="modal" data-target="#changeStatus" >
+                            <button type="button" class="btn btn-warning" title="Change Status" onClick="changeStatus('FLIGHT', <?php echo $item->ID; ?> , '<?php echo $item->BOOKING_STATUS;?>')" data-toggle="modal" data-target="#changeStatus" >
                             <span class="fa fa-exchange"></button>
                         <?php }else { ?>
                             <button title="Save Booking" style="display:none" class="btn btn-success" id="bntSaveBooking_<?php echo $counter; ?>" onClick="saveRow(<?php echo $counter; ?>)">

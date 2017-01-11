@@ -1,5 +1,11 @@
 <script type="text/javascript">
 
+		function changeStatus(type, value, status){
+			$("#cmbChangeStatus").val(status);
+			$("#bookingId").val(value);
+			$("#bookingType").val(type);
+		}	
+
 		//##################LOOKUP###################/
 		function refreshLookups(){
 			$.post("<?php echo site_url('modules/lookupsPage'); ?>", function(data){ 
@@ -116,6 +122,38 @@
 				refreshLookups();
 			})
 			//##################LOOKUP###################/
+
+			//################## CHANGE STATUS BOOKING ###################/
+	      	$('#submitChangeStatus').click(function() {
+		        var form_data = {
+		          id: $('#bookingId').val(),
+		          status: $('#cmbChangeStatus').val(),
+		          type: $('#bookingType').val()
+		        };
+		        $.ajax({
+		            url: "<?php echo site_url('modules/changeBookingStatus'); ?>",
+		            type: 'POST',
+		            data: form_data,  
+		            success: function(msg) {
+		                if (msg == 'YES'){
+		                  $('#status-alert-msg').html('<div class="alert alert-success text-center">Status has been successfully changed!</div>');
+		                }else if (msg == 'NO'){
+		                    $('#status-alert-msg').html('<div class="alert alert-danger text-center">Error in changing status! Please try again later.</div>');
+		                }else{
+		                    $('#status-alert-msg').html('<div class="alert alert-danger">' + msg + '</div>');
+		                }
+		            }
+		        });
+		        return false;
+	      	});
+
+	      	//###################### ON-CLOSE MODAL #######################
+	      	$('#changeStatus').on('hidden.bs.modal', function () {
+          		location.reload();
+  			})
+
 		});
+
+
 
 </script>

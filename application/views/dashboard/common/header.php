@@ -50,6 +50,9 @@
     .para-no-margin{
       margin:0;
     }
+  .navbar-collapse.in {
+      padding-top:30px;
+  }
 </style>
 </head>
 <body class="hold-transition skin-blue layout-top-nav wysihtml5-supported">

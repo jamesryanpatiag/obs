@@ -9,14 +9,13 @@
 
           <div id="form_container">
           <?php echo validation_errors(); ?>
-          <?php echo form_open('modules/changeStatus'); ?>
             <div class="box-body">
                	<div id="status-alert-msg"></div>
 	                <div class="form-group">
-                    <input type="hidden" id="classId" />
+                    <input type="hidden" id="bookingId" />
+                    <input type="hidden" id="bookingType" />
 	                  <label for="status">Status</label>
 	                  <select  class="form-control pull-right" id="cmbChangeStatus">
-	                  	  <option value="">-- Select Status --</option>
                         <?php foreach(getAllBookingStatus() as $item){?>
                           <option value="<?php echo $item; ?>"><?php echo $item; ?></option>
                         <?php } ?>

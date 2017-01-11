@@ -71,6 +71,4 @@
 
     </section>
   </div>
-  <?php $this->view("dashboard/common/footer-html"); ?>
-  <div class="control-sidebar-bg"></div>
 </div>

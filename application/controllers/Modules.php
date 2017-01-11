@@ -170,6 +170,25 @@ class Modules extends CI_Controller {
 		$this->lookups_model->deleteLookup($this->input->post("id"));
 	}
 
+	public function deleteBooking(){
+		$post = $this->input->post();
+		$data["BOOKING_STATUS"] = "CANCELLED";
+		echo "shit";
+		exit;
+		switch($post["type"]){
+			case "FLIGHT":
+				$this->flight_schedule_model->updateFlightSchedule($post["id"],$data);
+			break;
+			case "BOOKING":
+				$this->hotel_schedule_model->updateHotelSchedule($post["id"],$data);	
+			break;
+			case "VEHICLE":
+				$this->vehicle_schedule_model->updateVehicleSchedule($post["id"],$data);
+			break;
+		}
+		echo "YES";	
+	}
+
 	public function getLookupById(){
 		$data["lookup"] = $this->lookups_model->getLookupById($this->input->post("id"));
 		echo json_encode($data);
@@ -312,7 +331,6 @@ class Modules extends CI_Controller {
     		echo "YES";
         }
 	}
-
 	public function saveEditBookVehicle(){
 		$this->bookVehicleValidations();
         if ($this->form_validation->run() == FALSE){
@@ -330,6 +348,18 @@ class Modules extends CI_Controller {
 		echo "YES";
 	}
 
+	public function cancelHotelBooking(){
+		$data["BOOKING_STATUS"] = "CANCELLED";
+		$this->hotel_schedule_model->updateHotelSchedule($this->input->post("id"), $data);
+		echo "YES";
+	}
+
+	public function cancelVehicleBooking(){
+		$data["BOOKING_STATUS"] = "CANCELLED";
+		$this->vehicle_schedule_model->updateVehicleSchedule($this->input->post("id"), $data);
+		echo "YES";
+	}
+	
 	############ DATA CREATIONS ################
 	private function bookFlightDataCreation($data){
 		return array(
@@ -452,6 +482,23 @@ class Modules extends CI_Controller {
 		$symbol = $fmt->getSymbol(NumberFormatter::CURRENCY_SYMBOL);
 		header("Content-Type: text/html; charset=UTF-8;");
 		return $symbol;
+	}
+
+	public function changeBookingStatus(){
+		$post = $this->input->post();
+		$data["BOOKING_STATUS"] = $post["status"];
+		switch($post["type"]){
+			case "FLIGHT":
+				$this->flight_schedule_model->updateFlightSchedule($post["id"],$data);
+			break;
+			case "BOOKING":
+				$this->hotel_schedule_model->updateHotelSchedule($post["id"],$data);	
+			break;
+			case "VEHICLE":
+				$this->vehicle_schedule_model->updateVehicleSchedule($post["id"],$data);
+			break;
+		}
+		echo "YES";
 	}
 }
 				

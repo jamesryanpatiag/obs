@@ -37,7 +37,7 @@
                 $counter = 1; 
                 foreach($list as $item){ 
                   ?>
-                <tr> 
+                <tr id="HOTEL_<?php echo $item->ID;?>"> 
                     <td style="width:3%" >
                       <label class="data-label-row" id="lblHotelId_<?php echo $counter;?>"><?php echo $item->ID;?></label>
                       <input type="hidden" id="hotelId_<?php echo $counter;?>" name="hotelId_<?php echo $counter;?>" value="<?php echo $item->ID;?>" >
@@ -108,7 +108,7 @@
                     </td>
                     <td  style="width:10%" >
                         <?php if($_SESSION["role_code"]==ADMINISTRATOR){?>
-                            <button type="button" class="btn btn-warning" title="Change Status" data-toggle="modal" data-target="#changeStatus" >
+                            <button type="button" class="btn btn-warning"  onClick="changeStatus('HOTEL', <?php echo $item->ID; ?> , '<?php echo $item->BOOKING_STATUS;?>')" title="Change Status" data-toggle="modal" data-target="#changeStatus" >
                             <span class="fa fa-exchange"></button>
                         <?php }else { ?>
                             <button title="Save Booking" style="display:none" class="btn btn-success" id="bntSaveBooking_<?php echo $counter; ?>" onClick="saveRow(<?php echo $counter; ?>)">
@@ -118,9 +118,9 @@
                               <span class="fa fa-pencil"></span></a>
                             </button>
                         <?php } ?>
-                        <button title="Cancel Booking" class="btn btn-danger">
-                          <span class="fa fa-trash"></span></a>
-                        </button>
+                        <button title="Cancel Booking" class="btn btn-danger" onClick="cancelBooking(<?php echo $counter; ?>)">
+                            <span class="fa fa-trash"></span></a>
+                          </button>
                     </td>
                 </tr>
             <?php $counter++;}?>
@@ -205,6 +205,27 @@
       showHideLabelRow(counter,"none");
       showHideEditableRows("none");
       showHideEditableRow(counter, "block");
+  }
+
+  function cancelBooking(counter){
+    if(confirm('Are you sure you want to cancel this hotel?')){
+        var form_data = new FormData();
+        form_data.append('id', $("#hotelId_"+counter).val());
+        $.ajax({
+        url: "<?php echo site_url('modules/cancelHotelBooking'); ?>",
+        type: 'POST',
+        data: form_data,  
+        processData: false,
+        contentType: false,
+        success: function(msg) {
+          if(msg=="YES"){
+            location.reload();
+          }else{
+            $("#bookflight-table-alert-msg").html('<div class="alert alert-danger text-center" style="width:100%">' + msg +  '</div>');
+          }
+        }
+      });
+    }
   }
 
   function saveRow(counter){

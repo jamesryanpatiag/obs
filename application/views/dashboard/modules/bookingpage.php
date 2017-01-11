@@ -16,6 +16,7 @@
         <div style="height:20px;"></div>
       </section>
       <section class="content">
+      <div id="booking-table-alert-msg"></div>
       <?php if($_SESSION["role_code"]==CUSTOMER){?>
       <div class="nav-tabs-custom col-md-12 col-lg-12">
             <ul class="nav nav-tabs">
@@ -57,7 +58,7 @@
     <!-- /.content -->
   </div>
 
-    <?php $this->view("dashboard/common/footer-html"); ?>
+    <?php $this->view("dashboard/common/obsInclude"); ?>
     <?php $this->view("dashboard/modals/changeStatus"); ?>
   </div>
 <script>

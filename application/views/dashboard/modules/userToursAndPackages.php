@@ -20,5 +20,3 @@
       </section>
     </div>
   </div>
-
-<?php $this->view("dashboard/common/footer-html"); ?>

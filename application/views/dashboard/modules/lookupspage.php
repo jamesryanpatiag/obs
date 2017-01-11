@@ -21,7 +21,6 @@
       </div>
   </div>
 
-<?php $this->view("dashboard/common/footer-html"); ?>
 <?php $this->view("dashboard/modals/addLookupsModal"); ?>
 <?php $this->view("dashboard/modals/editLookupsModal"); ?>
 <?php $this->view("dashboard/common/obsInclude"); ?>

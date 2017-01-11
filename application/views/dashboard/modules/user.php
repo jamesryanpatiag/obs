@@ -207,9 +207,6 @@
     </section>
     <!-- /.content -->
   </div>
-
-  <?php $this->view("dashboard/common/footer-html"); ?>
-  <div class="control-sidebar-bg"></div>
 </div>
 <?php $this->view("dashboard/common/jsIncludeForModal"); ?>
 <script type="text/javascript">

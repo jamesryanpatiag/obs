@@ -120,7 +120,6 @@
   	</div>
 </div>
 
-<?php $this->view("dashboard/common/footer-html"); ?>
 <script src="<?php echo base_url()."assets/"; ?>plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.js"></script>
 <script>
   $('.textarea').wysihtml5();

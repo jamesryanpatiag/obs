@@ -38,7 +38,7 @@ function getAllBookingStatus(){
 			"CONFIRMED",
 			"ON-GOING",
 			"RESERVED",
-			"CANCEL",
+			"CANCELLED",
 			"PAID"
 		);
 }
