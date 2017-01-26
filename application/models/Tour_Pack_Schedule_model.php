@@ -15,7 +15,7 @@
         public function isPackageAreadyBooked($id){
         	$this->db->select('*');
             $this->db->from("tour_pack_schedule tap");
-            $this->db->where("tap.ID", $id);
+            $this->db->where("tap.TOUR_PACK_ID", $id);
             $this->db->where("tap.USER_ID", $_SESSION["user_id"]);
             $query = $this->db->get();
             return $query->row();
@@ -28,9 +28,9 @@
             if($_SESSION["role_code"]==CUSTOMER){
                 $this->db->where("tps.USER_ID", $id);
             }
+            $this->db->order_by("tps.ID", "DESC");
             $query = $this->db->get();
             return $query->result();
         }
-
 	}
 ?>

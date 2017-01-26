@@ -69,13 +69,14 @@
                     <!-- Menu toggle button -->
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-envelope-o"></i>
-                        <span class="label label-success">4</span>
+                        <span class="label label-success"><?php echo count(getAllMessagesByuser()) > 0 ? count(getAllMessagesByuser()) : "";?></span>
                       </a>
                       <ul class="dropdown-menu">
-                        <li class="header">You have 4 messages</li>
+                        <li class="header">You have <?php echo count(getAllMessagesByuser());?> message(s)</li>
                         <li>
                           <!-- inner menu: contains the messages -->
                           <ul class="menu">
+                            <?php foreach(getAllMessagesByuser() as $message){ ?>
                             <li><!-- start message -->
                               <a href="#">
                                 <div class="pull-left">
@@ -91,6 +92,7 @@
                                 <p>Why not buy a new awesome theme?</p>
                               </a>
                             </li>
+                            <?php } ?>
                             <!-- end message -->
                           </ul>
                           <!-- /.menu -->

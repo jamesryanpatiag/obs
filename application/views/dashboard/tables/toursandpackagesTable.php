@@ -21,7 +21,11 @@
                 <tr>
                     <td>    
                         <div class="col-md-12 col-lg-12">
-                            <h4><a href="<?php echo site_url("modules/viewToursAndPackages/".$item->ID)?>"><b><?php echo $item->TITLE;?></b></a></h4>
+                            <h4><a href="<?php echo site_url("modules/viewToursAndPackages/".md5($item->ID))?>"><b><?php echo $item->TITLE; ?></b></a>
+                                <?php if($_SESSION["role_code"]==ADMINISTRATOR){?>
+                                &nbsp;<small><a href="<?php echo site_url("modules/editToursAndPackages/".md5($item->ID))?>"><span class="fa fa-pencil"></span> Edit</a></small>
+                                <?php } ?>
+                            </h4>
                         </div>
                         <div class="col-md-12 col-lg-12">
                             <h4><a href="#" style="color:red"><b><i><?php echo $currency_symbol." ".$item->PRICE;?></i></b></a></h4>

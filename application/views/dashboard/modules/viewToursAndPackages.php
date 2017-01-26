@@ -48,12 +48,12 @@
                       <ul class="nav nav-tabs pull-right">
                         <li class=""><a href="#tab_1-1" data-toggle="tab" aria-expanded="true">Itinerary</a></li>
                         <li class=""><a href="#tab_2-2" data-toggle="tab" aria-expanded="false">Inclusion/Exclusion</a></li>
-                        <li class="active"><a href="#tab_3-2" data-toggle="tab" aria-expanded="false">Description</a></li>
+                        <li class="active"><a href="#tab_3-3" data-toggle="tab" aria-expanded="false">Description</a></li>
                         <li class="pull-left header"><i class="fa fa-th"></i> Tours & Package Details</li>
                       </ul>
                       <div class="tab-content">
-                        <div class="tab-pane active" id="tab_1-1">
-                            <h4>Itinerary</h4>
+                        <div class="tab-pane active" id="tab_3-3">
+                           <p class="text-justify"><?php echo $tap->DESCRIPTION;?></P>
                         </div>
                         <!-- /.tab-pane -->
                         <div class="tab-pane" id="tab_2-2">
@@ -68,9 +68,42 @@
                               <P><?php echo $tap->EXCLUSION;?></P>
                             </div>
                         </div>
+
                         <!-- /.tab-pane -->
-                        <div class="tab-pane" id="tab_3-2">
-                          <p class="text-justify"><?php echo $tap->DESCRIPTION;?></P>
+                        <div class="tab-pane" id="tab_1-1">
+                            <h4>Itinerary</h4>
+                            <div class="row">
+                              <div class="col-md-12">
+                                <div class="box box-solid">
+                                  <div class="box-header with-border">
+                                    <h3 class="box-title" id="itinerary_header_title"></h3>
+                                  </div>
+                                  <!-- /.box-header -->
+                                  <div class="box-body">
+                                    <div class="box-group" id="itinerary">
+
+                                    <?php foreach($itinerary as $i){?>
+                                      <div class="box-header with-border"> 
+                                        <h4 class="box-title"> 
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#itineraryCollapse_<?php echo $i->NTH_DAY; ?>" aria-expanded="false" class="collapsed"> Day <?php echo $i->NTH_DAY;?> - <?php echo $i->TITLE;?></h4></a> 
+                                        </h4> 
+                                      </div>
+                                      <div id="itineraryCollapse_<?php echo $i->NTH_DAY; ?>" class="panel-collapse collapse show" aria-expanded="false" style="height: 0px;"> 
+                                        <div class="box-body">
+                                          <div class="form-group col-md-12 col-lg-12"> 
+                                            <p><?php echo $i->DESCRIPTION;?></p>
+                                          </div>  
+                                        </div> 
+                                      </div>                                              
+                                      <?php } ?>
+                                    </div>
+                                  </div>
+                                  <!-- /.box-body -->
+                                </div>
+                                <!-- /.box -->
+                              </div>
+                              <!-- /.col -->
+                            </div>
                         </div>
                         <!-- /.tab-pane -->
                       </div>

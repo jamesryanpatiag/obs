@@ -12,18 +12,30 @@
 
 <!--End of Zopim Live Chat Script-->
 <script>
+
   $(function () {
+
+    $('.numeric').on('keypress', function(e){
+        if (e.which < 48 || e.which > 57)
+        {
+            e.preventDefault();
+        }
+    })
+
     $("#example1").DataTable();
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": true,
       "searching": true,
-      "ordering": true,
+      "ordering": false,
       "info": true,
       "autoWidth": true
     });
 
+    var nowDate = new Date();
+    var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
     $('.datepicker').datepicker({
+      startDate: today,
       format: 'yyyy-mm-dd',
       autoclose: true
     });

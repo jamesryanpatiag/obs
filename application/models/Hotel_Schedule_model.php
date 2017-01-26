@@ -24,6 +24,7 @@
                 $this->db->where("hs.USER_ID", $id); 
             }
             $this->db->where("hs.BOOKING_STATUS !=", "CANCELLED");
+            $this->db->order_by("hs.ID", "DESC");
             $query = $this->db->get();
             return $query->result();
         }

@@ -24,7 +24,7 @@
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <input type="text" class="form-control pull-right" id="hotelCheckInDate" name="hotelCheckInDate" value="<?php echo set_value('hotelCheckInDate') ?>" readonly>
+              <input type="text" class="form-control pull-right datepicker" id="hotelCheckInDate" name="hotelCheckInDate" value="<?php echo set_value('hotelCheckInDate') ?>" readonly>
             </div>
             <span class="error-mess"><?php echo form_error('hotelCheckInDate'); ?></span>
           </div>
@@ -47,31 +47,31 @@
         <div class="input-group-addon">
           <i class="fa fa-calendar"></i>
         </div>
-        <input type="text" class="form-control pull-right" id="hotelCheckOutDate" name="hotelCheckOutDate" value="<?php echo set_value('hotelCheckOutDate') ?>" readonly>
+        <input type="text" class="form-control pull-right datepicker" id="hotelCheckOutDate" name="hotelCheckOutDate" value="<?php echo set_value('hotelCheckOutDate') ?>" readonly>
       </div>
       <span class="error-mess"><?php echo form_error('hotelCheckOutDate'); ?></span>
     </div>
   </div>
   <div class="form-group col-md-3 col-lg-3">
           <label for="hotelNoOfRooms">No. of Rooms:</label>
-          <input type="text" class="form-control" id="hotelNoRooms" name="hotelNoRooms" value="<?php echo set_value('hotelNoRooms') ?>">
+          <input type="text" class="form-control numeric" id="hotelNoRooms" name="hotelNoRooms" value="<?php echo set_value('hotelNoRooms') ?>">
           <span class="error-mess"><?php echo form_error('hotelNoRooms'); ?></span>
   </div>
   <div class="form-group col-md-2 col-lg-2">
           <label for="hotelNoAdults">Adults:</label>
-          <input type="text" class="form-control" id="hotelNoAdults" name="hotelNoAdults" value="<?php echo set_value('hotelNoAdults') ?>">
+          <input type="text" class="form-control numeric" id="hotelNoAdults" name="hotelNoAdults" value="<?php echo set_value('hotelNoAdults') ?>">
           <span class="error-mess"><?php echo form_error('hotelNoAdults'); ?></span>
   </div>
   <div class="form-group col-md-2 col-lg-2">
       <label for="hotelNoChildren">Children:</label>
-      <input type="text" class="form-control" id="hotelNoChildren" name="hotelNoChildren" value="<?php echo set_value('hotelNoChildren') ?>">
+      <input type="text" class="form-control numeric" id="hotelNoChildren" name="hotelNoChildren" value="<?php echo set_value('hotelNoChildren') ?>">
       <span class="error-mess"><?php echo form_error('hotelNoChildren'); ?></span>
   </div>
 
  <div style="margin-top:20px" class="form-group col-md-12 col-lg-12">
 	    <input type="submit" class="btn btn-warning" >
 	    <i class="fa fa-check-circle" aria-hidden="true"/></i>
-	    Book this Hotel
+	    Inquire this Hotel
 	  </div>
   <?php echo form_close(); ?>
 </div>

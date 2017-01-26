@@ -37,7 +37,7 @@
 		        <div class="input-group-addon">
 		          <i class="fa fa-calendar"></i>
 		        </div>
-		        <input type="text" class="form-control pull-right" id="flightDepartureDate" name="flightDepartureDate" value="<?php echo set_value('flightDepartureDate') ?>" readonly >
+		        <input type="text" class="form-control pull-right datepicker" id="flightDepartureDate" name="flightDepartureDate" value="<?php echo set_value('flightDepartureDate') ?>" readonly >
 		      </div>
 		      <span class="error-mess"><?php echo form_error('flightDepartureDate'); ?></span>
 		    </div>
@@ -84,33 +84,33 @@
 	        <div class="input-group-addon">
 	          <i class="fa fa-calendar"></i>
 	        </div>
-	        <input type="text" class="form-control pull-right" id="flightReturnDate" name="flightReturnDate" value="<?php echo set_value('flightReturnDate') ?>" readonly>
+	        <input type="text" class="form-control pull-right datepicker" id="flightReturnDate" name="flightReturnDate" value="<?php echo set_value('flightReturnDate') ?>" readonly>
 	      </div>
 	      <span class="error-mess"><?php echo form_error('flightReturnDate'); ?></span>
 	    </div>
 	  </div>
 	  <div class="form-group col-md-2 col-lg-2">
 	          <label for="flightNoAdults">Adults:</label>
-	          <input type="text" class="form-control" id="flightNoAdults" name="flightNoAdults" value="<?php echo set_value('flightNoAdults') ?>" >
+	          <input type="text" class="form-control numeric" id="flightNoAdults" name="flightNoAdults" value="<?php echo set_value('flightNoAdults') ?>" >
 	          <span class="error-mess"><?php echo form_error('flightNoAdults'); ?></span>
 		</div>
 		
 		<div class="form-group col-md-2 col-lg-2">
 		  <label for="flightNoChildren">Children:</label>
-		  <input type="text" class="form-control" id="flightNoChildren" name="flightNoChildren" value="<?php echo set_value('flightNoChildren') ?>">
+		  <input type="text" class="form-control numeric" id="flightNoChildren" name="flightNoChildren" value="<?php echo set_value('flightNoChildren') ?>">
 		  <span class="error-mess"><?php echo form_error('flightNoChildren'); ?></span>
 		</div>
 		
 		<div class="form-group col-md-2 col-lg-2">
 		  <label for="flightNoInfants">Infants:</label>
-		  <input type="text" class="form-control" id="flightNoInfants" name="flightNoInfants" value="<?php echo set_value('flightNoInfants') ?>">
+		  <input type="text" class="form-control numeric" id="flightNoInfants" name="flightNoInfants" value="<?php echo set_value('flightNoInfants') ?>">
 		  <span class="error-mess"><?php echo form_error('flightNoInfants'); ?></span>
 		</div>
       	
 	  <div style="margin-top:20px" class="form-group col-md-12 col-lg-12">
 	    <input type="submit" class="btn btn-warning" >
 	    <i class="fa fa-check-circle" aria-hidden="true"/></i>
-	    Book this Flight
+	    Inquire this Flight
 	  </div>
 	  <?php echo form_close(); ?>
 	</div>

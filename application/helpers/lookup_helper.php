@@ -32,6 +32,16 @@ function notYetBooked($id){
 	return false;
 }
 
+function getAllMessagesByuser(){
+	$CI = get_instance();
+	$CI->load->model('user_messages_model');	
+	return $CI->user_messages_model->getAllMessagesByUser(); 
+}
+
+function getAllUnreadMessages(){
+
+}
+
 function getAllBookingStatus(){
 	return array(
 			"PENDING",

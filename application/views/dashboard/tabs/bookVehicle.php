@@ -49,7 +49,7 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <input type="text" class="form-control pull-right" id="vehicleDepartureDate" name="vehicleDepartureDate" value="<?php echo set_value('vehicleDepartureDate') ?>" readonly>
+          <input type="text" class="form-control pull-right datepicker" id="vehicleDepartureDate" name="vehicleDepartureDate" value="<?php echo set_value('vehicleDepartureDate') ?>" readonly>
         </div>
         <span class="error-mess"><?php echo form_error('vehicleDepartureDate'); ?></span>
       </div>
@@ -59,7 +59,7 @@
           <div class="input-group-addon">
             <i class="fa fa-calendar"></i>
           </div>
-          <input type="text" class="form-control pull-right" id="vehicleReturnDate" name="vehicleReturnDate" value="<?php echo set_value('vehicleReturnDate') ?>" readonly>
+          <input type="text" class="form-control pull-right datepicker" id="vehicleReturnDate" name="vehicleReturnDate" value="<?php echo set_value('vehicleReturnDate') ?>" readonly>
         </div>
         <span class="error-mess"><?php echo form_error('vehicleReturnDate'); ?></span>
       </div>
@@ -67,7 +67,7 @@
    <div style="margin-top:20px" class="form-group col-md-12 col-lg-12">
       <input type="submit" class="btn btn-warning" >
       <i class="fa fa-check-circle" aria-hidden="true"/></i>
-      Rent this Vehicle
+      Inquire this Vehicle
     </div>
     <?php echo form_close(); ?>
 

@@ -11,6 +11,7 @@
             $this->db->from("tour_pack tp");
             $this->db->where("tp.VALID_FROM <=", date("Y/m/d"));
             $this->db->where("tp.VALID_TO >=", date("Y/m/d"));
+            $this->db->order_by("tp.ID", "DESC");
             $query = $this->db->get();
             return $query->result();
         }
@@ -24,9 +25,23 @@
         public function getTourAndPackagesById($id){
             $this->db->select('*');
             $this->db->from("tour_pack tp");
-            $this->db->where("id", $id);
+            $this->db->where("md5(id)", $id);
             $query = $this->db->get();
             return $query->row();
+        }
+
+        public function getItineraries($id){
+            $this->db->select('*');
+            $this->db->from("itinerary i");
+            $this->db->where("md5(i.TOUR_PACK_ID)", $id);
+            $this->db->order_by("i.NTH_DAY", "asc");
+            $query = $this->db->get();
+            return $query->result();
+        }
+
+        public function updateTourPack($data, $id){
+            $this->db->where('ID', $id);
+            $this->db->update('tour_pack', $data); 
         }
 
 	}

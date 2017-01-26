@@ -120,8 +120,24 @@ class Modules extends CI_Controller {
 		$data["module"] = "viewtoursandpackages";
 		$data["page_title"] = "View Tours & Packages";
 		$data["tap"] = $this->tour_pack_model->getTourAndPackagesById($id);
+		$data["itinerary"] = $this->tour_pack_model->getItineraries($id);
 		$this->load->view("dashboard/common/header");
 		$this->load->view("dashboard/modules/viewToursAndPackages",$data);
+		$this->load->view("dashboard/common/footer");	
+	}
+
+	public function editToursAndPackages($id){
+		sessionChecker();
+		//0 = customer
+		//1 = administrator
+		permissionChecker(array(0,1), true);
+		$data["currency_symbol"] = $this->getCurrentCurrencySymbol();
+		$data["module"] = "viewtoursandpackages";
+		$data["page_title"] = "View Tours & Packages";
+		$data["tap"] = $this->tour_pack_model->getTourAndPackagesById($id);
+		$data["itinerary"] = $this->tour_pack_model->getItineraries($id);
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/editToursAndPackages",$data);
 		$this->load->view("dashboard/common/footer");	
 	}
 
@@ -251,7 +267,7 @@ class Modules extends CI_Controller {
         	$data = $this->bookFlightDataCreation($this->input->post());
         	$data["CREATED_BY"] = $_SESSION['user_id'];
         	$this->flight_schedule_model->addFlightSchedule($data);
-        	$this->session->set_flashdata('message', 'You successfully Booked a flight.');
+        	$this->session->set_flashdata('message', 'You successfully Inquired a flight.');
         	redirect(current_url());
         }
 	}
@@ -264,7 +280,7 @@ class Modules extends CI_Controller {
         	$data = $this->bookHotelDataCreation($this->input->post());
         	$data["CREATED_BY"] = $_SESSION['user_id'];
         	$this->hotel_schedule_model->addHotelSchedule($data);
-        	$this->session->set_flashdata('message', 'You successfully Booked a Hotel.');
+        	$this->session->set_flashdata('message', 'You successfully Inquired a Hotel.');
         	redirect(current_url());
         }
 	}
@@ -277,7 +293,7 @@ class Modules extends CI_Controller {
         	$data = $this->bookVehicleDataCreation($this->input->post());
         	$data["CREATED_BY"] = $_SESSION['user_id'];
         	$this->vehicle_schedule_model->addVehicleSchedule($data);
-        	$this->session->set_flashdata('message', 'You successfully Booked a Vehicle.');
+        	$this->session->set_flashdata('message', 'You successfully Inquired a Vehicle.');
         	redirect(current_url());
         }
 	}
@@ -291,10 +307,57 @@ class Modules extends CI_Controller {
 			if($data["DESCRIPTION"]!=""){
 				$data["DESCRIPTION"] = str_replace('src=', 'class="img-responsive" src=', $data["DESCRIPTION"]);
 			}
+			
         	$data["CREATED_BY"] = $_SESSION['user_id'];
-        	$this->tour_pack_model->addTourPack($data);
+        	$tour_pack_id = $this->tour_pack_model->addTourPack($data);
+        	if(intval($data["NO_OF_DAYS"])>0){
+				$noOfdays = intval($data["NO_OF_DAYS"]);
+				for($i = 1; $i <= $noOfdays; $i++){
+					$itinerary = array(
+							"TOUR_PACK_ID"	=>	$tour_pack_id,
+							"TITLE"			=> 	$this->input->post("itineraryTitle_" . $i),
+							"DESCRIPTION"	=>	$this->input->post("itineraryDesc_" . $i),
+							"NTH_DAY"		=> $i,
+							"UPDATED_BY"	=> $_SESSION['user_id'],
+							"CREATED_BY"	=> $_SESSION['user_id']
+						);
+					$this->itinerary_model->addItinerary($itinerary);
+				}
+			}
         	$this->session->set_flashdata('message', 'You successfully created Tour and Package.');
         	redirect(current_url());
+		}
+	}
+
+	public function updateToursAndPackages(){
+		$this->toursAndPackagesValidations();
+		$tapId = $this->input->post("tapId");
+		if ($this->form_validation->run() == FALSE){
+			$this->editToursandpackages(md5($tapId));
+		}else{
+			$data = $this->toursAndPackagesCreation($this->input->post());
+			if($data["DESCRIPTION"]!=""){
+				$data["DESCRIPTION"] = str_replace('src=', 'class="img-responsive" src=', $data["DESCRIPTION"]);
+			}
+        	$data["CREATED_BY"] = $_SESSION['user_id'];
+        	$tour_pack_id = $this->tour_pack_model->updateTourPack($data, $tapId);
+        	$this->itinerary_model->deleteItinerary($tapId);
+        	if(intval($data["NO_OF_DAYS"])>0){
+				$noOfdays = intval($data["NO_OF_DAYS"]);
+				for($i = 1; $i <= $noOfdays; $i++){
+					$itinerary = array(
+							"TOUR_PACK_ID"	=>	$tapId,
+							"TITLE"			=> 	$this->input->post("itineraryTitle_" . $i),
+							"DESCRIPTION"	=>	$this->input->post("itineraryDesc_" . $i),
+							"NTH_DAY"		=> $i,
+							"UPDATED_BY"	=> $_SESSION['user_id'],
+							"CREATED_BY"	=> $_SESSION['user_id']
+						);
+					$this->itinerary_model->addItinerary($itinerary);
+				}
+			}
+        	$this->session->set_flashdata('message', 'You updated created Tour and Package.');
+			$this->editToursandpackages(md5($tapId));
 		}
 	}
 
@@ -467,12 +530,18 @@ class Modules extends CI_Controller {
 	private function toursAndPackagesValidations(){
 		$this->form_validation->set_rules('tapTitle', 'Title', 'trim|required');
 		$this->form_validation->set_rules('tapDescription', 'Description', 'trim|required');
-		$this->form_validation->set_rules('tapNoDays', 'No. of Days', 'trim|required|numeric');
-		$this->form_validation->set_rules('tapNoNights', 'No. of Nights', 'trim|required|numeric');
+		$this->form_validation->set_rules('tapNoDays', 'No. of Days', 'trim|required|numeric|greater_than[0]');
+		$this->form_validation->set_rules('tapNoNights', 'No. of Nights', 'trim|required|numeric|greater_than[0]');
 		$this->form_validation->set_rules('tapValidFrom', 'Valid From', 'trim|required');
 		$this->form_validation->set_rules('tapValidTo', 'Valid To', 'trim|required');
 		$this->form_validation->set_rules('tapInclusion', 'Inclusion', 'trim|required');
 		$this->form_validation->set_rules('tapExclusion', 'Exclusion', 'trim|required');
+		if($this->input->post("tapNoDays")>0){
+			for($i = 1; $i <= $this->input->post("tapNoDays");$i++){
+				$this->form_validation->set_rules('itineraryTitle_' + $i, 'Description', 'trim|required');
+				$this->form_validation->set_rules('itineraryDesc_' + $i, 'Description', 'trim|required');
+			}	
+		}
 	}
 
 	private function getCurrentCurrencySymbol(){
