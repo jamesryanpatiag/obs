@@ -39,7 +39,9 @@ function getAllMessagesByuser(){
 }
 
 function getAllUnreadMessages(){
-
+	$CI = get_instance();
+	$CI->load->model('user_messages_model');	
+	return $CI->user_messages_model->getAllUnreadMessages();
 }
 
 function getAllBookingStatus(){

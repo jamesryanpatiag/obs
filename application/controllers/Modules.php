@@ -154,6 +154,61 @@ class Modules extends CI_Controller {
 		$this->load->view("dashboard/common/footer");
 	}
 
+	public function mailbox(){
+		sessionChecker();
+		permissionChecker(array(0,1), true);
+		$data["module"] = "mailbox";
+		$data["page_title"] = "MailBox";
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/mailbox", $data);
+		$this->load->view("dashboard/common/footer");
+	}
+
+	public function composeMail(){
+		sessionChecker();
+		permissionChecker(array(0,1), true);
+		$data["module"] = "composemail";
+		$data["page_title"] = "Compose Mail";
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/composeMail", $data);
+		$this->load->view("dashboard/common/footer");	
+	}
+
+	public function readMail($id){
+		sessionChecker();
+		permissionChecker(array(0,1), true);
+		$data["IS_READ"] = 1;
+		$this->user_messages_model->updateUserMessage($id, $data);
+		$data["module"] = "readmail";
+		$data["page_title"] = "Read Mail";
+		$data["mail"] = $this->user_messages_model->getMessageById($id);
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/readMail", $data);
+		$this->load->view("dashboard/common/footer");	
+	}
+
+	public function sendMail(){
+		$this->sendMailValidation();
+		if ($this->form_validation->run() == FALSE){
+        	$this->composeMail();
+        }else{
+        	$toUserId = $this->user_model->getUserIdByEmail($this->input->post("mailTo"))[0]->ID;
+        	$data = array(
+        			"EMAIL" 			=> $this->input->post("mailTo"),
+        			"SUBJECT"			=> $this->input->post("mailSubject"),
+        			"FROM_USER_ID"		=> $_SESSION["user_id"],
+        			"TO_USER_ID"		=> $toUserId,
+        			"MESSAGE"			=> $this->input->post("mailMessage"),
+        			"IS_READ"			=> 0,
+	        		"UPDATED_BY"		=> $_SESSION['user_id'],
+	        		"CREATED_BY"		=> $_SESSION['user_id']
+        		);
+    		$this->user_messages_model->sendMail($data);
+        	$this->session->set_flashdata('message', 'You successfully sent an email to' . $this->input->post("mailTo") . "'");
+        	redirect(current_url());
+        }
+	}
+
 	public function lookupsPage(){
 		$data["list"] = $this->lookups_model->getAllLookups();
 		$this->load->view("dashboard/tables/lookupsTable",$data);
@@ -527,6 +582,12 @@ class Modules extends CI_Controller {
 		$this->form_validation->set_rules('vehicleReturnDate', 'Return Date', 'trim|required');
 	}
 
+	private function sendMailValidation(){
+		$this->form_validation->set_rules('mailTo', 'Mail To', 'trim|required|callback_isExistingEmail');
+		$this->form_validation->set_rules('mailSubject', 'Mail Subject', 'trim|required');
+		$this->form_validation->set_rules('mailMessage', 'Message', 'trim|required');
+	}
+
 	private function toursAndPackagesValidations(){
 		$this->form_validation->set_rules('tapTitle', 'Title', 'trim|required');
 		$this->form_validation->set_rules('tapDescription', 'Description', 'trim|required');
@@ -541,6 +602,16 @@ class Modules extends CI_Controller {
 				$this->form_validation->set_rules('itineraryTitle_' + $i, 'Description', 'trim|required');
 				$this->form_validation->set_rules('itineraryDesc_' + $i, 'Description', 'trim|required');
 			}	
+		}
+	}
+
+	public function isExistingEmail($str)
+	{
+		if(empty($this->user_model->isEmailExist($str))){
+			$this->form_validation->set_message('isExistingEmail', "Email doesn't exist");
+			return FALSE;
+		}else{
+			return TRUE;		
 		}
 	}
 

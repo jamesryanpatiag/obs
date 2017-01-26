@@ -12,8 +12,13 @@
             }
 
              public function isEmailExist($email){
-                    $query = $this->db->get_where('user',array('EMAIL_ADDRESS'=>$email));
-                    return $query->result();
+                $query = $this->db->get_where('user',array('EMAIL_ADDRESS'=>$email));
+                return $query->result();
+            }
+
+            public function getUserIdByEmail($email){
+                $query = $this->db->get_where('user',array('EMAIL_ADDRESS'=>$email));
+                return $query->result();  
             }
 
             public function registerUser($data, $role){
