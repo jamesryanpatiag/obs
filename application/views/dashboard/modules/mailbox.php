@@ -5,7 +5,7 @@
         <section class="content-header">
         <h1>
           Mailbox
-          <small>13 new messages</small>
+          <small><?php echo count(getAllUnreadMessages()); ?> new messages</small>
         </h1>
         <ol class="breadcrumb">
           <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -22,7 +22,7 @@
         <div class="col-md-9">
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Inbox</h3>
+              <h3 class="box-title"><?php echo $page_title; ?></h3>
 
               <div class="box-tools pull-right">
                 <div class="has-feedback">

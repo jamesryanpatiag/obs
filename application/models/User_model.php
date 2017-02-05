@@ -25,6 +25,7 @@
                     $user_data = array(
                             "USERNAME" => $data["username"],
                             "PASSWORD" => $this->generateHashPassword($data["password"]),
+                            "EMAIL_ADDRESS" => $data["email"],
                             "USER_TYPE"    => $role,
                             "LAST_LOGIN" => null,
                             "IS_VERIFIED" => $role == CUSTOMER ? 0 : 1,

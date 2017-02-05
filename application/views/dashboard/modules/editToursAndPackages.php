@@ -61,12 +61,12 @@
 		    	</div>
 				<div class="form-group col-md-4 col-lg-4">
 				  <label for="tapNoDays">No. of Days:</label>
-				  <input type="text" class="form-control" id="tapNoDays" name="tapNoDays" onBlur="createItineraryFields(this.value)" value="<?php echo set_value('tapNoDays', isset($tap) && isset($tap->NO_OF_DAYS) ? $tap->NO_OF_DAYS : ''); ?>">
+				  <input type="text" class="form-control numeric" id="tapNoDays" name="tapNoDays" onBlur="createItineraryFields(this.value)" value="<?php echo set_value('tapNoDays', isset($tap) && isset($tap->NO_OF_DAYS) ? $tap->NO_OF_DAYS : ''); ?>">
 				  <span class="error-mess"><?php echo form_error('tapNoDays'); ?></span>
 				</div>
 				<div class="form-group col-md-4 col-lg-4">
 				  <label for="tapNoNights">No. of Nights:</label>
-				  <input type="text" class="form-control" id="tapNoNights" name="tapNoNights" value="<?php echo set_value('tapNoNights', isset($tap) && isset($tap->NO_OF_NIGHTS) ? $tap->NO_OF_NIGHTS : ''); ?>">
+				  <input type="text" class="form-control numeric" id="tapNoNights" name="tapNoNights" value="<?php echo set_value('tapNoNights', isset($tap) && isset($tap->NO_OF_NIGHTS) ? $tap->NO_OF_NIGHTS : ''); ?>">
 				  <span class="error-mess"><?php echo form_error('tapNoNights'); ?></span>
 				</div> 
 				<div class="form-group col-md-6 col-lg-6">
@@ -110,7 +110,7 @@
 				</div>
 				<div class="form-group col-md-3 col-lg-3">
 				  <label for="tapPrice">Price:</label>
-				  <input type="text" class="form-control" id="tapPrice" name="tapPrice" value="<?php echo set_value('tapPrice', isset($tap) && isset($tap->PRICE) ? $tap->PRICE : ''); ?>">
+				  <input type="text" class="form-control numeric" id="tapPrice" name="tapPrice" value="<?php echo set_value('tapPrice', isset($tap) && isset($tap->PRICE) ? $tap->PRICE : ''); ?>">
 				  <span class="error-mess"><?php echo form_error('tapPrice'); ?></span>
 				</div>
 				<!-- ITINERARY -->

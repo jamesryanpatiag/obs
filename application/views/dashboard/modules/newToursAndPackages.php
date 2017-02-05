@@ -60,12 +60,12 @@
 		    	</div>
 				<div class="form-group col-md-4 col-lg-4">
 				  <label for="tapNoDays">No. of Days:</label>
-				  <input type="text" class="form-control" id="tapNoDays" name="tapNoDays" onBlur="createItineraryFields(this.value)" value="<?php echo set_value('tapNoDays') ?>">
+				  <input type="text" class="form-control numeric" id="tapNoDays" name="tapNoDays" onBlur="createItineraryFields(this.value)" value="<?php echo set_value('tapNoDays') ?>">
 				  <span class="error-mess"><?php echo form_error('tapNoDays'); ?></span>
 				</div>
 				<div class="form-group col-md-4 col-lg-4">
 				  <label for="tapNoNights">No. of Nights:</label>
-				  <input type="text" class="form-control" id="tapNoNights" name="tapNoNights" value="<?php echo set_value('tapNoNights') ?>">
+				  <input type="text" class="form-control numeric" id="tapNoNights" name="tapNoNights" value="<?php echo set_value('tapNoNights') ?>">
 				  <span class="error-mess"><?php echo form_error('tapNoNights'); ?></span>
 				</div>
 				<div class="form-group col-md-6 col-lg-6">
@@ -109,7 +109,7 @@
 				</div>
 				<div class="form-group col-md-3 col-lg-3">
 				  <label for="tapPrice">Price:</label>
-				  <input type="text" class="form-control" id="tapPrice" name="tapPrice" value="<?php echo set_value('tapPrice') ?>">
+				  <input type="text" class="form-control numeric" id="tapPrice" name="tapPrice" value="<?php echo set_value('tapPrice') ?>">
 				  <span class="error-mess"><?php echo form_error('tapPrice'); ?></span>
 				</div>
 				<!-- ITINERARY -->

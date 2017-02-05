@@ -158,7 +158,7 @@ class Modules extends CI_Controller {
 		sessionChecker();
 		permissionChecker(array(0,1), true);
 		$data["module"] = "mailbox";
-		$data["page_title"] = "MailBox";
+		$data["page_title"] = "Inbox";
 		$data["mails"] = getAllMessagesByUser();
 		$this->load->view("dashboard/common/header");
 		$this->load->view("dashboard/modules/mailbox", $data);
@@ -166,6 +166,17 @@ class Modules extends CI_Controller {
 	}
 
 	public function sentmailbox(){
+		sessionChecker();
+		permissionChecker(array(0,1), true);
+		$data["module"] = "sentmailbox";
+		$data["page_title"] = "Sent";
+		$data["mails"] = $this->user_messages_model->getAllSentMessages();
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/mailbox", $data);
+		$this->load->view("dashboard/common/footer");
+	}
+
+	public function trashmailbox(){
 		sessionChecker();
 		permissionChecker(array(0,1), true);
 		$data["module"] = "sentmailbox";
