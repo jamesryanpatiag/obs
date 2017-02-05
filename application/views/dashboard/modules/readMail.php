@@ -94,7 +94,7 @@
                 <button type="button" class="btn btn-default"><i class="fa fa-reply"></i> Reply</button>
                 <button type="button" class="btn btn-default"><i class="fa fa-share"></i> Forward</button>
               </div>
-              <button type="button" class="btn btn-default"><i class="fa fa-trash-o"></i> Delete</button>
+              <button type="button" class="btn btn-default" onclick="deleteMessage(<?php echo $mail->ID?>)"><i class="fa fa-trash-o"></i> Delete</button>
               <button type="button" class="btn btn-default" onclick="printElem('readmail')"><i class="fa fa-print"></i> Print</button>
             </div>
             <!-- /.box-footer -->

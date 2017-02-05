@@ -218,13 +218,17 @@ class Modules extends CI_Controller {
 		if ($this->form_validation->run() == FALSE){
         	$this->composeMail();
         }else{
+        	$message = $this->input->post("mailMessage");
+        	if($message!=""){
+				$message = str_replace('src=', 'class="img-responsive" src=', $message);
+			}
         	$toUserId = $this->user_model->getUserIdByEmail($this->input->post("mailTo"))[0]->ID;
         	$data = array(
         			"EMAIL" 			=> $this->input->post("mailTo"),
         			"SUBJECT"			=> $this->input->post("mailSubject"),
         			"FROM_USER_ID"		=> $_SESSION["user_id"],
         			"TO_USER_ID"		=> $toUserId,
-        			"MESSAGE"			=> $this->input->post("mailMessage"),
+        			"MESSAGE"			=> $message,
         			"IS_READ"			=> 0,
 	        		"UPDATED_BY"		=> $_SESSION['user_id'],
 	        		"CREATED_BY"		=> $_SESSION['user_id']
