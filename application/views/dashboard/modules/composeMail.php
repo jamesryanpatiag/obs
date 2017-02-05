@@ -52,7 +52,7 @@
                   <i class="fa fa-paperclip"></i> Attachment
                   <input type="file" name="attachment">
                 </div>
-                <p class="help-block">Max. 32MB</p>
+                <p class="help-block">Max. 32MB</p> 
               </div>
               -->
             </div>

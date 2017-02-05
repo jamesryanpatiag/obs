@@ -39,7 +39,7 @@
                 <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
                 </button>
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default btn-sm" onClick="deleteSelectedMail('<?php echo $module; ?>')"><i class="fa fa-trash-o"></i></button>
+                  <button type="button" class="btn btn-default btn-sm" onClick="deleteSelectedMail('<?php echo $module; ?>', '<?php echo $module != "trashmailbox" ? 'MOVE_TO_TRASH' : 'DELETE_FOREVER'; ?>')"><i class="fa fa-trash-o"></i></button>
                 </div>
                 <!-- /.btn-group -->
                 <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
@@ -95,7 +95,7 @@
                 <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
                 </button>
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default btn-sm" onClick="deleteSelectedMail('<?php echo $module; ?>')"><i class="fa fa-trash-o"></i></button>
+                  <button type="button" class="btn btn-default btn-sm" onClick="deleteSelectedMail('<?php echo $module; ?>', '<?php echo $module != "trashmailbox" ? 'MOVE_TO_TRASH' : 'DELETE_FOREVER'; ?>')"><i class="fa fa-trash-o"></i></button>
                 </div>
                 <!-- /.btn-group -->
                 <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>

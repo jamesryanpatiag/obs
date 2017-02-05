@@ -94,7 +94,11 @@
                 <button type="button" class="btn btn-default"><i class="fa fa-reply"></i> Reply</button>
                 <button type="button" class="btn btn-default"><i class="fa fa-share"></i> Forward</button>
               </div>
-              <button type="button" class="btn btn-default" onclick="deleteMessage(<?php echo $mail->ID?>)"><i class="fa fa-trash-o"></i> Delete</button>
+              <?php if($orig_type!=""){ ?>
+                <button type="button" class="btn btn-default" onclick="deleteMessage(<?php echo $mail->ID?>, '<?php echo $type;?>', 'DELETE_FOREVER')"><i class="fa fa-trash-o"></i> Delete Forever</button>
+              <?php }else{ ?>
+                <button type="button" class="btn btn-default" onclick="deleteMessage(<?php echo $mail->ID?>, '<?php echo $type;?>', 'MOVE_TO_TRASH')"><i class="fa fa-trash-o"></i> Move to Trash</button>
+              <?php } ?>
               <button type="button" class="btn btn-default" onclick="printElem('readmail')"><i class="fa fa-print"></i> Print</button>
             </div>
             <!-- /.box-footer -->

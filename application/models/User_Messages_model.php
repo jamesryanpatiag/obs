@@ -35,6 +35,7 @@
             $this->db->select("ID, SUBJECT, EMAIL, MESSAGE, CREATED_DATE, IS_READ, 'sentmail' as TYPE");
             $this->db->from('sentmails');
             $this->db->where('IS_DELETED', 1);
+            $this->db->order_by("ID", "DESC");
             $query2 = $this->db->get_compiled_select();
             $query = $this->db->query($query1 . ' UNION ' . $query2);
             return $query->result();
@@ -83,6 +84,16 @@
         public function updateSentMails($id, $data){
             $this->db->where('ID', $id);
             $this->db->update('sentmails', $data);
+        }
+
+        public function deleteReadMails($id){
+            $this->db->where('ID', $id);
+            $this->db->delete('readmails'); 
+        }
+
+        public function deleteSentMails($id){
+            $this->db->where('ID', $id);
+            $this->db->delete('sentmails'); 
         }
 	}
 ?>

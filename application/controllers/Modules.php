@@ -204,10 +204,12 @@ class Modules extends CI_Controller {
 		$this->user_messages_model->updateUserMessage($id, $data);
 		$data["module"] = "readmail";
 		$data["page_title"] = "Read Mail";
+		$data["orig_type"] = $x;
 		if($x != ""){
 			$type = $x;
 		}
 		$data["mail"] = $this->user_messages_model->getMessageById($id, $type);
+		$data["type"] = $type;
 		$this->load->view("dashboard/common/header");
 		$this->load->view("dashboard/modules/readMail", $data);
 		$this->load->view("dashboard/common/footer");	
@@ -495,7 +497,8 @@ class Modules extends CI_Controller {
 		$ids = explode(",", $this->input->post("ids"));
 		$type = $this->input->post("type");
 		$data = array(
-				"IS_DELETED"	=> 1
+				"IS_DELETED"	=>	1,
+				"IS_READ"		=>  1
 			);
 		foreach($ids as $id){
 			if($type=="mailbox"){
@@ -505,6 +508,18 @@ class Modules extends CI_Controller {
 			}
 		}
 		echo var_dump($ids);
+	}
+
+	public function deleteForeverMessage(){
+		$ids = explode(",", $this->input->post("ids"));
+		$type = $this->input->post("type");
+		foreach($ids as $id){
+			if($type=="readmail"){
+				$this->user_messages_model->deleteReadMails($id);
+			}else{
+				$this->user_messages_model->deleteSentMails($id);
+			}
+		}
 	}
 
 	public function cancelFlightBooking(){

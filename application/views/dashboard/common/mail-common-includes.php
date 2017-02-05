@@ -59,8 +59,7 @@
     $("#compose-textarea").wysihtml5();
   });
 
-  function deleteSelectedMail(type){ 
-    if(confirm("Are you sure you want to delete all selected messages?")){
+  function deleteSelectedMail(type, otype){
       var ids = [];
       $(".mails").each(function() {
         if(this.checked==true){
@@ -72,18 +71,31 @@
       var fd = new FormData();
       fd.append("ids", ids);
       fd.append("type", type);
-      $.ajax({
-        url: "<?php echo site_url('modules/deleteMessages'); ?>",
-        type: 'POST',
-        data: fd,  
-        processData: false,
-        contentType: false,
-        success: function(msg) {
-        }
-      });
-      console.log(ids);
-    }
-    
+      if(otype=="MOVE_TO_TRASH"){
+          if(confirm("Are you sure you want to delete this message?")){
+              $.ajax({
+                url: "<?php echo site_url('modules/deleteMessages'); ?>",
+                type: 'POST',
+                data: fd,  
+                processData: false,
+                contentType: false,
+                success: function(msg) {
+                }
+              });
+          }
+       }else{
+          if(confirm("Are you sure you want to delete this message permanently?")){
+              $.ajax({
+                url: "<?php echo site_url('modules/deleteForeverMessage'); ?>",
+                type: 'POST',
+                data: fd,  
+                processData: false,
+                contentType: false,
+                success: function(msg) {
+                }
+              });
+          }
+       }
   }
 
   function printElem(elem)
@@ -106,4 +118,37 @@
 
       return true;
       }
+
+    function deleteMessage(id, type, otype){
+       var fd = new FormData();
+       fd.append("ids", id);
+       fd.append("type", type);
+       if(otype=="MOVE_TO_TRASH"){
+          if(confirm("Are you sure you want to delete this message?")){
+              $.ajax({
+                url: "<?php echo site_url('modules/deleteMessages'); ?>",
+                type: 'POST',
+                data: fd,  
+                processData: false,
+                contentType: false,
+                success: function(msg) {
+                    window.location = '<?php echo site_url('/modules/mailbox');?>';
+                }
+              });
+          }
+       }else{
+          if(confirm("Are you sure you want to delete this message permanently?")){
+              $.ajax({
+                url: "<?php echo site_url('modules/deleteForeverMessage'); ?>",
+                type: 'POST',
+                data: fd,  
+                processData: false,
+                contentType: false,
+                success: function(msg) {
+                   window.location = '<?php echo site_url('/modules/trashmailbox');?>';
+                }
+              });
+          }
+       }
+    }
 </script>
