@@ -159,6 +159,18 @@ class Modules extends CI_Controller {
 		permissionChecker(array(0,1), true);
 		$data["module"] = "mailbox";
 		$data["page_title"] = "MailBox";
+		$data["mails"] = getAllMessagesByUser();
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/mailbox", $data);
+		$this->load->view("dashboard/common/footer");
+	}
+
+	public function sentmailbox(){
+		sessionChecker();
+		permissionChecker(array(0,1), true);
+		$data["module"] = "sentmailbox";
+		$data["page_title"] = "MailBox";
+		$data["mails"] = $this->user_messages_model->getAllSentMessages();
 		$this->load->view("dashboard/common/header");
 		$this->load->view("dashboard/modules/mailbox", $data);
 		$this->load->view("dashboard/common/footer");
@@ -204,6 +216,7 @@ class Modules extends CI_Controller {
 	        		"CREATED_BY"		=> $_SESSION['user_id']
         		);
     		$this->user_messages_model->sendMail($data);
+    		$this->user_messages_model->sentMail($data);
         	$this->session->set_flashdata('message', 'You successfully sent an email to' . $this->input->post("mailTo") . "'");
         	redirect(current_url());
         }
@@ -458,6 +471,22 @@ class Modules extends CI_Controller {
     		$this->vehicle_schedule_model->updateVehicleSchedule($this->input->post("id"),$data);
     		echo "YES";
         }
+	}
+
+	public function deleteMessages(){
+		$ids = explode(",", $this->input->post("ids"));
+		$type = $this->input->post("type");
+		$data = array(
+				"IS_DELETED"	=> 1
+			);
+		foreach($ids as $id){
+			if($type=="mailbox"){
+				$this->user_messages_model->updateReadMails($id, $data);
+			}else{
+				$this->user_messages_model->updateSentMails($id, $data);
+			}
+		}
+		echo var_dump($ids);
 	}
 
 	public function cancelFlightBooking(){

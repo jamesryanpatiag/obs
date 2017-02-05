@@ -58,4 +58,31 @@
     //Add text editor
     $("#compose-textarea").wysihtml5();
   });
+
+  function deleteSelectedMail(type){ 
+    if(confirm("Are you sure you want to delete all selected messages?")){
+      var ids = [];
+      $(".mails").each(function() {
+        if(this.checked==true){
+            var id = this.id.replace("chkmail_", "");
+            $(this).closest("tr").hide();
+            ids.push(id);
+        }
+      });  
+      var fd = new FormData();
+      fd.append("ids", ids);
+      fd.append("type", type);
+      $.ajax({
+        url: "<?php echo site_url('modules/deleteMessages'); ?>",
+        type: 'POST',
+        data: fd,  
+        processData: false,
+        contentType: false,
+        success: function(msg) {
+        }
+      });
+      console.log(ids);
+    }
+    
+  }
 </script>

@@ -14,7 +14,7 @@
       <div class="row">
         <div class="col-md-3"> 
             <a href="<?php echo site_url('/modules/composeMail');?>" class="btn btn-primary btn-block margin-bottom">Compose</a>
-            <?php $this->view("dashboard/common/mail-sidebar"); ?>
+          <?php $this->view("dashboard/common/mail-sidebar"); ?>
         </div>
         <!-- /.col -->
         <div class="col-md-9">

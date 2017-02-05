@@ -39,9 +39,7 @@
                 <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
                 </button>
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
-                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
-                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
+                  <button type="button" class="btn btn-default btn-sm" onClick="deleteSelectedMail('<?php echo $module; ?>')"><i class="fa fa-trash-o"></i></button>
                 </div>
                 <!-- /.btn-group -->
                 <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
@@ -58,20 +56,23 @@
               <div class="table-responsive mailbox-messages">
                 <table class="table table-hover table-striped">
                   <tbody>
-                  <?php foreach(getAllMessagesByUser() as $mail){ ?>
+                  <?php foreach($mails as $mail){ ?>
                   <tr>
-                    <td><input type="checkbox"></td>
+                    <td>
+                      <input class="mails" id="chkmail_<?php echo $mail->ID; ?>" type="checkbox">
+                      <input value="<?php echo $mail->ID; ?>" type="hidden">
+                    </td>
                     <td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td>
                     <td class="mailbox-name"><a href="<?php echo site_url('/modules/readMail/' . md5($mail->ID));?>"><?php echo $mail->EMAIL;?></a></td>
                     <td class="mailbox-subject">
-                        <?php if($mail->IS_READ == 1){ ?>
-                            <?php echo $mail->SUBJECT;?>
-                        <?php }else{ ?>
+                        <?php if($mail->IS_READ == 0 && $module=="mailbox"){ ?>
                             <b><?php echo $mail->SUBJECT;?></b>
+                        <?php }else{ ?>
+                            <?php echo $mail->SUBJECT;?>
                         <?php } ?>
                     </td>
                     <td class="mailbox-attachment"></td>
-                    <td class="mailbox-date">5 mins ago</td>
+                    <td class="mailbox-date"><?php echo date_format(date_create($mail->CREATED_DATE), "F d Y");?></td>
                   </tr>
                   <?php } ?>
                   </tbody>
@@ -87,9 +88,7 @@
                 <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
                 </button>
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
-                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
-                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
+                  <button type="button" class="btn btn-default btn-sm" onClick="deleteSelectedMail('<?php echo $module; ?>')"><i class="fa fa-trash-o"></i></button>
                 </div>
                 <!-- /.btn-group -->
                 <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
