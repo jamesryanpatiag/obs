@@ -28,27 +28,12 @@
               </div>
             </div>
             <!-- /.box-header -->
-            <div class="box-body no-padding">
+            <div class="box-body no-padding" id="readmail">
               <div class="mailbox-read-info">
                 <h3><?php echo $mail->SUBJECT;?></h3>
                 <h5><?php echo $mail->EMAIL;?>
                   <span class="mailbox-read-time pull-right"><?php echo $mail->CREATED_DATE;?></span></h5>
               </div>
-              <!-- /.mailbox-read-info -->
-              <div class="mailbox-controls with-border text-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Delete">
-                    <i class="fa fa-trash-o"></i></button>
-                  <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Reply">
-                    <i class="fa fa-reply"></i></button>
-                  <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-container="body" title="Forward">
-                    <i class="fa fa-share"></i></button>
-                </div>
-                <!-- /.btn-group -->
-                <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Print">
-                  <i class="fa fa-print"></i></button>
-              </div>
-              <!-- /.mailbox-controls -->
               <div class="mailbox-read-message">
                 <?php echo $mail->MESSAGE;?>
               </div>
@@ -110,7 +95,7 @@
                 <button type="button" class="btn btn-default"><i class="fa fa-share"></i> Forward</button>
               </div>
               <button type="button" class="btn btn-default"><i class="fa fa-trash-o"></i> Delete</button>
-              <button type="button" class="btn btn-default"><i class="fa fa-print"></i> Print</button>
+              <button type="button" class="btn btn-default" onclick="printElem('readmail')"><i class="fa fa-print"></i> Print</button>
             </div>
             <!-- /.box-footer -->
           </div>

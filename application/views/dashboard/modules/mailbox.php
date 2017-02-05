@@ -62,8 +62,15 @@
                       <input class="mails" id="chkmail_<?php echo $mail->ID; ?>" type="checkbox">
                       <input value="<?php echo $mail->ID; ?>" type="hidden">
                     </td>
+                    <?php
+                      if(isset($mail->TYPE)){
+                         $x = $mail->TYPE;
+                      }else{
+                         $x = "";
+                      }
+                    ?>
                     <td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td>
-                    <td class="mailbox-name"><a href="<?php echo site_url('/modules/readMail/' . md5($mail->ID));?>"><?php echo $mail->EMAIL;?></a></td>
+                    <td class="mailbox-name"><a href="<?php echo site_url('/modules/readMail/'.$module.'/' . md5($mail->ID) . '/' . $x)?>"><?php echo $mail->EMAIL;?></a></td>
                     <td class="mailbox-subject">
                         <?php if($mail->IS_READ == 0 && $module=="mailbox"){ ?>
                             <b><?php echo $mail->SUBJECT;?></b>

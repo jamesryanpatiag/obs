@@ -26,6 +26,20 @@
             return $query->result();
         }
 
+        public function getAllTrashMessages(){
+            $this->db->select("ID, SUBJECT, EMAIL, MESSAGE, CREATED_DATE, IS_READ, 'readmail' as TYPE");
+            $this->db->from('readmails');
+            $this->db->where('IS_DELETED', 1);
+            $query1 = $this->db->get_compiled_select();
+
+            $this->db->select("ID, SUBJECT, EMAIL, MESSAGE, CREATED_DATE, IS_READ, 'sentmail' as TYPE");
+            $this->db->from('sentmails');
+            $this->db->where('IS_DELETED', 1);
+            $query2 = $this->db->get_compiled_select();
+            $query = $this->db->query($query1 . ' UNION ' . $query2);
+            return $query->result();
+        }
+
 
         public function getAllUnreadMessages(){
             $this->db->select('*');
@@ -36,9 +50,13 @@
             return $query->result();
         }
 
-        public function getMessageById($id){
+        public function getMessageById($id, $type){
             $this->db->select('*');
-            $this->db->from("readmails um");
+            if($type=="sentmail"){
+                $this->db->from("sentmails um");
+            }else{
+                $this->db->from("readmails um");    
+            }
             $this->db->where("md5(um.ID)", $id);
             $query = $this->db->get();
             return $query->row();

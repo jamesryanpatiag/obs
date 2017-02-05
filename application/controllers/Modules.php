@@ -179,9 +179,9 @@ class Modules extends CI_Controller {
 	public function trashmailbox(){
 		sessionChecker();
 		permissionChecker(array(0,1), true);
-		$data["module"] = "sentmailbox";
+		$data["module"] = "trashmailbox";
 		$data["page_title"] = "MailBox";
-		$data["mails"] = $this->user_messages_model->getAllSentMessages();
+		$data["mails"] = $this->user_messages_model->getAllTrashMessages();
 		$this->load->view("dashboard/common/header");
 		$this->load->view("dashboard/modules/mailbox", $data);
 		$this->load->view("dashboard/common/footer");
@@ -197,14 +197,17 @@ class Modules extends CI_Controller {
 		$this->load->view("dashboard/common/footer");	
 	}
 
-	public function readMail($id){
+	public function readMail($type, $id, $x = ""){
 		sessionChecker();
 		permissionChecker(array(0,1), true);
 		$data["IS_READ"] = 1;
 		$this->user_messages_model->updateUserMessage($id, $data);
 		$data["module"] = "readmail";
 		$data["page_title"] = "Read Mail";
-		$data["mail"] = $this->user_messages_model->getMessageById($id);
+		if($x != ""){
+			$type = $x;
+		}
+		$data["mail"] = $this->user_messages_model->getMessageById($id, $type);
 		$this->load->view("dashboard/common/header");
 		$this->load->view("dashboard/modules/readMail", $data);
 		$this->load->view("dashboard/common/footer");	
