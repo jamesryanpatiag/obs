@@ -77,14 +77,14 @@ class Auth extends CI_Controller {
 
         }else{
     		$users = $this->user_model->getUserByUsername($this->input->post("username"));
-    		
+
         	if(empty($users)){
 
         		$data["message"] = "Username doesn't exist.";
 
     			$this->loginPage($data);
 
-			}else if($users[0]->IS_VERIFIED === 0){
+			}else if($users[0]->IS_VERIFIED == 0){
 
 				$data["message"] = "Your account is not yet activated. Please check your email for the instructions.";
 
@@ -146,7 +146,7 @@ class Auth extends CI_Controller {
         	$newPassword = substr(md5(uniqid(rand(1,6))), 0, 8);
         	$data["password"] = $newPassword;
         	$this->user_model->updateUserPassword($data,$this->input->post("email"));
-        	$this->session->set_flashdata('forgot_password_success', 'Forgot password successfully done. Kindly check your email.' . $newPassword);
+        	$this->session->set_flashdata('forgot_password_success', 'Forgot password successfully done. Kindly check your email.');
 
         	if($this->sendForgotPasswordEmail($this->input->post("email"), $newPassword)==false){
 				$this->load->view('errors/html/error_emai_settings');
@@ -221,7 +221,7 @@ class Auth extends CI_Controller {
 
         	$this->session->set_flashdata('message', 'You are successfully registered. Please check your email to validate your account');
 		
-        	if($this->sendSuccessEmail($this->input->post("email"),$users[0]->username,$users[0]->id)==false){
+        	if($this->sendSuccessEmail($this->input->post("email"),$users[0]->username,$users[0]->ID)==false){
 
 				$this->load->view('errors/html/error_emai_settings');
         	
@@ -406,7 +406,7 @@ class Auth extends CI_Controller {
 
 		$users = $this->user_model->getUserById($userid);
 
-		$this->sendTermsEmail($users[0]->email,$users[0]->username);
+		$this->sendTermsEmail($users[0]->EMAIL_ADDRESS,$users[0]->USERNAME);
 
 		$data["account_activated"] = true;
 
