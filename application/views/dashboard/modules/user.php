@@ -28,7 +28,7 @@
                   <div class="box-body">
                     <div class="form-group">
                       <label for="first_name">Firstname</label>
-                      <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter Firstname" value="<?php echo set_value('first_name', isset($user) && isset($user->FIRSTNAME) ? $user->FIRSTNAME : ''); ?>"  >
+                      <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter Firstname" value="<?php echo set_value('first_name', isset($user) && isset($user->from_email_address) ? $user->from_email_address : ''); ?>"  >
                       <span class="error-mess"><?php echo form_error('first_name'); ?></span>
                     </div>
                     <div class="form-group">

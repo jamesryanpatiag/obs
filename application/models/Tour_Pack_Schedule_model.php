@@ -21,16 +21,26 @@
             return $query->row();
         }
 
-        public function getTourPackScheduleById($id){
-    	 	$this->db->select('*');
+        public function getTourPackScheduleById($id, $isCancelled){
+    	 	$this->db->select('*, tps.ID as TPS_ID');
             $this->db->from("tour_pack_schedule tps");
             $this->db->join("tour_pack tp", "tps.TOUR_PACK_ID = tp.ID", "inner");
             if($_SESSION["role_code"]==CUSTOMER){
                 $this->db->where("tps.USER_ID", $id);
             }
+            if($isCancelled){
+                $this->db->where("tps.BOOKING_STATUS", "CANCELLED");
+            }else{
+                $this->db->where("tps.BOOKING_STATUS !=", "CANCELLED");
+            }
             $this->db->order_by("tps.ID", "DESC");
             $query = $this->db->get();
             return $query->result();
+        }
+
+        public function updateTourPackSchedule($id, $data){
+            $this->db->where('ID', $id);
+            $this->db->update('tour_pack_schedule', $data); 
         }
 	}
 ?>

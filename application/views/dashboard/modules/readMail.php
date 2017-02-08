@@ -91,7 +91,9 @@
             <!-- /.box-footer -->
             <div class="box-footer">
               <div class="pull-right">
-                <!-- <button type="button" class="btn btn-default"><i class="fa fa-reply"></i> Reply</button> -->
+                <?php if($type=="mailbox"){ ?>
+                <a href="<?php echo site_url('/modules/replyMail/'.$mail->ID);?>" class="btn btn-default"><i class="fa fa-reply"></i> Reply</a>
+                <?php } ?>
                 <!-- <button type="button" class="btn btn-default"><i class="fa fa-share"></i> Forward</button> -->
               </div>
               <?php if($orig_type!=""){ ?>

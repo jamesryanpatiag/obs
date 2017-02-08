@@ -125,9 +125,25 @@ class Modules extends CI_Controller {
 		$data["currency_symbol"] = $this->getCurrentCurrencySymbol();
 		$data["module"] = "toursandpackages";
 		$data["page_title"] = "Tours & Packages";
+		$data["isCancelled"] = false;
 		$data["list"] = $this->tour_pack_model->getAllValidTourPackSchedule();
 		$this->load->view("dashboard/common/header");
 		$this->load->view("dashboard/modules/toursandpackages",$data);
+		$this->load->view("dashboard/common/footer");
+	}
+
+	public function promos(){
+		sessionChecker();
+		//0 = customer
+		//1 = administrator
+		permissionChecker(array(0,1), true);
+		$data["currency_symbol"] = $this->getCurrentCurrencySymbol();
+		$data["module"] = "promos";
+		$data["page_title"] = "Promos";
+		$data["isCancelled"] = false;
+		$data["list"] = $this->tour_pack_model->getAllValidTourPackSchedule();
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/promos",$data);
 		$this->load->view("dashboard/common/footer");
 	}
 
@@ -139,7 +155,23 @@ class Modules extends CI_Controller {
 		$data["currency_symbol"] = $this->getCurrentCurrencySymbol();
 		$data["module"] = "usertoursandpackages";
 		$data["page_title"] = "My Tours & Packages";
-		$data["list"] = $this->tour_pack_schedule_model->getTourPackScheduleById($_SESSION["user_id"]);
+		$data["list"] = $this->tour_pack_schedule_model->getTourPackScheduleById($_SESSION["user_id"], false);
+		$data["isCancelled"] = false;
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/toursandpackages",$data);
+		$this->load->view("dashboard/common/footer");
+	}
+
+	public function cancelledtoursandpackages(){
+		sessionChecker();
+		//0 = customer
+		//1 = administrator
+		permissionChecker(array(0,1), true);
+		$data["currency_symbol"] = $this->getCurrentCurrencySymbol();
+		$data["module"] = "cancelledtoursandpackages";
+		$data["page_title"] = "My Tours & Packages";
+		$data["list"] = $this->tour_pack_schedule_model->getTourPackScheduleById($_SESSION["user_id"], true);
+		$data["isCancelled"] = false;
 		$this->load->view("dashboard/common/header");
 		$this->load->view("dashboard/modules/toursandpackages",$data);
 		$this->load->view("dashboard/common/footer");
@@ -153,6 +185,7 @@ class Modules extends CI_Controller {
 		$data["currency_symbol"] = $this->getCurrentCurrencySymbol();
 		$data["module"] = "newtoursandpackages";
 		$data["page_title"] = "New Tours & Packages";
+		$data["isCancelled"] = false;
 		$data = $this->getAllLookups($data);
 		$this->load->view("dashboard/common/header");
 		$this->load->view("dashboard/modules/newToursAndPackages",$data);
@@ -242,6 +275,17 @@ class Modules extends CI_Controller {
 		$data["page_title"] = "Compose Mail";
 		$this->load->view("dashboard/common/header");
 		$this->load->view("dashboard/modules/composeMail", $data);
+		$this->load->view("dashboard/common/footer");	
+	}
+
+	public function replyMail($id){
+		sessionChecker();
+		permissionChecker(array(0,1), true);
+		$data["module"] = "replymail";
+		$data["page_title"] = "Reply Mail";
+		$data["mail"] = $this->user_messages_model->getMessageById(md5($id), "mailbox");
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/replyMail", $data);
 		$this->load->view("dashboard/common/footer");	
 	}
 
@@ -590,6 +634,12 @@ class Modules extends CI_Controller {
 		$this->vehicle_schedule_model->updateVehicleSchedule($this->input->post("id"), $data);
 		echo "YES";
 	}
+
+	public function cancelToursAndPackages(){
+		$data["BOOKING_STATUS"] = "CANCELLED";
+		$this->tour_pack_schedule_model->updateTourPackSchedule($this->input->post("id"), $data);
+		echo "YES";
+	}
 	
 	############ DATA CREATIONS ################
 	private function bookFlightDataCreation($data){
@@ -749,6 +799,9 @@ class Modules extends CI_Controller {
 			break;
 			case "VEHICLE":
 				$this->vehicle_schedule_model->updateVehicleSchedule($post["id"],$data);
+			break;
+			case "TOURSANDPACKAGE":
+				$this->tour_pack_schedule_model->updateTourPackSchedule($post["id"], $data);
 			break;
 		}
 		echo "YES";

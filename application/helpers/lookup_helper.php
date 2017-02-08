@@ -14,6 +14,13 @@ function getUsernameById($id){
 	return $user == null ? "" : $user->USERNAME;
 }
 
+function getEmailById($id){
+	$CI = get_instance();
+	$CI->load->model('user_model');	
+	$user = $CI->user_model->getUsernameById($id); 
+	return $user == null ? "" : $user->EMAIL_ADDRESS;
+}
+
 
 function getLookupValueById($lookupid){
 	$CI = get_instance();

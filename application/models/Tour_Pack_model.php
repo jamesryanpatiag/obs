@@ -9,8 +9,10 @@
         public function getAllValidTourPackSchedule(){
         	$this->db->select('*');
             $this->db->from("tour_pack tp");
-            $this->db->where("tp.VALID_FROM <=", date("Y/m/d"));
-            $this->db->where("tp.VALID_TO >=", date("Y/m/d"));
+            if($_SESSION["role_code"]==CUSTOMER){
+                $this->db->where("tp.VALID_FROM <=", date("Y/m/d"));
+                $this->db->where("tp.VALID_TO >=", date("Y/m/d"));
+            }
             $this->db->order_by("tp.ID", "DESC");
             $query = $this->db->get();
             return $query->result();

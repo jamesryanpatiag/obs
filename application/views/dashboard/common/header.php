@@ -41,6 +41,12 @@
       background-attachment: fixed;
    }
 
+   .underconstruction{
+      background-image: url("<?php echo base_url()."assets/img/underconstruction.png"; ?>");
+      background-size:100%;
+      min-height: 450px;
+   }
+
    h1{
     color:#99a19a;
    }

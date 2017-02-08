@@ -29,7 +29,7 @@
                             <b>Book Vehicle</b></a></li>
                             <li class="divider"></li>
                             <li <?php if($module == "usertoursandpackages"){echo "class='active'";} ?>><a href="<?php echo site_url('/modules/userToursAndPackages');?>"><i class="fa fa-dropbox" aria-hidden="true"></i><b>Reserve Tours/Package</b></a></li>
-                            <li><a href="#"><i class="fa fa-asterisk" aria-hidden="true"></i>  <b>Reserve Promos</b></a></li>
+                            <li><a href="<?php echo site_url('/modules/promos');?>"><i class="fa fa-asterisk" aria-hidden="true"></i>  <b>Reserve Promos</b></a></li>
                         </ul>
                     </li>
                     <li>
@@ -44,8 +44,11 @@
                              <li><a href="<?php echo site_url('/modules/cancelledbookvehicle');?>">
                             <b>Cancelled Book Vehicle</b></a></li>
                             <li class="divider"></li>
-                            <li><a href="#">
-                            <b>Cancelled Reservations</b></a></li>
+                            <li><a href="<?php echo site_url('/modules/cancelledtoursandpackages');?>">
+                            <b>Cancelled Tours & Packages Bookings</b></a></li>
+                            <li><a href="<?php echo site_url('/modules/promos');?>">
+                            <b>Cancelled Promo Bookings</b></a></li>
+                            
                         </ul>
                     </li>
                     <li>
@@ -54,7 +57,7 @@
                         <b>Tours & Package</b></a></li>
                     </li>
                     <li>
-                        <li><a href="#">
+                        <li><a href="<?php echo site_url('/modules/promos');?>">
                         <i class="fa fa-asterisk" aria-hidden="true"></i>  
                         <b>Promos</b></a></li>
                     </li>
