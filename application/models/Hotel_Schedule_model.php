@@ -17,13 +17,17 @@
             $this->db->update('hotel_schedule', $data); 
         }
 
-        public function getBookHotelsByUserId($id){
+        public function getBookHotelsByUserId($id, $isCancelled){
         	$this->db->select('*');
             $this->db->from("hotel_schedule hs");
             if($_SESSION["role_code"]==CUSTOMER){
                 $this->db->where("hs.USER_ID", $id); 
             }
-            $this->db->where("hs.BOOKING_STATUS !=", "CANCELLED");
+            if($isCancelled){
+                $this->db->where("hs.BOOKING_STATUS", "CANCELLED");
+            }else{
+                $this->db->where("hs.BOOKING_STATUS !=", "CANCELLED"); 
+            }
             $this->db->order_by("hs.ID", "DESC");
             $query = $this->db->get();
             return $query->result();

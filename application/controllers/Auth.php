@@ -36,6 +36,20 @@ class Auth extends CI_Controller {
 		$this->load->view('faqs');
 	}
 
+	function forgotPasswordPage($data = null){
+
+		$data["isRegisterLinkVisible"] = false;
+
+		$data["isLoginLinkVisible"] = true;
+
+		$data["title"] = "Forgot Password";
+
+		$this->load->view('headers/loginheader',$data);
+		
+		$this->load->view('forgotpassword');
+
+	}
+
 	function registrationPage($data = null){
 
 		$data["isRegisterLinkVisible"] = false;
@@ -124,6 +138,39 @@ class Auth extends CI_Controller {
 
 	}
 
+	function forgotpassword(){
+		$this->form_validation->set_rules('email', 'Email', 'required|trim|callback_isExistingEmailForgotPass');
+		if ($this->form_validation->run() == FALSE){	
+        	$this->forgotPasswordPage();
+        }else{
+        	$newPassword = substr(md5(uniqid(rand(1,6))), 0, 8);
+        	$data["password"] = $newPassword;
+        	$this->user_model->updateUserPassword($data,$this->input->post("email"));
+        	$this->session->set_flashdata('forgot_password_success', 'Forgot password successfully done. Kindly check your email.' . $newPassword);
+
+        	if($this->sendForgotPasswordEmail($this->input->post("email"), $newPassword)==false){
+				$this->load->view('errors/html/error_emai_settings');
+        	}else{
+        		$this->forgotPasswordPage($data);
+        		redirect(current_url());
+        	}
+        }
+	}
+
+	public function sendForgotPasswordEmail($email,$password){
+
+		$this->email->initialize($this->getEmailConfiguration());	
+		$this->email->from($this->adminEmail, '');
+		$this->email->to($email);
+		$this->email->subject('Forgot Password!');
+		$this->email->message(emailForgotPasswordBody($email,$password));
+		if(!$this->email->send()){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
 	function redirectToDashboard($data = array()){
 
 		if(empty($data)){
@@ -173,18 +220,16 @@ class Auth extends CI_Controller {
 			$users = $this->user_model->getUserById($id);        	
 
         	$this->session->set_flashdata('message', 'You are successfully registered. Please check your email to validate your account');
-
-        	redirect(current_url());
 		
-    //     	if($this->sendSuccessEmail($this->input->post("email"),$users[0]->username,$users[0]->id)==false){
+        	if($this->sendSuccessEmail($this->input->post("email"),$users[0]->username,$users[0]->id)==false){
 
-				// $this->load->view('errors/html/error_emai_settings');
+				$this->load->view('errors/html/error_emai_settings');
         	
-    //     	}else{
+        	}else{
         	
-    //     		redirect(current_url());
+        		redirect(current_url());
         	
-    //     	}
+        	}
 			//$this->registrationPage($data);
         }
 	}
@@ -325,6 +370,16 @@ class Auth extends CI_Controller {
 
 	}
 
+	public function isExistingEmailForgotPass($str)
+	{
+		if(empty($this->user_model->isEmailExist($str))){
+			$this->form_validation->set_message('isExistingEmailForgotPass', "Email doesn't exist in the system");
+			return FALSE;
+		}else{
+			return TRUE;		
+		}
+	}
+
 	public function isExistingEmail($str)
 	{	
 
@@ -344,8 +399,7 @@ class Auth extends CI_Controller {
 	public function verifyUser($hash, $userid){
 
 		$data = array(
-				"is_verified" => 1,
-				"is_password_changed" => 1
+				"IS_VERIFIED" => 1,
 				);
 
 		$this->user_model->updateUser($data, $userid);
@@ -382,43 +436,24 @@ class Auth extends CI_Controller {
 	public function changepassword(){
 
 		$users = $this->user_model->getUserByHashedId($this->input->post('userid'));
-
 		$user = $users[0];
-
 		$data["isSuccess"] = false;
-
-		$this->form_validation->set_rules('old_password', 'Old Password', 'trim|required|callback_isPasswordValid['.$this->input->post('old_password').', '.$user->password.']');
-
+		$this->form_validation->set_rules('old_password', 'Old Password', 'trim|required|callback_isPasswordValid['.$this->input->post('old_password').', '.$user->PASSWORD.']');
         $this->form_validation->set_rules('new_password', 'New Password', 'trim|required|min_length[8]|callback_checkPasswordFormat');
-
         $this->form_validation->set_rules('retype_password', 'Password Confirmation', 'trim|required|matches[new_password]');
-
         $id = $this->input->post('userid');
-
 		if ($this->form_validation->run() == FALSE){
-
 			$data["message"] = "";
-
         }else{
-
         	$data["isSuccess"] = true;
-
         	$data["message"] = "Password Successfully Changed";
-
-        	$this->user_model->changeUserPassword($user->id, $this->input->post("new_password"));
-			
+        	$this->user_model->changeUserPassword($user->ID, $this->input->post("new_password"));
         }
-
         $data["module"] = "changepassword";
-		
 		$data["page_title"] = "Change Password";
-
 		$data["userid"] = $id;
-
 		$this->load->view("dashboard/common/header");
-
 		$this->load->view("dashboard/modules/changepassword",$data);
-
 		$this->load->view("dashboard/common/footer");
 	}
 

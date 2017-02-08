@@ -59,10 +59,8 @@
             <!-- /.box-body -->
             <div class="box-footer">
               <div class="pull-right">
-                <button type="button" class="btn btn-default"><i class="fa fa-pencil"></i> Draft</button>
                 <input type="submit" class="btn btn-primary" value="Send" />
               </div>
-              <button type="reset" class="btn btn-default"><i class="fa fa-times"></i> Discard</button>
             </div>
             <!-- /.box-footer -->
           </div>

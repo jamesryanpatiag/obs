@@ -68,6 +68,7 @@
             ids.push(id);
         }
       });  
+      console.log(ids);
       var fd = new FormData();
       fd.append("ids", ids);
       fd.append("type", type);
@@ -101,21 +102,15 @@
   function printElem(elem)
     {
       var mywindow = window.open('', 'PRINT', 'height=400,width=600');
-
-
       mywindow.document.write('<html><head><title>' + document.title  + '</title>');
-
       mywindow.document.write('</head><body >');
       mywindow.document.write('<h1>' + document.title  + '</h1>');
       mywindow.document.write(document.getElementById(elem).innerHTML);
       mywindow.document.write('</body></html>');
-
       mywindow.document.close(); // necessary for IE >= 10
       mywindow.focus(); // necessary for IE >= 10*/
-
       mywindow.print();
       mywindow.close();
-
       return true;
       }
 
@@ -132,7 +127,11 @@
                 processData: false,
                 contentType: false,
                 success: function(msg) {
-                    window.location = '<?php echo site_url('/modules/mailbox');?>';
+                    if(type=="sentmail"){
+                      window.location = '<?php echo site_url('/modules/sentmailbox');?>';
+                    }else{
+                      window.location = '<?php echo site_url('/modules/mailbox');?>';  
+                    }
                 }
               });
           }

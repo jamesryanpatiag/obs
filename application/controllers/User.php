@@ -60,86 +60,27 @@ class User extends CI_Controller {
 	}
 
 	public function editUser(){
-
 		$this->validateUser();
-
 		$this->isEdit = "true";
-
 		if ($this->form_validation->run() == FALSE){
-
 			$tempUserId = $this->input->post('userid') == "" ? $_SESSION['user_id'] : $this->input->post('userid');
-
 			$this->userpage($this->input->post('module'), $tempUserId);
-
         }else{
-
         	$person = array(
-        			"firstname" 	=> $this->input->post('first_name'),
-        			"middlename" 	=> $this->input->post('middlename'),
-    				"surname" 		=> $this->input->post('last_name'),
-    				"dob"			=> $this->input->post('dob'),
-					"gender"		=> $this->input->post('gender'),
+        			"FIRSTNAME" 	=> $this->input->post('first_name'),
+        			"MIDDLENAME" 	=> $this->input->post('middlename'),
+    				"LASTNAME" 		=> $this->input->post('last_name'),
+    				"BIRTHDATE"			=> $this->input->post('dob'),
+					"GENDER"		=> $this->input->post('gender') == "Male" ? "M" : ($this->input->post('gender') == "Female" ? "F" : "") ,
         		);
-
-        	$user = array(
-        			"username"		=> $this->input->post('username'),
-        			"role"			=> $this->input->post('role'),
-        		);
-
-        	$this->user_model->updateUser($user, $this->input->post('userid'));
-
         	$this->user_model->updatePerson($person, $this->input->post('userid'));
-
         	$this->session->set_flashdata('message', 'Save Success!');
-			
 			$userid = $this->input->post('userid');
-
         	if($userid == null){
-
         		$userid = $_SESSION['userid'];
-
         	}
 
-			if($this->input->post('allexpertise')!=null){
-
-				$this->user_model->deleteAllUserExpertiseByUser($userid);
-
-				$allexpertise = $this->input->post('allexpertise');
-			
-			}else{
-
-				$allexpertise = array();
-
-				$tempAllExpertise = $this->user_model->getAllExpertiseByUser($userid);
-
-				foreach($tempAllExpertise as $tempExpertise){
-
-					array_push($allexpertise, $tempExpertise->name);
-
-				}
-
-			}
-
-			foreach($allexpertise as $expertise){
-
-				$expertiseLookup = $this->user_model->getExpertiseByName($expertise);
-
-				if(count($expertiseLookup)==0){
-
-					$expertiseId = $this->user_model->insertExpertise($expertise);
-
-				}else{
-					$ex = $expertiseLookup[0];
-
-					$expertiseId = $ex->id;
-
-				}
-
-				$this->user_model->insertUserExpertise($expertiseId, $userid);
-
-			}
-
-        	$data["user"] = $this->user_model->getUserById($userid)[0];
+        	$data["user"] = $this->user_model->getUserById($_SESSION["user_id"])[0];
 
         	$this->isSuccess = "true";
 
@@ -226,73 +167,37 @@ class User extends CI_Controller {
 	public function userpage($module,$id = null){
 
 		sessionChecker();
-
-		permissionChecker(array(STUDENT, TUTOR, ADMINISTRATOR, MANAGER), true);
-
+		permissionChecker(array(ADMINISTRATOR, CUSTOMER), true);
 		$data["module"] = $module;
-
 		$data["page_title"] = "User Page";
-		
 		$data["sub_title"] = $module;
-
 		$data["isSuccess"] = $this->isSuccess;
-
-		$data["allUserExpertise"] = $this->user_model->getAllExpertiseByUser($id);
-
 		$this->isSuccess = "false";
-
 		$data["isCurrentUser"] = true; 
-
 		if($id == null || $id != $_SESSION["user_id"]){
-
 			$data["isCurrentUser"] = false;
-
 		}
-
-		if($_SESSION['role_code'] != ADMINISTRATOR && $_SESSION['role_code'] != MANAGER){
-
+		if($_SESSION['role_code'] != ADMINISTRATOR && $_SESSION['role_code'] != CUSTOMER){
 			if($id!=null){
-
 				if($id != $_SESSION['user_id']){
-
 					show_404();
-
 				}
-
 			}
-
 		}
-
-		if($id!=null){
-
-			$data["user"] = $this->user_model->getUserById($id)[0];
-
-		}
-
+		$data["user"] = $this->user_model->getUserById($_SESSION["user_id"])[0];
 		$this->load->view("dashboard/common/header");
-
 		$this->load->view("dashboard/modules/user",$data);
-
 		$this->load->view("dashboard/common/footer");
 
 	}
 
 	public function validateUser(){
-
 		$this->form_validation->set_rules('first_name', 'First name', 'required');
-
         $this->form_validation->set_rules('last_name', 'Last name', 'required');
-        
         $this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]|max_length[12]|callback_isExistingUsername');
-
         $this->form_validation->set_rules('dob', 'Date of Birth', 'callback_isDOBValid');
-
         $this->form_validation->set_rules('email', 'Email', 'required|callback_isExistingEmail');
-
-        $this->form_validation->set_rules('role', 'Role', 'required');
-
         $this->form_validation->set_rules('mobileno', 'Mobile Number', 'callback_isMobileNumberValid');
-        
 	} 
 
 	public function sendSuccessEmail($email){

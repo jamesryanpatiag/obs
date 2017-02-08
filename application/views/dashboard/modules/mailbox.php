@@ -36,13 +36,17 @@
             <div class="box-body no-padding">
               <div class="mailbox-controls">
                 <!-- Check all button -->
+                <?php if($module != "trashmailbox"){?>
                 <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
                 </button>
+                <?php } ?>
                 <div class="btn-group">
+                  <?php if($module != "trashmailbox"){?>
                   <button type="button" class="btn btn-default btn-sm" onClick="deleteSelectedMail('<?php echo $module; ?>', '<?php echo $module != "trashmailbox" ? 'MOVE_TO_TRASH' : 'DELETE_FOREVER'; ?>')"><i class="fa fa-trash-o"></i></button>
+                   <?php } ?>
                 </div>
                 <!-- /.btn-group -->
-                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
+                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh" onClick="location.reload();"></i></button>
                 <div class="pull-right">
                   1-50/200
                   <div class="btn-group">
@@ -59,7 +63,9 @@
                   <?php foreach($mails as $mail){ ?>
                   <tr>
                     <td>
+                      <?php if($module != "trashmailbox"){?>
                       <input class="mails" id="chkmail_<?php echo $mail->ID; ?>" type="checkbox">
+                      <?php }?>
                       <input value="<?php echo $mail->ID; ?>" type="hidden">
                     </td>
                     <?php

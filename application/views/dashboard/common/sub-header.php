@@ -37,8 +37,13 @@
                         <i class="fa fa-minus-circle" aria-hidden="true"></i>
                         <b>Cancelled Transactions</b> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">
-                            <b>Cancelled Bookings</b></a></li>
+                            <li><a href="<?php echo site_url('/modules/cancelledbookflight');?>">
+                            <b>Cancelled Book Flight</b></a></li>
+                             <li><a href="<?php echo site_url('/modules/cancelledbookhotel');?>">
+                            <b>Cancelled Book Hotel</b></a></li>
+                             <li><a href="<?php echo site_url('/modules/cancelledbookvehicle');?>">
+                            <b>Cancelled Book Vehicle</b></a></li>
+                            <li class="divider"></li>
                             <li><a href="#">
                             <b>Cancelled Reservations</b></a></li>
                         </ul>
@@ -113,6 +118,9 @@
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
+                            <div class="pull-left">
+                              <a href="<?php echo site_url('/user/userpage/profile')?>" class="btn btn-default btn-flat">Profile</a>
+                            </div>
                           <div class="pull-right">
                             <a href="<?php echo site_url('/auth/logout');?>" class="btn btn-default btn-flat">Sign out</a>
                           </div>

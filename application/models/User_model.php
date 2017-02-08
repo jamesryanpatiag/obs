@@ -61,15 +61,15 @@
 
             public function getUserById($userid){
                 $this->db->select('*');
-                $this->db->from("USER u");
-                $this->db->join("PERSON p", "u.id = p.user_id", "inner");
+                $this->db->from("user u");
+                $this->db->join("person p", "u.id = p.user_id", "inner");
                 $this->db->where("u.id", $userid);
                 $query = $this->db->get();
                 return $query->result();
             }
 
             public function getPersonByUserId($userid){
-                $query = $this->db->get_where('PERSON',array('USER_ID'=>$userid));
+                $query = $this->db->get_where('person',array('USER_ID'=>$userid));
                 return $query->result();
             }
 
@@ -84,8 +84,39 @@
             }
 
              public function getSinglePersonByUserId($userid){
-                $query = $this->db->get_where('PERSON',array('USER_ID'=>$userid));
+                $query = $this->db->get_where('person',array('USER_ID'=>$userid));
                 return $query->row();
+            }
+
+            public function updateUserPassword($data, $email){      
+                $data["password"] = $this->generateHashPassword($data["password"]);
+                $this->db->where('EMAIL_ADDRESS', $email);
+                $this->db->update('user', $data); 
+            }
+
+            public function updatePerson($data, $userid){
+                $this->db->where('USER_ID', $userid);
+                $this->db->update('person', $data); 
+            }
+
+            public function getUserByHashedId($userid){
+                   $this->db->select('*');
+                $this->db->from("user u");
+                $this->db->where("sha1(u.ID)", $userid);
+                $query = $this->db->get();
+                return $query->result();
+            }
+
+            public function changeUserPassword($userid, $password){
+
+                $user_data = array(
+                    "password" => $this->generateHashPassword($password),
+                );
+
+                $this->db->where('ID', $userid);
+
+                $this->db->update('user', $user_data); 
+
             }
 	}
 ?>

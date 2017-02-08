@@ -34,7 +34,23 @@ class Modules extends CI_Controller {
 		permissionChecker(array(0,1), true);
 		$data["module"] = "bookflight";
 		$data["page_title"] = "Book Flight";
-		$data["list"] = $this->flight_schedule_model->getBookFlightsByUserId($_SESSION["user_id"]);
+		$data["list"] = $this->flight_schedule_model->getBookFlightsByUserId($_SESSION["user_id"], false);
+		$data["isCancelled"] = false;
+		$data = $this->getAllLookups($data);
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/bookingpage",$data);
+		$this->load->view("dashboard/common/footer");
+	}
+
+	public function cancelledbookflight(){
+		sessionChecker();
+		//0 = customer
+		//1 = administrator
+		permissionChecker(array(0,1), true);
+		$data["module"] = "bookflight";
+		$data["page_title"] = "Cancelled Book Flight";
+		$data["list"] = $this->flight_schedule_model->getBookFlightsByUserId($_SESSION["user_id"], true);
+		$data["isCancelled"] = true;
 		$data = $this->getAllLookups($data);
 		$this->load->view("dashboard/common/header");
 		$this->load->view("dashboard/modules/bookingpage",$data);
@@ -48,7 +64,23 @@ class Modules extends CI_Controller {
 		permissionChecker(array(0,1), true);
 		$data["module"] = "bookhotel";
 		$data["page_title"] = "Book Hotel";
-		$data["list"] = $this->hotel_schedule_model->getBookHotelsByUserId($_SESSION["user_id"]);
+		$data["list"] = $this->hotel_schedule_model->getBookHotelsByUserId($_SESSION["user_id"], false);
+		$data["isCancelled"] = false;
+		$data = $this->getAllLookups($data);
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/bookingpage",$data);
+		$this->load->view("dashboard/common/footer");
+	}
+
+	public function cancelledbookhotel(){
+		sessionChecker();
+		//0 = customer
+		//1 = administrator
+		permissionChecker(array(0,1), true);
+		$data["module"] = "bookhotel";
+		$data["page_title"] = "Cancelled Book Hotel";
+		$data["list"] = $this->hotel_schedule_model->getBookHotelsByUserId($_SESSION["user_id"], true);
+		$data["isCancelled"] = true;
 		$data = $this->getAllLookups($data);
 		$this->load->view("dashboard/common/header");
 		$this->load->view("dashboard/modules/bookingpage",$data);
@@ -62,7 +94,23 @@ class Modules extends CI_Controller {
 		permissionChecker(array(0,1), true);
 		$data["module"] = "rentvehicle";
 		$data["page_title"] = "Rent Vehicle";
-		$data["list"] = $this->vehicle_schedule_model->getBookVehiclesByUserId($_SESSION["user_id"]);
+		$data["list"] = $this->vehicle_schedule_model->getBookVehiclesByUserId($_SESSION["user_id"], false);
+		$data["isCancelled"] = false;
+		$data = $this->getAllLookups($data);
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/bookingpage",$data);
+		$this->load->view("dashboard/common/footer");
+	}
+
+	public function cancelledbookvehicle(){
+		sessionChecker();
+		//0 = customer
+		//1 = administrator
+		permissionChecker(array(0,1), true);
+		$data["module"] = "rentvehicle";
+		$data["page_title"] = "Cancelled Rent Vehicle";
+		$data["list"] = $this->vehicle_schedule_model->getBookVehiclesByUserId($_SESSION["user_id"], true);
+		$data["isCancelled"] = true;
 		$data = $this->getAllLookups($data);
 		$this->load->view("dashboard/common/header");
 		$this->load->view("dashboard/modules/bookingpage",$data);
@@ -208,6 +256,9 @@ class Modules extends CI_Controller {
 		if($x != ""){
 			$type = $x;
 		}
+		if($type==="sentmailbox"){
+			$type = "sentmail";
+		}
 		$data["mail"] = $this->user_messages_model->getMessageById($id, $type);
 		$data["type"] = $type;
 		$this->load->view("dashboard/common/header");
@@ -249,7 +300,7 @@ class Modules extends CI_Controller {
 	}
 
 	public function refreshBookingFlight(){
-		$data["list"] = $this->flight_schedule_model->getBookFlightsByUserId($_SESSION["user_id"]);
+		$data["list"] = $this->flight_schedule_model->getBookFlightsByUserId($_SESSION["user_id"], false);
 		$data = $this->getAllLookups($data);
 		$this->load->view("dashboard/tables/bookFlightTable",$data);
 	}

@@ -17,7 +17,7 @@
       </section>
       <section class="content">
       <div id="booking-table-alert-msg"></div>
-      <?php if($_SESSION["role_code"]==CUSTOMER){?>
+      <?php if($_SESSION["role_code"]==CUSTOMER && !$isCancelled){?>
       <div class="nav-tabs-custom col-md-12 col-lg-12">
             <ul class="nav nav-tabs">
               <?php if($module==="bookflight"){ ?>

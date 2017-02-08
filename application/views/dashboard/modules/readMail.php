@@ -91,8 +91,8 @@
             <!-- /.box-footer -->
             <div class="box-footer">
               <div class="pull-right">
-                <button type="button" class="btn btn-default"><i class="fa fa-reply"></i> Reply</button>
-                <button type="button" class="btn btn-default"><i class="fa fa-share"></i> Forward</button>
+                <!-- <button type="button" class="btn btn-default"><i class="fa fa-reply"></i> Reply</button> -->
+                <!-- <button type="button" class="btn btn-default"><i class="fa fa-share"></i> Forward</button> -->
               </div>
               <?php if($orig_type!=""){ ?>
                 <button type="button" class="btn btn-default" onclick="deleteMessage(<?php echo $mail->ID?>, '<?php echo $type;?>', 'DELETE_FOREVER')"><i class="fa fa-trash-o"></i> Delete Forever</button>

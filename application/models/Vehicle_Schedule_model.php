@@ -17,13 +17,17 @@
             $this->db->update('vehicle_schedule', $data); 
         }
 
-        public function getBookVehiclesByUserId($id){
+        public function getBookVehiclesByUserId($id, $isCancelled){
         	$this->db->select('*');
             $this->db->from("vehicle_schedule vs");
             if($_SESSION["role_code"]==CUSTOMER){
                 $this->db->where("vs.USER_ID", $id);
             }
-            $this->db->where("vs.BOOKING_STATUS !=", "CANCELLED");
+            if($isCancelled){
+                $this->db->where("vs.BOOKING_STATUS", "CANCELLED");
+            }else{
+                $this->db->where("vs.BOOKING_STATUS !=", "CANCELLED");    
+            }
             $this->db->order_by("vs.ID", "DESC");
             $query = $this->db->get();
             return $query->result();

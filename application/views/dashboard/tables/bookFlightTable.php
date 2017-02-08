@@ -29,7 +29,9 @@
         <th>No. of Person</th>
       <?php } ?>
       <th>Status</th>
+      <?php if(!$isCancelled || $_SESSION["role_code"]==ADMINISTRATOR) { ?>
       <th>Actions</th>
+      <?php } ?> 
     </tr>
     </thead>
     <tbody>
@@ -138,6 +140,7 @@
                     <td>
                       <label class="data-label-row" id="lblStatus_<?php echo $counter;?>"><?php echo $item->BOOKING_STATUS;?></label>
                     </td>
+                    <?php if(!$isCancelled || $_SESSION["role_code"]==ADMINISTRATOR) { ?>
                     <td  style="width:10%" >
                         <?php if($_SESSION["role_code"]==ADMINISTRATOR){?>
                             <button type="button" class="btn btn-warning" title="Change Status" onClick="changeStatus('FLIGHT', <?php echo $item->ID; ?> , '<?php echo $item->BOOKING_STATUS;?>')" data-toggle="modal" data-target="#changeStatus" >
@@ -146,15 +149,19 @@
                             <button title="Save Booking" style="display:none" class="btn btn-success" id="bntSaveBooking_<?php echo $counter; ?>" onClick="saveRow(<?php echo $counter; ?>)">
                               <span class="fa fa-check"></span></a>
                             </button>
+                            <?php if(!$isCancelled){?>
                             <button title="Edit Booking" class="btn btn-info" id="bntEditBooking_<?php echo $counter; ?>"  onClick="editRow(<?php echo $counter; ?>)">
                               <span class="fa fa-pencil"></span></a>
                             </button>
+                            <?php }?>
                         <?php } ?>
+                        <?php if(!$isCancelled){?>
                           <button title="Cancel Booking" class="btn btn-danger" onClick="cancelBooking(<?php echo $counter; ?>)">
                             <span class="fa fa-trash"></span></a>
                           </button>
-                        
+                        <?php } ?>
                     </td>
+                    <?php } ?>
                 </tr>
             <?php $counter++;}?>
         <?php }?>
