@@ -39,6 +39,16 @@ function notYetBooked($id){
 	return false;
 }
 
+function promoNotYetAvailed($id){
+	$CI = get_instance();
+	$CI->load->model('promo_schedule_model');	
+	$tap = $CI->promo_schedule_model->promoNotYetAvailed($id); 
+	if($tap==null){
+		return true;
+	}
+	return false;
+}
+
 function getAllMessagesByuser(){
 	$CI = get_instance();
 	$CI->load->model('user_messages_model');	

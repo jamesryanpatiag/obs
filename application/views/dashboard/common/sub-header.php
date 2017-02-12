@@ -29,7 +29,7 @@
                             <b>Book Vehicle</b></a></li>
                             <li class="divider"></li>
                             <li <?php if($module == "usertoursandpackages"){echo "class='active'";} ?>><a href="<?php echo site_url('/modules/userToursAndPackages');?>"><i class="fa fa-dropbox" aria-hidden="true"></i><b>Reserve Tours/Package</b></a></li>
-                            <li><a href="<?php echo site_url('/modules/promos');?>"><i class="fa fa-asterisk" aria-hidden="true"></i>  <b>Reserve Promos</b></a></li>
+                            <li <?php if($module == "userpromo"){echo "class='active'";} ?>><a href="<?php echo site_url('/modules/userPromo');?>"><i class="fa fa-asterisk" aria-hidden="true"></i><b>Reserve Promos</b></a></li>
                         </ul>
                     </li>
                     <li>
@@ -46,7 +46,7 @@
                             <li class="divider"></li>
                             <li><a href="<?php echo site_url('/modules/cancelledtoursandpackages');?>">
                             <b>Cancelled Tours & Packages Bookings</b></a></li>
-                            <li><a href="<?php echo site_url('/modules/promos');?>">
+                            <li><a href="<?php echo site_url('/modules/cancelledPromo');?>">
                             <b>Cancelled Promo Bookings</b></a></li>
                             
                         </ul>
@@ -57,7 +57,7 @@
                         <b>Tours & Package</b></a></li>
                     </li>
                     <li>
-                        <li><a href="<?php echo site_url('/modules/promos');?>">
+                        <li <?php if($module == "promos" || $module == "viewpromo"){echo "class='active'";} ?>><a href="<?php echo site_url('/modules/promos');?>">
                         <i class="fa fa-asterisk" aria-hidden="true"></i>  
                         <b>Promos</b></a></li>
                     </li>

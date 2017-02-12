@@ -8,12 +8,13 @@
         <ol class="breadcrumb"><li><a href="#"><i class="fa fa-dashboard"></i> Home</li></a> /<?php echo $page_title;?></li></ol>
         <div style="height:20px;"></div>
       </section>
-      <div class="container">
+      <div class="content">
           <?php if($_SESSION["role_code"]==ADMINISTRATOR && $module==="toursandpackages") {?>
           <a href="<?php echo site_url("modules/newToursandpackages"); ?>" title="New Tour and Package" class="btn btn-info" > 
            <i class="fa fa-plus" aria-hidden="true"></i> 
            Add <?php echo $page_title;?> 
           </a> 
+          <div style="height:20px;"></div>
           <?php } ?>
           <?php $this->view("dashboard/tables/toursandpackagesTable", $list); ?>
       </div>

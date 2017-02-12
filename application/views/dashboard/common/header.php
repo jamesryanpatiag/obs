@@ -31,9 +31,14 @@
   <![endif]-->
    <style type="text/css">
    table{
-    font-size: 12px;
+    font-size: 17px;
     font-weight: 5px;
    }
+
+   .container{
+      width:80% !important;
+   }
+
    .content-wrapper{
       background-image: url("<?php echo base_url()."assets/img/container-bg.png"; ?>");
       background-size:cover;

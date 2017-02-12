@@ -52,6 +52,7 @@
 				</div>
 				<div class="form-group  col-md-4 col-lg-4">
 		        <label for="tapHotel">Hotel:</label>
+		        <?php var_dump($hotel);?>
 		        <select class="form-control pull-right" id="tapHotel" name="tapHotel">
 		            <option value="">-- Hotel Place --</option>
 		            <?php foreach($hotel as $category){ ?>
@@ -172,9 +173,6 @@
     </div>
   	</div>
 </div>
-<?php 
-	var_dump($itinerary);
-?> 
 <script src="<?php echo base_url()."assets/"; ?>plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.js"></script>
 <script> 
 

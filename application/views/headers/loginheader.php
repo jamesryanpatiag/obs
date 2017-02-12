@@ -61,27 +61,6 @@
                 </a>
                 <?php if($isRegisterLinkVisible && $isLoginLinkVisible){?>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a class="hidden-sm hidden-xs" href="<?php echo site_url('/#about'); ?>">
-                        <i class="fa fa-plane" aria-hidden="true"></i>
-                        Flights</a>
-                    </li>
-                    <li>
-                        <a class="hidden-sm hidden-xs" href="<?php echo site_url('/#services'); ?>">
-                        <i class="fa fa-home" aria-hidden="true"></i>
-                        Hotels</a>
-                    </li>
-                    <li>
-                        <a class="hidden-sm hidden-xs" href="<?php echo site_url('/#promise'); ?>">
-                        <i class="fa fa-car" aria-hidden="true"></i>
-                        Vehicles</a>
-                    </li>
-                    <li>
-                         <a href="<?php echo site_url('auth/faqs');?>">Inquiries</a>
-                    </li>
-                    <li>
-                        <!-- <a class="hidden-sm hidden-xs" href="#testimonials">Testimonials</a> -->
-                    </li>
                 </ul>
                 <?php }?>
             </div>

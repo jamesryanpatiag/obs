@@ -117,35 +117,6 @@ class Modules extends CI_Controller {
 		$this->load->view("dashboard/common/footer");
 	}
 
-	public function toursandpackages(){
-		sessionChecker();
-		//0 = customer
-		//1 = administrator
-		permissionChecker(array(0,1), true);
-		$data["currency_symbol"] = $this->getCurrentCurrencySymbol();
-		$data["module"] = "toursandpackages";
-		$data["page_title"] = "Tours & Packages";
-		$data["isCancelled"] = false;
-		$data["list"] = $this->tour_pack_model->getAllValidTourPackSchedule();
-		$this->load->view("dashboard/common/header");
-		$this->load->view("dashboard/modules/toursandpackages",$data);
-		$this->load->view("dashboard/common/footer");
-	}
-
-	public function promos(){
-		sessionChecker();
-		//0 = customer
-		//1 = administrator
-		permissionChecker(array(0,1), true);
-		$data["currency_symbol"] = $this->getCurrentCurrencySymbol();
-		$data["module"] = "promos";
-		$data["page_title"] = "Promos";
-		$data["isCancelled"] = false;
-		$data["list"] = $this->tour_pack_model->getAllValidTourPackSchedule();
-		$this->load->view("dashboard/common/header");
-		$this->load->view("dashboard/modules/promos",$data);
-		$this->load->view("dashboard/common/footer");
-	}
 
 	public function userToursAndPackages(){
 		sessionChecker();
@@ -217,11 +188,116 @@ class Modules extends CI_Controller {
 		$data["page_title"] = "View Tours & Packages";
 		$data["tap"] = $this->tour_pack_model->getTourAndPackagesById($id);
 		$data["itinerary"] = $this->tour_pack_model->getItineraries($id);
+		$data = $this->getAllLookups($data);
 		$this->load->view("dashboard/common/header");
 		$this->load->view("dashboard/modules/editToursAndPackages",$data);
 		$this->load->view("dashboard/common/footer");	
 	}
 
+	public function toursandpackages(){
+		sessionChecker();
+		//0 = customer
+		//1 = administrator
+		permissionChecker(array(0,1), true);
+		$data["currency_symbol"] = $this->getCurrentCurrencySymbol();
+		$data["module"] = "toursandpackages";
+		$data["page_title"] = "Tours & Packages";
+		$data["isCancelled"] = false;
+		$data["list"] = $this->tour_pack_model->getAllValidTourPackSchedule();
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/toursandpackages",$data);
+		$this->load->view("dashboard/common/footer");
+	}
+
+	public function promos(){
+		sessionChecker();
+		//0 = customer
+		//1 = administrator
+		permissionChecker(array(0,1), true);
+		$data["currency_symbol"] = $this->getCurrentCurrencySymbol();
+		$data["module"] = "promos";
+		$data["page_title"] = "Promos";
+		$data["isCancelled"] = false;
+		$data["list"] = $this->promos_model->getAllValidPromos();
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/promos",$data);
+		$this->load->view("dashboard/common/footer");
+	}
+
+	public function newPromos(){
+		sessionChecker();
+		//0 = customer
+		//1 = administrator
+		permissionChecker(array(0,1), true);
+		$data["currency_symbol"] = $this->getCurrentCurrencySymbol();
+		$data["module"] = "newpromos";
+		$data["page_title"] = "New Promos";
+		$data["isCancelled"] = false;
+		$data = $this->getAllLookups($data);
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/newPromos",$data);
+		$this->load->view("dashboard/common/footer");	
+	}
+
+
+	public function viewPromo($id){
+		sessionChecker();
+		//0 = customer
+		//1 = administrator
+		permissionChecker(array(0,1), true);
+		$data["currency_symbol"] = $this->getCurrentCurrencySymbol();
+		$data["module"] = "viewpromo";
+		$data["page_title"] = "View Promo";
+		$data["tap"] = $this->promos_model->getPromoById($id);
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/viewPromo",$data);
+		$this->load->view("dashboard/common/footer");	
+	}
+
+	public function editPromo($id){
+		sessionChecker();
+		//0 = customer
+		//1 = administrator
+		permissionChecker(array(0,1), true);
+		$data["currency_symbol"] = $this->getCurrentCurrencySymbol();
+		$data["module"] = "editpromo";
+		$data["page_title"] = "Edit Promo";
+		$data["promo"] = $this->promos_model->getPromoById($id);
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/editPromo",$data);
+		$this->load->view("dashboard/common/footer");	
+	}
+
+
+	public function userPromo(){
+		sessionChecker();
+		//0 = customer
+		//1 = administrator
+		permissionChecker(array(0,1), true);
+		$data["currency_symbol"] = $this->getCurrentCurrencySymbol();
+		$data["module"] = "userpromo";
+		$data["page_title"] = "My Promos";
+		$data["list"] = $this->promo_schedule_model->getPromoScheduleById($_SESSION["user_id"], false);
+		$data["isCancelled"] = false;
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/promos",$data);
+		$this->load->view("dashboard/common/footer");
+	}
+
+	public function cancelledPromo(){
+		sessionChecker();
+		//0 = customer
+		//1 = administrator
+		permissionChecker(array(0,1), true);
+		$data["currency_symbol"] = $this->getCurrentCurrencySymbol();
+		$data["module"] = "cancelledpromo";
+		$data["page_title"] = "My Promos";
+		$data["list"] = $this->promo_schedule_model->getPromoScheduleById($_SESSION["user_id"], true);
+		$data["isCancelled"] = true;
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/promos",$data);
+		$this->load->view("dashboard/common/footer");
+	}
 
 	public function lookups(){
 		sessionChecker();
@@ -439,6 +515,7 @@ class Modules extends CI_Controller {
 		$data["destination"] = $this->lookups_model->getLookupByCategory("Destination");
 		$data["ticket_type"] = $this->lookups_model->getLookupByCategory("Ticket Type");
 		$data["hotel"] = $this->lookups_model->getLookupByCategory("Hotel");
+		$data["tandpack"] = $this->tour_pack_model->getAllValidTourPackSchedule();
 		return $data;
 	}
 
@@ -512,6 +589,39 @@ class Modules extends CI_Controller {
 		}
 	}
 
+	public function submitPromo(){
+		$this->promosValidation();
+		if ($this->form_validation->run() == FALSE){
+			$this->newPromos();
+		}else{
+			$data = $this->promosCreation($this->input->post());
+			if($data["DESCRIPTION"]!=""){
+				$data["DESCRIPTION"] = str_replace('src=', 'class="img-responsive" src=', $data["DESCRIPTION"]);
+			}
+			
+        	$data["CREATED_BY"] = $_SESSION['user_id'];
+        	$tour_pack_id = $this->promos_model->addPromo($data);
+        	$this->session->set_flashdata('message', 'You successfully created a Promo.');
+        	redirect(current_url());
+		}
+	}
+
+	public function updatePromo(){
+		$this->promosValidation();
+		$promoId = $this->input->post("promoId");
+		if ($this->form_validation->run() == FALSE){
+			$this->editPromo(md5($promoId));
+		}else{
+			$data = $this->promosCreation($this->input->post());
+			if($data["DESCRIPTION"]!=""){
+				$data["DESCRIPTION"] = str_replace('src=', 'class="img-responsive" src=', $data["DESCRIPTION"]);
+			}
+        	$this->promos_model->updatePromo($data,$promoId);
+        	$this->session->set_flashdata('message', 'You successfully created a Promo.');
+        	$this->editPromo(md5($promoId));
+		}
+	}
+
 	public function updateToursAndPackages(){
 		$this->toursAndPackagesValidations();
 		$tapId = $this->input->post("tapId");
@@ -553,6 +663,18 @@ class Modules extends CI_Controller {
 			);
 
 		$this->tour_pack_schedule_model->addTourPackSchedule($data);
+		echo "YES";
+	}
+
+	public function submitPromoSchedule(){
+		$data = array(
+				"PROMO_ID"	=>	$this->input->post("id"),
+				"USER_ID"		=>	$_SESSION["user_id"],
+				"UPDATED_BY"	=>  $_SESSION['user_id'],
+				"CREATED_BY"	=>  $_SESSION['user_id']
+			);
+
+		$this->promo_schedule_model->addPromoSchedule($data);
 		echo "YES";
 	}
 
@@ -640,6 +762,12 @@ class Modules extends CI_Controller {
 		$this->tour_pack_schedule_model->updateTourPackSchedule($this->input->post("id"), $data);
 		echo "YES";
 	}
+
+	public function cancelPromo(){
+		$data["BOOKING_STATUS"] = "CANCELLED";
+		$this->promo_schedule_model->updatePromoSchedule($this->input->post("id"), $data);
+		echo "YES";
+	}
 	
 	############ DATA CREATIONS ################
 	private function bookFlightDataCreation($data){
@@ -699,18 +827,19 @@ class Modules extends CI_Controller {
 				"PRICE"					=> $data["tapPrice"],
         		"UPDATED_BY" 			=> $_SESSION['user_id'],
 			);
+	}
 
-
-
-		$this->form_validation->set_rules('tapTitle', 'Title', 'trim|required');
-		$this->form_validation->set_rules('tapDescription', 'Description', 'trim|required');
-		$this->form_validation->set_rules('tapHotel', 'Hotel', 'trim|required');
-		$this->form_validation->set_rules('tapNoDays', 'No. of Days', 'trim|required|numeric');
-		$this->form_validation->set_rules('tapNoNights', 'No. of Nights', 'trim|required|numeric');
-		$this->form_validation->set_rules('tapValidFrom', 'Valid From', 'trim|required');
-		$this->form_validation->set_rules('tapValidTo', 'Valid To', 'trim|required');
-		$this->form_validation->set_rules('tapInclusion', 'Inclusion', 'trim|required');
-		$this->form_validation->set_rules('tapExclusion', 'Exclusion', 'trim|required');
+	private function promosCreation($data){
+		return array(
+				"TITLE"					=> $data["promoTitle"],
+				"DESCRIPTION"			=> $data["promoDescription"],
+				"VALID_FROM"			=> $data["promoValidFrom"],
+				"VALID_TO"				=> $data["promoValidTo"],
+				"SALES_PERIOD_FROM"		=> $data["promoSalesPeriodFrom"],
+				"SALES_PERIOD_TO"		=> $data["promoSalesPeriodTo"],
+				"PRICE"					=> $data["promoPrice"],
+        		"UPDATED_BY" 			=> $_SESSION['user_id'],
+			);
 	}
 
 	############# VALIDATIONS ###########
@@ -768,6 +897,16 @@ class Modules extends CI_Controller {
 		}
 	}
 
+	private function promosValidation(){
+		$this->form_validation->set_rules('promoTitle', 'Title', 'trim|required');
+		$this->form_validation->set_rules('promoDescription', 'Description', 'trim|required');
+		$this->form_validation->set_rules('promoSalesPeriodFrom', 'Sales Period From', 'trim|required');
+		$this->form_validation->set_rules('promoSalesPeriodTo', 'Sales Period To', 'trim|required');
+		$this->form_validation->set_rules('promoValidFrom', 'Valid From', 'trim|required');
+		$this->form_validation->set_rules('promoValidTo', 'Valid To', 'trim|required');
+		$this->form_validation->set_rules('promoPrice', 'Price', 'trim|required');	
+	}
+
 	public function isExistingEmail($str)
 	{
 		if(empty($this->user_model->isEmailExist($str))){
@@ -802,6 +941,9 @@ class Modules extends CI_Controller {
 			break;
 			case "TOURSANDPACKAGE":
 				$this->tour_pack_schedule_model->updateTourPackSchedule($post["id"], $data);
+			break;
+			case "PROMO":
+				$this->promo_schedule_model->updatePromoSchedule($post["id"], $data);
 			break;
 		}
 		echo "YES";

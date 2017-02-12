@@ -27,12 +27,12 @@
         }
 
         public function getAllTrashMessages(){
-            $this->db->select("ID, SUBJECT, EMAIL, MESSAGE, CREATED_DATE, IS_READ, 'readmail' as TYPE");
+            $this->db->select("ID, SUBJECT, EMAIL, MESSAGE, CREATED_DATE, IS_READ, 'readmail' as TYPE, FROM_USER_ID, TO_USER_ID");
             $this->db->from('readmails');
             $this->db->where('IS_DELETED', 1);
             $query1 = $this->db->get_compiled_select();
 
-            $this->db->select("ID, SUBJECT, EMAIL, MESSAGE, CREATED_DATE, IS_READ, 'sentmail' as TYPE");
+            $this->db->select("ID, SUBJECT, EMAIL, MESSAGE, CREATED_DATE, IS_READ, 'sentmail' as TYPE, FROM_USER_ID, TO_USER_ID");
             $this->db->from('sentmails');
             $this->db->where('IS_DELETED', 1);
             $this->db->order_by("ID", "DESC");
