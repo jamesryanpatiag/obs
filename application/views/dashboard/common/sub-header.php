@@ -62,11 +62,12 @@
                         <b>Promos</b></a></li>
                     </li>
                     <?php if($_SESSION["role_code"]==ADMINISTRATOR){?>
-                        <li>
-                         <li <?php if($module == "lookup"){echo "class='active'";} ?>><a href="<?php echo site_url('/modules/lookups');?>">
+                        <li <?php if($module == "reports"){echo "class='active'";} ?>><a href="<?php echo site_url('/modules/reports');?>">
+                        <i class="fa fa-bar-chart-o" aria-hidden="true"></i>  
+                        <b>Reports</b></a></li>
+                        <li <?php if($module == "lookup"){echo "class='active'";} ?>><a href="<?php echo site_url('/modules/lookups');?>">
                         <i class="fa fa-search" aria-hidden="true"></i>  
                         <b>Lookup Values</b></a></li>
-                        </li>
                     <?php } ?>
                 </ul>
             </div>   

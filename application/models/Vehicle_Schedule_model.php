@@ -33,5 +33,19 @@
             return $query->result();
         }
 
+        public function getBookVehicles($date){
+            $this->db->select('*');
+            $this->db->from("vehicle_schedule fs");
+            if(count($date)>0){
+                if($date["dateFrom"]!=""){
+                    $this->db->where("fs.CREATED_DATE >= ", $date["dateFrom"]);    
+                }
+                if($date["dateTo"]!=""){
+                    $this->db->where("fs.CREATED_DATE <= ", $date["dateTo"]);    
+                }
+            }
+            $query = $this->db->get();
+            return $query->result();
+        }
 	}
 ?>

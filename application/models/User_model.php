@@ -118,5 +118,31 @@
                 $this->db->update('user', $user_data); 
 
             }
+
+            public function getUserByStatus($userType){
+                $this->db->select('*');
+                $this->db->from("user u");
+                $this->db->join("person p", "u.id = p.user_id", "inner");
+                $this->db->where("u.USER_TYPE", $userType);
+                $query = $this->db->get();
+                return $query->result();
+            }
+
+            public function getUserByStatusByDate($userType, $date){
+                $this->db->select('*');
+                $this->db->from("user u");
+                $this->db->join("person p", "u.id = p.user_id", "inner");
+                $this->db->where("u.USER_TYPE", $userType);
+                if(count($date)>0){
+                    if($date["dateFrom"]!=""){
+                    $this->db->where("u.CREATED_DATE >= ", $date["dateFrom"]);
+                    }
+                    if($date["dateTo"]!=""){
+                        $this->db->where("u.CREATED_DATE <= ", $date["dateTo"]);
+                    }    
+                }
+                $query = $this->db->get();
+                return $query->result();
+            }
 	}
 ?>

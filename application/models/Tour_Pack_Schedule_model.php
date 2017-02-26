@@ -38,6 +38,23 @@
             return $query->result();
         }
 
+        public function getToursPackSched($date){
+            $this->db->select('*, tps.ID as TPS_ID');
+            $this->db->from("tour_pack_schedule tps");
+            $this->db->join("tour_pack tp", "tps.TOUR_PACK_ID = tp.ID", "inner");
+            if(count($date)>0){
+                if($date["dateFrom"]!=""){
+                    $this->db->where("tps.CREATED_DATE >= ", $date["dateFrom"]);    
+                }
+                if($date["dateTo"]!=""){
+                    $this->db->where("tps.CREATED_DATE <= ", $date["dateTo"]);    
+                }
+            }   
+            $this->db->order_by("tps.ID", "DESC");
+            $query = $this->db->get();
+            return $query->result();
+        }
+
         public function updateTourPackSchedule($id, $data){
             $this->db->where('ID', $id);
             $this->db->update('tour_pack_schedule', $data); 

@@ -311,6 +311,138 @@ class Modules extends CI_Controller {
 		$this->load->view("dashboard/common/footer");
 	}
 
+	public function reports(){
+		sessionChecker();
+		permissionChecker(array(0,1), true);
+		$data["module"] = "client_registration";
+		$data["page_title"] = "Reports";
+		$data["list"] = $this->lookups_model->getAllLookups();
+		$data["categories"] = $this->category_model->getAllCategories();
+		$data["client_registration"] = $this->user_model->getUserByStatus(0);
+		$data["flight_booking"] = $this->flight_schedule_model->getBookFlights(array());
+		$data["hotel_booking"] = $this->hotel_schedule_model->getBookHotels(array());
+		$data["vehicle_booking"] = $this->vehicle_schedule_model->getBookVehicles(array());
+		$data["tap"] = $this->tour_pack_schedule_model->getToursPackSched(array());
+		$data["promo"] = $this->promo_schedule_model->getPromoSched(array());
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/reports",$data);
+		$this->load->view("dashboard/common/footer");
+	}
+
+	public function searchClientReg(){
+		sessionChecker();
+		permissionChecker(array(0,1), true);
+		$date = $this->setDate($this->input->post("dateFrom"), $this->input->post("dateTo"));
+		$data["module"] = "client_registration";
+		$data["page_title"] = "Reports";
+		$data["list"] = $this->lookups_model->getAllLookups();
+		$data["categories"] = $this->category_model->getAllCategories();
+		$data["client_registration"] = $this->user_model->getUserByStatusByDate(0, $date);
+		$data["flight_booking"] = $this->flight_schedule_model->getBookFlights(array());
+		$data["hotel_booking"] = $this->hotel_schedule_model->getBookHotels(array());
+		$data["vehicle_booking"] = $this->vehicle_schedule_model->getBookVehicles(array());
+		$data["tap"] = $this->tour_pack_schedule_model->getToursPackSched(array());
+		$data["promo"] = $this->promo_schedule_model->getPromoSched(array());
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/reports",$data);
+		$this->load->view("dashboard/common/footer");
+	}
+
+	public function searchBookFlight(){
+		sessionChecker();
+		permissionChecker(array(0,1), true);
+		$date = $this->setDate($this->input->post("dateFrom"), $this->input->post("dateTo"));
+		$data["module"] = "book_flight";
+		$data["page_title"] = "Reports";
+		$data["list"] = $this->lookups_model->getAllLookups();
+		$data["categories"] = $this->category_model->getAllCategories();
+		$data["client_registration"] = $this->user_model->getUserByStatusByDate(0, array());
+		$data["flight_booking"] = $this->flight_schedule_model->getBookFlights($date);
+		$data["hotel_booking"] = $this->hotel_schedule_model->getBookHotels(array());
+		$data["vehicle_booking"] = $this->vehicle_schedule_model->getBookVehicles(array());
+		$data["tap"] = $this->tour_pack_schedule_model->getToursPackSched(array());
+		$data["promo"] = $this->promo_schedule_model->getPromoSched(array());
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/reports",$data);
+		$this->load->view("dashboard/common/footer");
+	}
+
+	public function searchBookHotel(){
+		sessionChecker();
+		permissionChecker(array(0,1), true);
+		$date = $this->setDate($this->input->post("dateFrom"), $this->input->post("dateTo"));
+		$data["module"] = "book_hotel";
+		$data["page_title"] = "Reports";
+		$data["list"] = $this->lookups_model->getAllLookups();
+		$data["categories"] = $this->category_model->getAllCategories();
+		$data["client_registration"] = $this->user_model->getUserByStatusByDate(0, array());
+		$data["flight_booking"] = $this->flight_schedule_model->getBookFlights(array());
+		$data["hotel_booking"] = $this->hotel_schedule_model->getBookHotels($date);
+		$data["vehicle_booking"] = $this->vehicle_schedule_model->getBookVehicles(array());
+		$data["tap"] = $this->tour_pack_schedule_model->getToursPackSched(array());
+		$data["promo"] = $this->promo_schedule_model->getPromoSched(array());
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/reports",$data);
+		$this->load->view("dashboard/common/footer");
+	}
+
+	public function searchBookVehicle(){
+		sessionChecker();
+		permissionChecker(array(0,1), true);
+		$date = $this->setDate($this->input->post("dateFrom"), $this->input->post("dateTo"));
+		$data["module"] = "book_vehicle";
+		$data["page_title"] = "Reports";
+		$data["list"] = $this->lookups_model->getAllLookups();
+		$data["categories"] = $this->category_model->getAllCategories();
+		$data["client_registration"] = $this->user_model->getUserByStatusByDate(0, array());
+		$data["flight_booking"] = $this->flight_schedule_model->getBookFlights(array());
+		$data["hotel_booking"] = $this->hotel_schedule_model->getBookHotels(array());
+		$data["vehicle_booking"] = $this->vehicle_schedule_model->getBookVehicles($date);
+		$data["tap"] = $this->tour_pack_schedule_model->getToursPackSched(array());
+		$data["promo"] = $this->promo_schedule_model->getPromoSched(array());
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/reports",$data);
+		$this->load->view("dashboard/common/footer");
+	}
+
+	public function searchTap(){
+		sessionChecker();
+		permissionChecker(array(0,1), true);
+		$date = $this->setDate($this->input->post("dateFrom"), $this->input->post("dateTo"));
+		$data["module"] = "tap";
+		$data["page_title"] = "Reports";
+		$data["list"] = $this->lookups_model->getAllLookups();
+		$data["categories"] = $this->category_model->getAllCategories();
+		$data["client_registration"] = $this->user_model->getUserByStatusByDate(0, array());
+		$data["flight_booking"] = $this->flight_schedule_model->getBookFlights(array());
+		$data["hotel_booking"] = $this->hotel_schedule_model->getBookHotels(array());
+		$data["vehicle_booking"] = $this->vehicle_schedule_model->getBookVehicles(array());
+		$data["tap"] = $this->tour_pack_schedule_model->getToursPackSched($date);
+		$data["promo"] = $this->promo_schedule_model->getPromoSched(array());
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/reports",$data);
+		$this->load->view("dashboard/common/footer");
+	}
+
+	public function searchPromo(){
+		sessionChecker();
+		permissionChecker(array(0,1), true);
+		$date = $this->setDate($this->input->post("dateFrom"), $this->input->post("dateTo"));
+		$data["module"] = "promos";
+		$data["page_title"] = "Reports";
+		$data["list"] = $this->lookups_model->getAllLookups();
+		$data["categories"] = $this->category_model->getAllCategories();
+		$data["client_registration"] = $this->user_model->getUserByStatusByDate(0, array());
+		$data["flight_booking"] = $this->flight_schedule_model->getBookFlights(array());
+		$data["hotel_booking"] = $this->hotel_schedule_model->getBookHotels(array());
+		$data["vehicle_booking"] = $this->vehicle_schedule_model->getBookVehicles(array());
+		$data["tap"] = $this->tour_pack_schedule_model->getToursPackSched(array());
+		$data["promo"] = $this->promo_schedule_model->getPromoSched($date);
+		$this->load->view("dashboard/common/header");
+		$this->load->view("dashboard/modules/reports",$data);
+		$this->load->view("dashboard/common/footer");
+	}
+
 	public function mailbox(){
 		sessionChecker();
 		permissionChecker(array(0,1), true);
@@ -935,7 +1067,7 @@ class Modules extends CI_Controller {
 			break;
 			case "BOOKING":
 				$this->hotel_schedule_model->updateHotelSchedule($post["id"],$data);	
-			break;
+				break;
 			case "VEHICLE":
 				$this->vehicle_schedule_model->updateVehicleSchedule($post["id"],$data);
 			break;
@@ -947,6 +1079,19 @@ class Modules extends CI_Controller {
 			break;
 		}
 		echo "YES";
+	}
+
+	public function setDate($dateFrom, $dateTo){
+		// if($dateFrom==""){
+		// 	$dateFrom = date("Y-m-d");
+		// }
+		// if($dateTo==""){
+		// 	$dateFrom = date("Y-m-d");
+		// }
+		return array(
+				"dateFrom"	=>	$dateFrom,
+				"dateTo"	=>	$dateTo
+			);
 	}
 }
 				

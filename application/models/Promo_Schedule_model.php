@@ -29,6 +29,23 @@
             return $query->result();
         }
 
+        public function getPromoSched($date){
+            $this->db->select('*, ps.ID as TPS_ID');
+            $this->db->from("promo_schedule ps");
+            $this->db->join("promos p", "ps.PROMO_ID = p.ID", "inner");
+            if(count($date)>0){
+                if($date["dateFrom"]!=""){
+                    $this->db->where("ps.CREATED_DATE >= ", $date["dateFrom"]);    
+                }
+                if($date["dateTo"]!=""){
+                    $this->db->where("ps.CREATED_DATE <= ", $date["dateTo"]);    
+                }
+            }   
+            $this->db->order_by("ps.ID", "DESC");
+            $query = $this->db->get();
+            return $query->result();
+        }
+
         public function updatePromoSchedule($id, $data){
             $this->db->where('ID', $id);
             $this->db->update('promo_schedule', $data); 

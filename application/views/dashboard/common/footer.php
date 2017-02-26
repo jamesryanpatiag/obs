@@ -39,6 +39,11 @@
       format: 'yyyy-mm-dd',
       autoclose: true
     });
+
+     $('.datepicker2').datepicker({
+      format: 'yyyy-mm-dd',
+      autoclose: true
+    });
     
   });
 </script>
